@@ -52,7 +52,12 @@
     "redux-thunk": "2.4.2",
     "reduxjs-toolkit-persist": "7.2.1",
     "webextension-polyfill": "0.9.0",
-    "zustand": "4.5.0"
+    "zustand": "4.5.0",
+    "@web3auth/base": "^7.3.1",
+    "@web3auth/ethereum-provider": "^7.3.1",
+    "@web3auth/no-modal": "^7.3.1",
+    "@web3auth/openlogin-adapter": "^7.3.1",
+    "web3": "^4.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.3",

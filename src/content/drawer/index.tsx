@@ -6,6 +6,7 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 
+import XXWeb3Auth from '../../auth/Auth';
 import { ProfileData } from '../../service/login/me';
 import { TwitterOauth2Data } from '../../service/login/twiterOuth2';
 import http, { ResultData } from '../../service/request';
@@ -62,6 +63,8 @@ export default function PersistentDrawerRight() {
   };
 
   const [pageState, setPageState] = React.useState('login');
+  const [web3Auth, setWeb3Auth] = React.useState<XXWeb3Auth | null>(null);
+  const [loggedIn, setLoggedIn] = React.useState<boolean | null>(false);
 
   React.useEffect(() => {
     // 获取当前 URL 中的参数
@@ -93,6 +96,22 @@ export default function PersistentDrawerRight() {
       }
     }
   }, []);
+
+  React.useEffect(() => {
+    if (pageState === 'profile') {
+      // 当pageState等于'profile'时执行的代码
+      console.log('Page state is profile, executing specific code...');
+
+      const initWeb3AuthIfNeeded = async () => {
+        if (web3Auth === null) {
+          setWeb3Auth(await new XXWeb3Auth().init());
+        }
+        setLoggedIn(web3Auth?.isLoggedIn() ?? false);
+      };
+      // 初始化web3Auth
+      initWeb3AuthIfNeeded();
+    }
+  }, [pageState]);
 
   const checkProfileData = async () => {
     // https://test-xfans-api.d.buidlerdao.xyz/api/user/me
@@ -144,6 +163,16 @@ export default function PersistentDrawerRight() {
     }
   };
 
+  const handleWalletButtonClick = async () => {
+    await web3Auth?.login();
+    setLoggedIn(web3Auth?.isLoggedIn() ?? false);
+    if (loggedIn) {
+      setPageState('wallet');
+    } else {
+      console.log('wallet login failed');
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <ProfileModal />
@@ -185,7 +214,7 @@ export default function PersistentDrawerRight() {
           {pageState === 'congratulation' && (
             <CongratulationPage handleButtonClick={() => setPageState('profile')} />
           )}
-          {pageState === 'profile' && <Profile handleButtonClick={() => setPageState('wallet')} />}
+          {pageState === 'profile' && <Profile handleButtonClick={handleWalletButtonClick} />}
           {pageState === 'wallet' && <Wallet handleButtonClick={() => setPageState('profile')} />}
         </div>
       </Drawer>
