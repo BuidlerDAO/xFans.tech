@@ -8,6 +8,7 @@ import removeSrcFromHtmlPaths from './utils/plugins/removeSrcFromHtmlPaths';
 
 export default defineConfig({
   build: {
+    target: [],
     rollupOptions: {
       input: {
         welcome: join(__dirname, 'src/welcome/welcome.html'),

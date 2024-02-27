@@ -4,6 +4,7 @@ import { CHAIN_NAMESPACES, IProvider, WALLET_ADAPTERS } from '@web3auth/base';
 import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider';
 import { Web3AuthNoModal } from '@web3auth/no-modal';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
+import browser from 'webextension-polyfill';
 
 import RPC from './web3RPC'; // for using web3.js
 
@@ -258,7 +259,7 @@ function App() {
   const unloggedInView = (
     <>
       {!isFullPage ? (
-        <button onClick={() => chrome.tabs.create({ url: 'index.html' })} className="card login">
+        <button onClick={() => browser.tabs.create({ url: 'index.html' })} className="card login">
           Login
         </button>
       ) : (

@@ -72,6 +72,7 @@ export default function PersistentDrawerRight() {
     const xfansToken = urlParams.get('xfans_token');
 
     console.log(xfansToken);
+    console.log(web3Auth);
 
     // 获取 xfans_token 参数的值
     const localStorageToken = localStorage.getItem('xfans-token');
@@ -102,14 +103,14 @@ export default function PersistentDrawerRight() {
       // 当pageState等于'profile'时执行的代码
       console.log('Page state is profile, executing specific code...');
 
-      const initWeb3AuthIfNeeded = async () => {
-        if (web3Auth === null) {
-          setWeb3Auth(await new XXWeb3Auth().init());
-        }
-        setLoggedIn(web3Auth?.isLoggedIn() ?? false);
-      };
+      // const initWeb3AuthIfNeeded = async () => {
+      //   if (web3Auth === null) {
+      //     setWeb3Auth(await new XXWeb3Auth().init());
+      //   }
+      //   setLoggedIn(web3Auth?.isLoggedIn() ?? false);
+      // };
       // 初始化web3Auth
-      initWeb3AuthIfNeeded();
+      // initWeb3AuthIfNeeded();
     }
   }, [pageState]);
 
@@ -164,8 +165,8 @@ export default function PersistentDrawerRight() {
   };
 
   const handleWalletButtonClick = async () => {
-    await web3Auth?.login();
-    setLoggedIn(web3Auth?.isLoggedIn() ?? false);
+    // await web3Auth?.login();
+    // setLoggedIn(web3Auth?.isLoggedIn() ?? false);
     if (loggedIn) {
       setPageState('wallet');
     } else {
