@@ -1,3 +1,3 @@
-export interface TwitterOauth2 {
+export interface TwitterOauth2Data {
   authorizationUrl: string;
 }
