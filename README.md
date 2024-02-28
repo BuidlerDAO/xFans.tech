@@ -158,3 +158,16 @@ This repository is following the [Conventional Commits](https://www.conventional
 ## License
 
 MIT © [Sinan Bekar](https://sinan.engineer)
+
+## How to Polifill nodejs build-in modules with vite:
+
+https://medium.com/@ftaioli/using-node-js-builtin-modules-with-vite-6194737c2cd2
+
+same problems:
+https://github.com/crxjs/chrome-extension-tools/issues/617
+
+https://github.com/Web3Auth/web3auth-pnp-examples/tree/main/web-modal-sdk/quick-starts/react-vite-modal-quick-start
+
+https://github.com/crxjs/chrome-extension-tools/discussions/461
+
+https://gist.github.com/FbN/0e651105937c8000f10fefdf9ec9af3d
