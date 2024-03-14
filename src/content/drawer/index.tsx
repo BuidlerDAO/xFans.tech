@@ -18,7 +18,6 @@ import InvitePage from '../loginPage/invitePage';
 import SignInWithXPage from '../loginPage/signInWithXPage';
 
 import LogoButton from './logoButton';
-
 import '../../tailwind.css';
 
 const drawerWidth = 463;
@@ -51,6 +50,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 
 export default function PersistentDrawerRight() {
   const [open, setOpen] = React.useState(false);
+
   const [loginLoading, setLoginLoading] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -187,7 +187,13 @@ export default function PersistentDrawerRight() {
             <InvitePage handleButtonClick={(inviteCode) => clickActivate(inviteCode)} />
           )}
           {pageState === 'congratulation' && (
-            <CongratulationPage handleButtonClick={() => setPageState('profile')} />
+            <CongratulationPage
+              start={(startStatus) => {
+                if (startStatus) {
+                  setPageState('profile');
+                }
+              }}
+            />
           )}
           {pageState === 'profile' && <Profile handleButtonClick={() => setPageState('wallet')} />}
           {pageState === 'wallet' && (

@@ -3,18 +3,23 @@ import React, { FC } from 'react';
 import { NextButton, VerifyButton } from '../../components/buttons/loginButton';
 
 import '../../tailwind.css';
+import { XFANS_TWITTER_HOMEPAGE, XFANS_TWITTES } from '../../constants';
 
 interface CongratulationPageProps {
-  handleButtonClick: () => void; // 定义一个函数类型的属性
+  start: (startStatus: boolean) => void; // 定义一个函数类型的属性
 }
 
-const CongratulationPage: FC<CongratulationPageProps> = ({ handleButtonClick }) => {
+const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
+  const [goTwitterHomepage, setGoTwitterHomepage] = React.useState(false);
+  const [goTwittes, setGoTwittes] = React.useState(false);
+  const [startStatus, setStartStatus] = React.useState(false);
+
   return (
-    <div className="w-full justify-center text-center items-center min-h-screen">
-      <p className="text-[#0F1419] text-[24px] leading-[38px] font-bold text-center mt-[81px] mb-[44px]">
+    <div className="min-h-screen w-full items-center justify-center text-center">
+      <p className="mt-[81px] mb-[44px] text-center text-[24px] font-bold leading-[38px] text-[#0F1419]">
         Congratulations!
       </p>
-      <p className="text-[#5B7083] text-[14px] leading-[24px] font-normal text-center mb-[21px]">
+      <p className="mb-[21px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
         Complete the following tasks to activate your account
       </p>
       <div className="flex px-[58px]">
@@ -30,14 +35,14 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ handleButtonClick }) 
             fill="#121516"
           />
         </svg>
-        <p className="text-[#5B7083] text-[14px] w-[207px] mx-[16px] leading-[24px] font-normal text-center mb-[21px]">
+        <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
           Follow @xFans on X
         </p>
-        <VerifyButton variant="contained" disableElevation onClick={() => undefined}>
-          verify
+        <VerifyButton variant="contained" disableElevation onClick={goHome}>
+          GO
         </VerifyButton>
       </div>
-      <div className="flex px-[58px] mb-[44px]">
+      <div className="mb-[44px] flex px-[58px]">
         <svg
           width="24"
           height="24"
@@ -54,14 +59,19 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ handleButtonClick }) 
           />
         </svg>
 
-        <p className="text-[#5B7083] text-[14px] w-[207px] mx-[16px] leading-[24px] font-normal text-center mb-[21px]">
+        <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
           Like tweets on X
         </p>
-        <VerifyButton variant="contained" disableElevation onClick={() => undefined}>
+        <VerifyButton variant="contained" disableElevation onClick={goTweet}>
           GO
         </VerifyButton>
       </div>
-      <NextButton variant="contained" disableElevation onClick={handleButtonClick}>
+      <NextButton
+        variant="contained"
+        disableElevation
+        onClick={() => start(startStatus)}
+        disabled={!startStatus}
+      >
         Start
       </NextButton>
     </div>
