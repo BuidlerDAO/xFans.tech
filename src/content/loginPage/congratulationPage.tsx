@@ -1,7 +1,20 @@
 import React, { FC, useEffect } from 'react';
 import { NextButton, VerifyButton } from '../../components/buttons/loginButton';
 import '../../tailwind.css';
-import { XFANS_TWITTER_HOMEPAGE, XFANS_TWITTES } from '../../constants';
+import {
+  XFANS_TWITTER_HOMEPAGE,
+  XFANS_TWITTES,
+  LOCALSTORAGE_TRUE,
+  LOCALSTORAGE_FALSE,
+  XFANS_TWITTER_GO_FOLLOW,
+  XFANS_TWITTER_GO_FOLLOW_VERIFY,
+  XFANS_TWITTER_GO_RETWEETS,
+  XFANS_TWITTER_GO_RETWEETS_VERIFY,
+  XFANS_CHECK_RETWEET,
+  XFANS_DONE,
+  XFANS_VERIFY,
+  XFANS_GO,
+} from '../../constants';
 import http, { ResultData } from '../../service/request';
 import useGlobalStore from '../../store/useGlobalStore';
 interface CongratulationPageProps {
@@ -10,23 +23,32 @@ interface CongratulationPageProps {
 
 const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
   const [goFollow, setGoFollow] = React.useState(
-    localStorage.getItem('xfans-go-follow') ?? 'false'
+    localStorage.getItem(XFANS_TWITTER_GO_FOLLOW) ?? LOCALSTORAGE_FALSE
   );
   const [goFollowVerify, setGoFollowVerify] = React.useState(
-    localStorage.getItem('xfans-go-follow-verify' ?? 'false')
+    localStorage.getItem(XFANS_TWITTER_GO_FOLLOW_VERIFY ?? LOCALSTORAGE_FALSE)
   );
 
   const [goRetwittes, setGoRetwittes] = React.useState(
-    localStorage.getItem('xfans-go-retweets') ?? 'false'
+    localStorage.getItem(XFANS_TWITTER_GO_RETWEETS) ?? LOCALSTORAGE_FALSE
   );
   const [goRetwittesVerify, setGoRetwittesVerify] = React.useState(
-    localStorage.getItem('xfans-go-retweets-verify' ?? 'false')
+    localStorage.getItem(XFANS_TWITTER_GO_RETWEETS_VERIFY ?? LOCALSTORAGE_FALSE)
   );
 
-  const followStatus = goFollow === 'true' ? (goFollowVerify === 'true' ? 'Done' : 'Verify') : 'GO';
+  const followStatus =
+    goFollow === LOCALSTORAGE_TRUE
+      ? goFollowVerify === LOCALSTORAGE_TRUE
+        ? XFANS_DONE
+        : XFANS_VERIFY
+      : XFANS_GO;
   const retweetStatus =
-    goRetwittes === 'true' ? (goRetwittesVerify === 'true' ? 'Done' : 'Verify') : 'GO';
-  const startStatus = followStatus === 'Done' && retweetStatus === 'Done';
+    goRetwittes === LOCALSTORAGE_TRUE
+      ? goRetwittesVerify === LOCALSTORAGE_TRUE
+        ? XFANS_DONE
+        : XFANS_VERIFY
+      : XFANS_GO;
+  const startStatus = followStatus === XFANS_DONE && retweetStatus === XFANS_DONE;
 
   // 打开一个新的标签页并访问指定网页
   const openNewTab = (url: string) => {
@@ -36,38 +58,38 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
 
   const _setGoRetwittesVerify = (r: string) => {
     setGoRetwittesVerify(r);
-    localStorage.setItem('xfans-go-retweets-verify', r);
+    localStorage.setItem(XFANS_TWITTER_GO_RETWEETS_VERIFY, r);
   };
 
   const _setGoRetwittes = (r: string) => {
     setGoRetwittes(r);
-    localStorage.setItem('xfans-go-retweets', r);
+    localStorage.setItem(XFANS_TWITTER_GO_RETWEETS, r);
   };
 
   // 再获取url中的token 作为第一优先级
   const urlParams = new URLSearchParams(window.location.search);
-  const xfansCheckRetweet = urlParams.get('xfans_check_retweet');
+  const xfansCheckRetweet = urlParams.get(XFANS_CHECK_RETWEET);
 
   const checkTasksStatus = async () => {
     try {
       const activateData = (await http.post(`api/user/activate/check-task`)) as ResultData;
       if (activateData.code === 0 && activateData.data.finished === true) {
-        _setGoRetwittesVerify('true');
+        _setGoRetwittesVerify(LOCALSTORAGE_TRUE);
       } else {
         if (!xfansCheckRetweet) {
-          _setGoRetwittes('false');
+          _setGoRetwittes(LOCALSTORAGE_FALSE);
         } else {
-          _setGoRetwittes('true');
+          _setGoRetwittes(LOCALSTORAGE_TRUE);
         }
-        _setGoRetwittesVerify('false');
+        _setGoRetwittesVerify(LOCALSTORAGE_FALSE);
       }
     } catch (error) {
       if (!xfansCheckRetweet) {
-        _setGoRetwittes('false');
+        _setGoRetwittes(LOCALSTORAGE_FALSE);
       } else {
-        _setGoRetwittes('true');
+        _setGoRetwittes(LOCALSTORAGE_TRUE);
       }
-      _setGoRetwittesVerify('false');
+      _setGoRetwittesVerify(LOCALSTORAGE_FALSE);
     }
   };
 
@@ -104,19 +126,19 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
         <VerifyButton
           variant="contained"
           disableElevation
-          disabled={followStatus === 'Done'}
+          disabled={followStatus === XFANS_DONE}
           onClick={() => {
             switch (followStatus) {
-              case 'GO':
+              case XFANS_GO:
                 openNewTab(XFANS_TWITTER_HOMEPAGE);
-                setGoFollow('true');
-                localStorage.setItem('xfans-go-follow', 'true');
+                setGoFollow(LOCALSTORAGE_TRUE);
+                localStorage.setItem(XFANS_TWITTER_GO_FOLLOW, LOCALSTORAGE_TRUE);
                 break;
 
-              case 'Verify':
+              case XFANS_VERIFY:
                 setTimeout(() => {
-                  setGoFollowVerify('true');
-                  localStorage.setItem('xfans-go-follow-verify', 'true');
+                  setGoFollowVerify(LOCALSTORAGE_TRUE);
+                  localStorage.setItem(XFANS_TWITTER_GO_FOLLOW_VERIFY, LOCALSTORAGE_TRUE);
                 }, 1000);
                 break;
 
@@ -151,15 +173,15 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
         <VerifyButton
           variant="contained"
           disableElevation
-          disabled={retweetStatus === 'Done'}
+          disabled={retweetStatus === XFANS_DONE}
           onClick={() => {
             switch (retweetStatus) {
-              case 'GO':
-                _setGoRetwittes('true');
+              case XFANS_GO:
+                _setGoRetwittes(LOCALSTORAGE_TRUE);
                 openNewTab(XFANS_TWITTES);
                 break;
 
-              case 'Verify':
+              case XFANS_VERIFY:
                 checkTasksStatus();
                 break;
 
