@@ -28,7 +28,7 @@ export function NumberDisplayer({ text = '0', className }: { text?: string; clas
     value = BigNumber(`0.${valueAfterDot}`).toFixed(4).split('.')[1];
     // 其他情况给0计数
   } else {
-    const lastZeroIndex = valueAfterDot.lastIndexOf('0');
+    const lastZeroIndex = getLastZero(valueAfterDot);
     const zeroCount = valueAfterDot.substring(0, lastZeroIndex + 1).length;
     const noneZeroValue = valueAfterDot.substring(lastZeroIndex + 1);
     const [, noneZeroRealValue] = (+`0.${noneZeroValue}`).toFixed(4).split('.');
@@ -40,4 +40,18 @@ export function NumberDisplayer({ text = '0', className }: { text?: string; clas
       {valueBeforeDot}.{value}
     </span>
   );
+}
+
+// 返回遇到的第一个下一个数字是非零的零的下标
+// 00005203 -> 3
+function getLastZero(numStr: string) {
+  let index = -1;
+  for (let n = 0; n < numStr.length; n++) {
+    if (numStr[n] === '0') {
+      index = n;
+    } else {
+      break;
+    }
+  }
+  return index;
 }
