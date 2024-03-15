@@ -16,9 +16,13 @@ export default function Toaster() {
       key={message}
       autoHideDuration={3000}
     >
-      <div className="px-6 py-5 flex items-center bg-white rounded-[15px] text-black">
+      <div
+        className={`flex items-center rounded-[15px] border bg-white px-6 py-5 text-black ${
+          messageType === 'succes' ? 'border-[#56B671]' : 'border-[#FF645E]'
+        }`}
+      >
         {messageType === 'succes' ? <Succes /> : <Error />}
-        <span className="ml-1">{message}</span>
+        <span className="ml-1 text-[20px] font-medium">{message}</span>
       </div>
     </Snackbar>,
     document.body
