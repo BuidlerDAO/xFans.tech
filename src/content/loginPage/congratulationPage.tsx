@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-
 import { NextButton, VerifyButton } from '../../components/buttons/loginButton';
-
 import '../../tailwind.css';
 import { XFANS_TWITTER_HOMEPAGE, XFANS_TWITTES } from '../../constants';
 
@@ -10,9 +8,30 @@ interface CongratulationPageProps {
 }
 
 const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
-  const [goTwitterHomepage, setGoTwitterHomepage] = React.useState(false);
-  const [goTwittes, setGoTwittes] = React.useState(false);
-  const [startStatus, setStartStatus] = React.useState(false);
+  const [goFollow, setGoFollow] = React.useState(
+    localStorage.getItem('xfans-go-follow') ?? 'false'
+  );
+  const [goFollowVerify, setGoFollowVerify] = React.useState(
+    localStorage.getItem('xfans-go-follow-verify' ?? 'false')
+  );
+
+  const [goRetwittes, setGoRetwittes] = React.useState(
+    localStorage.getItem('xfans-go-retweets') ?? 'false'
+  );
+  const [goRetwittesVerify, setGoRetwittesVerify] = React.useState(
+    localStorage.getItem('xfans-go-retweets-verify' ?? 'false')
+  );
+
+  const followStatus = goFollow === 'true' ? (goFollowVerify === 'true' ? 'Done' : 'Verify') : 'GO';
+  const retweetStatus =
+    goRetwittes === 'true' ? (goRetwittesVerify === 'true' ? 'Done' : 'Verify') : 'GO';
+  const startStatus = followStatus === 'Done' && retweetStatus === 'Done';
+
+  // 打开一个新的标签页并访问指定网页
+  const openNewTab = (url: string) => {
+    const newTab = window.open(url, '_blank');
+    newTab?.focus();
+  };
 
   return (
     <div className="min-h-screen w-full items-center justify-center text-center">
@@ -38,8 +57,31 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
         <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
           Follow @xFans on X
         </p>
-        <VerifyButton variant="contained" disableElevation onClick={goHome}>
-          GO
+        <VerifyButton
+          variant="contained"
+          disableElevation
+          disabled={followStatus === 'Done'}
+          onClick={() => {
+            switch (followStatus) {
+              case 'GO':
+                openNewTab(XFANS_TWITTER_HOMEPAGE);
+                setGoFollow('true');
+                localStorage.setItem('xfans-go-follow', 'true');
+                break;
+
+              case 'Verify':
+                setTimeout(() => {
+                  setGoFollowVerify('true');
+                  localStorage.setItem('xfans-go-follow-verify', 'true');
+                }, 1000);
+                break;
+
+              default:
+                break;
+            }
+          }}
+        >
+          {followStatus}
         </VerifyButton>
       </div>
       <div className="mb-[44px] flex px-[58px]">
@@ -62,8 +104,32 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
         <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
           Like tweets on X
         </p>
-        <VerifyButton variant="contained" disableElevation onClick={goTweet}>
-          GO
+        <VerifyButton
+          variant="contained"
+          disableElevation
+          disabled={retweetStatus === 'Done'}
+          onClick={() => {
+            switch (retweetStatus) {
+              case 'GO':
+                openNewTab(XFANS_TWITTES);
+                setGoRetwittes('true');
+                localStorage.setItem('xfans-go-retweets', 'true');
+
+                break;
+
+              case 'Verify':
+                setTimeout(() => {
+                  setGoRetwittesVerify('true');
+                  localStorage.setItem('xfans-go-retweets-verify', 'true');
+                }, 1000);
+                break;
+
+              default:
+                break;
+            }
+          }}
+        >
+          {retweetStatus}
         </VerifyButton>
       </div>
       <NextButton
