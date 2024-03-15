@@ -47,11 +47,11 @@ const InvitePage: FC<InvitePageProps> = ({ handleButtonClick }) => {
     }
   };
   return (
-    <div className="w-full px-[34px] justify-center text-center items-center min-h-screen">
-      <p className=" mt-[81px] text-[#0F1419] text-[24px] leading-[38px] font-bold text-center">
+    <div className="min-h-screen w-full items-center justify-center px-[34px] text-center">
+      <p className=" mt-[81px] text-center text-[24px] font-bold leading-[38px] text-[#0F1419]">
         Invite Code
       </p>
-      <p className="text-[#5B7083] my-[44px]  text-[14px] leading-[24px] font-normal text-center mb-[44px]">
+      <p className="my-[44px] mb-[44px]  text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
         To complete the registration you need to enter an invitation code, we released a small
         number of invitation codes during the beta period, see our tweets
       </p>

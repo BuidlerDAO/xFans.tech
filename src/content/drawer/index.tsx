@@ -104,6 +104,9 @@ export default function PersistentDrawerRight() {
       } else if (!profileData.data.isTaskFinished) {
         setPageState('congratulation');
         return 'waiting task';
+      } else {
+        setPageState('congratulation');
+        return 'waiting task';
       }
     }
     return profileData.message;
@@ -195,13 +198,7 @@ export default function PersistentDrawerRight() {
             <InvitePage handleButtonClick={(inviteCode) => clickRegisterInviteCode(inviteCode)} />
           )}
           {pageState === 'congratulation' && (
-            <CongratulationPage
-              start={(startStatus) => {
-                if (startStatus) {
-                  setPageState('profile');
-                }
-              }}
-            />
+            <CongratulationPage goProfile={() => setPageState('profile')} />
           )}
           {pageState === 'profile' && <Profile handleButtonClick={() => setPageState('wallet')} />}
           {pageState === 'wallet' && (

@@ -3,12 +3,12 @@ import { NextButton, VerifyButton } from '../../components/buttons/loginButton';
 import '../../tailwind.css';
 import { XFANS_TWITTER_HOMEPAGE, XFANS_TWITTES } from '../../constants';
 import http, { ResultData } from '../../service/request';
-
+import useGlobalStore from '../../store/useGlobalStore';
 interface CongratulationPageProps {
-  start: (startStatus: boolean) => void; // 定义一个函数类型的属性
+  goProfile: () => void; // 定义一个函数类型的属性
 }
 
-const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
+const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
   const [goFollow, setGoFollow] = React.useState(
     localStorage.getItem('xfans-go-follow') ?? 'false'
   );
@@ -34,16 +34,28 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
     newTab?.focus();
   };
 
+  const _setGoRetwittesVerify = (r: string) => {
+    setGoRetwittesVerify(r);
+    localStorage.setItem('xfans-go-retweets-verify', r);
+  };
+
+  const _setGoRetwittes = (r: string) => {
+    setGoRetwittes(r);
+    localStorage.setItem('xfans-go-retweets', r);
+  };
+
   const checkTasksStatus = async () => {
-    const activateData = (await http.post(`api/user/activate/check-task`)) as ResultData;
-    if (activateData.code === 0 && activateData.data.finished === true) {
-      setGoRetwittesVerify('true');
-      localStorage.setItem('xfans-go-retweets-verify', 'true');
-    } else {
-      setGoRetwittes('false');
-      localStorage.setItem('xfans-go-retweets', 'false');
-      setGoRetwittesVerify('false');
-      localStorage.setItem('xfans-go-retweets-verify', 'false');
+    try {
+      const activateData = (await http.post(`api/user/activate/check-task`)) as ResultData;
+      if (activateData.code === 0 && activateData.data.finished === true) {
+        _setGoRetwittesVerify('true');
+      } else {
+        _setGoRetwittes('false');
+        _setGoRetwittesVerify('false');
+      }
+    } catch (error) {
+      _setGoRetwittes('false');
+      _setGoRetwittesVerify('false');
     }
   };
 
@@ -150,7 +162,26 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
       <NextButton
         variant="contained"
         disableElevation
-        onClick={() => start(startStatus)}
+        onClick={async () => {
+          try {
+            const activateData = (await http.post(`api/user/activate`)) as ResultData;
+            if (activateData.code === 0) {
+              goProfile();
+            } else {
+              useGlobalStore.setState({
+                message: activateData?.message,
+                messageType: 'error',
+                messageOpen: true,
+              });
+            }
+          } catch (error) {
+            useGlobalStore.setState({
+              message: '注册失败!',
+              messageType: 'error',
+              messageOpen: true,
+            });
+          }
+        }}
         disabled={!startStatus}
       >
         Start
