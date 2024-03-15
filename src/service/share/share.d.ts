@@ -117,7 +117,7 @@ declare global {
     /**
      * 绑定的推特用户id
      */
-    twitterId?: string;
+    twitterId?: number;
     /**
      * 绑定的推特用户username
      */

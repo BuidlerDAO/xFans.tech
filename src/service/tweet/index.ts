@@ -5,7 +5,7 @@ import http, { ResultData } from '../request';
 
 const useTweetList = () => {
   const result = useRequest<ResultData<ItemsResponse<TweetProps>>, TweetRequest[]>(
-    () => http.get('/api/twitter/tweets'),
+    (params) => http.get('/api/twitter/tweets', params),
     {
       manual: true,
       onSuccess(response) {

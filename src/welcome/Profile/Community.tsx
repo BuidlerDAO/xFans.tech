@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import ChatRoomDrawer from './community/ChatRoomDrawer';
 import StackModal from './community/StackModal';
 
 const list = [
@@ -32,6 +33,7 @@ const list = [
 const Community = () => {
   const [isStackModalOpen, setIsStackModalOpen] = useState(false);
   const list1 = Array(4).fill('');
+  const [isChatRootOpen, setIsChatRootOpen] = useState(false);
 
   return (
     <div className="relative mx-4">
@@ -42,8 +44,9 @@ const Community = () => {
             className={`px-1 py-[10px] ${
               i === list1.length - 1 ? '' : 'border-b border-b-[#EBEEF0]'
             }`}
+            onClick={() => setIsChatRootOpen(true)}
           >
-            <div className="ml-3 flex items-center">
+            <div className="ml-3 flex cursor-pointer items-center">
               <img src={item.avatar} alt="" className="w-[44px] rounded-full" />
               <div className="ml-[28px] flex-1 overflow-hidden">
                 <div className="flex flex-col space-y-1">
@@ -89,6 +92,7 @@ const Community = () => {
         ))}
       </ul>
       {isStackModalOpen && <StackModal onClose={() => setIsStackModalOpen(false)} />}
+      <ChatRoomDrawer open={isChatRootOpen} onClose={() => setIsChatRootOpen(false)} />
     </div>
   );
 };

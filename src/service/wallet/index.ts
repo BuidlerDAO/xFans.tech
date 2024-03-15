@@ -16,7 +16,7 @@ const useWalletAccounts = () => {
 
   return result;
 };
-type ClaimSuccessFunctionType = () => void;
+type ClaimSuccessFunctionType = (x: any) => void;
 type ClaimFailedFunctionType = () => void;
 
 const useWalletClaimReward = (
@@ -27,7 +27,7 @@ const useWalletClaimReward = (
   const result = useRequest(
     () =>
       contractRequestHttp.post('/xfans/api/pool/claim', {
-        list,
+        list: list?.slice(0, 2),
       }),
     {
       manual: true,

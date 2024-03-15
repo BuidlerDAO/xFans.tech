@@ -5,7 +5,7 @@ declare global {
     /**
      * 推文作者的推特 id，传入将查询该作者所有推文数据
      */
-    authorId?: string;
+    authorId?: number;
   }
 
   /**

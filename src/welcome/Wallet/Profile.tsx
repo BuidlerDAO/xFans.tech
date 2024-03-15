@@ -14,7 +14,6 @@ import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import { useHolderList } from '../../service/share';
 import { useTweetList } from '../../service/tweet';
-
 import useProfileModal from '../../store/useProfileModal';
 import useShareStore from '../../store/useShareStore';
 import useTweetStore from '../../store/useTweetStore';
@@ -56,16 +55,16 @@ const ProfileModal = () => {
           onClick={() => openProfile(item)}
           src={item.holderUser?.avatar}
           alt=""
-          className="w-5 rounded-full cursor-pointer"
+          className="w-5 cursor-pointer rounded-full"
         />
-        <span className="text-[#0F1419] text-xs">{item.holderUser?.username}</span>
+        <span className="text-xs text-[#0F1419]">{item.holderUser?.username}</span>
       </div>
     ),
     shares: Number(item.shares) / 100,
     value: (
       <div className="flex items-center space-x-1">
         <Icon />
-        <NumberDisplayer className="text-[#0F1419] text-xs" text={item.value!} />
+        <NumberDisplayer className="text-xs text-[#0F1419]" text={item.value!} />
       </div>
     ),
   }));
@@ -77,16 +76,16 @@ const ProfileModal = () => {
           onClick={() => openProfile(item)}
           src={item.subjectUser?.avatar}
           alt=""
-          className="w-5 rounded-full cursor-pointer"
+          className="w-5 cursor-pointer rounded-full"
         />
-        <span className="text-[#0F1419] text-xs">{item.subjectUser?.username}</span>
+        <span className="text-xs text-[#0F1419]">{item.subjectUser?.username}</span>
       </div>
     ),
     shares: Number(item.shares) / 100,
     value: (
       <div className="flex items-center space-x-1">
         <Icon />
-        <NumberDisplayer className="text-[#0F1419] text-xs" text={item.value!} />
+        <NumberDisplayer className="text-xs text-[#0F1419]" text={item.value!} />
       </div>
     ),
   }));
@@ -99,16 +98,16 @@ const ProfileModal = () => {
             onClick={openProfile}
             src="https://s3-alpha-sig.figma.com/img/b0e6/1e6e/9e0b10bc7df7f8b016a4a4b14a72390c?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=QbzfTy62BKZoEECa3NIt1~o1YdznKeE79nKfwJ2eLXuw2csMXa8DSL~AjX2hqfXcV5CaSKQgqPk0nBDdaH1QMzoyApx~2GZyLzYidWjfL~4mAjmWIyAls4NVpTdwgcLmlzONayjLLIiUCmZPGSCLRRr2uGxX1vFBf0A27xQPXL-6Em0g~ufRsv0YMPtBaOTxGxRI35ifobRhI2H7BK3fPHbXojr4L9OMRT3OAoG9FEAVYD0ik7uLeJO5FYCeFS2jb3Yswp6VoYiPKY8EbVSYEQPK-bzVvDzkS6r-lb6vEQq5TOnuvvcDVUncy3wAUSwSXj1fQA15XJhcVVA5qban9w__"
             alt=""
-            className="w-5 rounded-full cursor-pointer"
+            className="w-5 cursor-pointer rounded-full"
           />
-          <span className="text-[#0F1419] text-xs">Patricia Smith</span>
+          <span className="text-xs text-[#0F1419]">Patricia Smith</span>
         </div>
       ),
       shares: 4,
       value: (
         <div className="flex items-center space-x-1">
           <Icon />
-          <span className="text-[#0F1419] text-xs">2.132</span>
+          <span className="text-xs text-[#0F1419]">2.132</span>
         </div>
       ),
     },
@@ -119,16 +118,16 @@ const ProfileModal = () => {
             onClick={openProfile}
             src="https://s3-alpha-sig.figma.com/img/a943/c456/1554d0938e310067d530a29ef6ff1664?Expires=1707696000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pJNMzft~d6XupbZFvcLHyodBsjJTxF7efO9NOhhuM3umsQ6eQgcuugzffRuin4KDl7fOI4dSwu64XS5i2UcBXCCr~jiUsqf8afYa-rcLlTkS8mIC-p2N~OxV9bK1qPFhdGEbLF6Bv8r5KtXSeK5eWnmyUjDVLKjOM-2t7uPL8Z~Uc83MuZGGWiTiF2a16x~sKBwqSuOm7cFI85vzwB2xz1zOzn~dL7fwVVm52zbOuoqMg0v-oRi238IkEOgEt0Yup4Huk47ApntDZRzENu3devBDz~fqIBwQANqBXEG1Gq0lHdl7JgDem9oUTAUZjnHHqoOYIhmvDPPt~aVS0MXnpg__"
             alt=""
-            className="w-5 rounded-full cursor-pointer"
+            className="w-5 cursor-pointer rounded-full"
           />
-          <span className="text-[#0F1419] text-xs">Brenda Wilson</span>
+          <span className="text-xs text-[#0F1419]">Brenda Wilson</span>
         </div>
       ),
       shares: 16,
       value: (
         <div className="flex items-center space-x-1">
           <Icon />
-          <span className="text-[#0F1419] text-xs">3.612</span>
+          <span className="text-xs text-[#0F1419]">3.612</span>
         </div>
       ),
     },
@@ -139,16 +138,16 @@ const ProfileModal = () => {
             onClick={openProfile}
             src="https://s3-alpha-sig.figma.com/img/80e2/698e/d168cf144ccafa1e4ed54123a0b6d7a3?Expires=1707696000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ErPGgBW-siAsqlC7hQjIGBFbEXMKzHwZmAQKXuUYt4KlYYnkKwryJpoI~CnKN6AKqjiIyzZUP84Bmmq~qFcXDMor3hAQo6KdioyETNQeLJg3LxoKN~T3E4FeUStL99qDsUu334PMVTqgroF13-8esW7Dx3GqdnU7Dnj-lFIA0VwcfeBHZSm22qXp8Fb0Yha8PHC4XOZ2Z7jj0i1mfcxQXfMG~JU0SC-pRT2z2S19p06HUgFfKSYNemsAMVav-0hFLliWyMq5ed8uvoYlfe8XaURtDtnk59gz8cEX8nBaG-QNbCiWaDlXFqY5Kkl3XseFaRPZBacF2whoYMQfLpjFuA__"
             alt=""
-            className="w-5 rounded-full cursor-pointer"
+            className="w-5 cursor-pointer rounded-full"
           />
-          <span className="text-[#0F1419] text-xs">Laura Lewis</span>
+          <span className="text-xs text-[#0F1419]">Laura Lewis</span>
         </div>
       ),
       shares: 23,
       value: (
         <div className="flex items-center space-x-1">
           <Icon />
-          <span className="text-[#0F1419] text-xs">3.191</span>
+          <span className="text-xs text-[#0F1419]">3.191</span>
         </div>
       ),
     },
@@ -162,7 +161,7 @@ const ProfileModal = () => {
       value: (
         <div className="flex items-center space-x-1">
           <Icon />
-          <span className="text-[#0F1419] text-xs">2.102</span>
+          <span className="text-xs text-[#0F1419]">2.102</span>
         </div>
       ),
     },
@@ -173,7 +172,7 @@ const ProfileModal = () => {
       value: (
         <div className="flex items-center space-x-1">
           <Icon />
-          <span className="text-[#0F1419] text-xs">1.034</span>
+          <span className="text-xs text-[#0F1419]">1.034</span>
         </div>
       ),
     },
@@ -184,7 +183,7 @@ const ProfileModal = () => {
       value: (
         <div className="flex items-center space-x-1">
           <Icon />
-          <span className="text-[#0F1419] text-xs">1.126</span>
+          <span className="text-xs text-[#0F1419]">1.126</span>
         </div>
       ),
     },
@@ -213,7 +212,10 @@ const ProfileModal = () => {
       getHolderList({
         holder: currentInfo?.walletAddress,
       }),
-    2: () => getTweetList(),
+    2: () =>
+      getTweetList({
+        authorId: currentInfo?.twitterId,
+      }),
   };
 
   useEffect(() => {
@@ -235,27 +237,27 @@ const ProfileModal = () => {
       <Modal onClose={closeProfile} open={open} width={626}>
         <div className="relative flex flex-col items-center">
           <h2 className="text-[24px] font-medium text-[#2E2E32]">Profile</h2>
-          <div className="mt-[15px] w-[438px] bg-[#EBEEF0] h-[1px]"></div>
+          <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
 
-          <div className="flex mt-6 items-center justify-between w-full">
+          <div className="mt-6 flex w-full items-center justify-between">
             <div className="flex items-center space-x-[14px]">
               <img
                 src={currentInfo?.avatar}
                 alt="avatar"
-                className="w-[75px] h-[75px] rounded-full cursor-pointer"
+                className="h-[75px] w-[75px] cursor-pointer rounded-full"
               />
               <div className="flex flex-col space-y-[6px]">
-                <span className="text-[#0F1419] text-[20px] leading-[20px] font-bold">
+                <span className="text-[20px] font-bold leading-[20px] text-[#0F1419]">
                   {currentInfo?.username}
                 </span>
-                <span className="text-[#919099] text-[16px] leading-[16px] font-medium">
+                <span className="text-[16px] font-medium leading-[16px] text-[#919099]">
                   @{currentInfo?.twitterUsername}
                 </span>
                 <div className="flex items-center space-x-1">
-                  <span className="text-[#2E2E32] text-[14px] font-bold">Floor Price:</span>
+                  <span className="text-[14px] font-bold text-[#2E2E32]">Floor Price:</span>
                   <Icon />
                   <NumberDisplayer
-                    className="text-[#0F1419] text-[14px]"
+                    className="text-[14px] text-[#0F1419]"
                     text={currentInfo?.price}
                   />
                 </div>
@@ -284,17 +286,17 @@ const ProfileModal = () => {
             </div>
           </div>
 
-          <div className="mt-3 mb-6 h-[1px] bg-[#EBEEF0] w-full"></div>
+          <div className="mt-3 mb-6 h-[1px] w-full bg-[#EBEEF0]"></div>
 
-          <div className="w-full space-x-[30px] flex">
+          <div className="flex w-full space-x-[30px]">
             {list.map((item, i) => (
               <div
                 onClick={() => {
                   setKey(i);
                 }}
                 key={item.text}
-                className={`rounded-full py-2 px-[18px] font-medium leading-[18px] border border-[#0F1419] ${
-                  key === i ? 'bg-[#2C2A2A] text-white' : 'text-[#0F1419] bg-white cursor-pointer'
+                className={`rounded-full border border-[#0F1419] py-2 px-[18px] font-medium leading-[18px] ${
+                  key === i ? 'bg-[#2C2A2A] text-white' : 'cursor-pointer bg-white text-[#0F1419]'
                 }`}
               >
                 {item.text}
@@ -382,7 +384,12 @@ const ProfileModal = () => {
                         {dayjs(row.createdAt).format('YYYY/MM/DD HH:mm')}
                       </TableCell>
                       <TableCell>
-                        <span className="truncate max-w-[200px] inline-block">{row.text}</span>
+                        <a
+                          className="inline-block max-w-[200px] truncate"
+                          href={`https://twitter.com/${currentInfo?.twitterUsername}/status/${currentInfo?.twitterId}`}
+                        >
+                          {row.text}
+                        </a>
                       </TableCell>
                       <TableCell>#{row.rank}</TableCell>
                       <TableCell>

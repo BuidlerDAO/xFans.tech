@@ -84,22 +84,22 @@ const Reward = () => {
       <div className="mx-6 flex items-center justify-between">
         <div className="flex space-x-[34px]">
           <div className="flex flex-col items-center space-y-1">
-            <div className="flex space-x-1 items-center">
+            <div className="flex items-center space-x-1">
               <Icon />
-              <span className="text-xs text-[#0F1419] font-medium">12.4</span>
+              <span className="text-xs font-medium text-[#0F1419]">12.4</span>
             </div>
-            <span className="text-[#919099] text-[15px] font-medium">Pool</span>
+            <span className="text-[15px] font-medium text-[#919099]">Pool</span>
           </div>
 
           <div className="flex flex-col items-center space-y-1">
-            <div className="flex space-x-1 items-center">
+            <div className="flex items-center space-x-1">
               <Icon />
               <NumberDisplayer
-                className="text-xs text-[#0F1419] font-medium"
+                className="text-xs font-medium text-[#0F1419]"
                 text={userInfo?.rewardEarned}
               />
             </div>
-            <span className="text-[#919099] text-[15px] font-medium">Your Reward</span>
+            <span className="text-[15px] font-medium text-[#919099]">Your Reward</span>
           </div>
         </div>
 
@@ -164,9 +164,9 @@ const Reward = () => {
               padding: 0,
             }}
           >
-            <ul className="py-[22px] border-t border-t-[#EBEEF0]">
+            <ul className="border-t border-t-[#EBEEF0] py-[22px]">
               {tweetList?.map((item, i) => (
-                <li key={i} className="space-y-2 mb-4">
+                <li key={i} className="mb-4 space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-[6px]">
                       <img
@@ -176,7 +176,7 @@ const Reward = () => {
                         }}
                         src={item.author?.avatar}
                         alt=""
-                        className="w-[44px] rounded-full cursor-pointer"
+                        className="w-[44px] cursor-pointer rounded-full"
                       />
                       <div className="flex flex-col space-y-[2px]">
                         <span className="text-sm font-bold" style={{ fontVariant: 'small-caps' }}>
@@ -194,7 +194,7 @@ const Reward = () => {
                     <span className="text-sm font-medium">#{item.rank}</span>
                   </div>
 
-                  <p className="text-black text-xs leading-[20px]">{item.text}</p>
+                  <p className="text-xs leading-[20px] text-black">{item.text}</p>
 
                   <Divider
                     sx={{
@@ -213,16 +213,16 @@ const Reward = () => {
               padding: 0,
             }}
           >
-            <ul className="py-[22px] border-t border-t-[#EBEEF0]">
+            <ul className="border-t border-t-[#EBEEF0] py-[22px]">
               {currentIndex >= 0 ? (
-                <li key={0} className="space-y-2 mb-4">
+                <li key={0} className="mb-4 space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-[6px]">
                       <img
                         onClick={() => openProfile(tweetList?.[currentIndex].author)}
                         src={tweetList?.[currentIndex].author?.avatar}
                         alt=""
-                        className="w-[44px] rounded-full cursor-pointer"
+                        className="w-[44px] cursor-pointer rounded-full"
                       />
                       <div className="flex flex-col space-y-[2px]">
                         <span className="text-sm font-bold" style={{ fontVariant: 'small-caps' }}>
@@ -242,7 +242,7 @@ const Reward = () => {
                     <span className="text-sm font-medium">#{tweetList?.[currentIndex].rank}</span>
                   </div>
 
-                  <p className="text-black text-xs leading-[20px]">
+                  <p className="text-xs leading-[20px] text-black">
                     {tweetList?.[currentIndex].text}
                   </p>
 
