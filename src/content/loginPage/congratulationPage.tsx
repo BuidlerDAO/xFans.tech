@@ -44,23 +44,37 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
     localStorage.setItem('xfans-go-retweets', r);
   };
 
+  // 再获取url中的token 作为第一优先级
+  const urlParams = new URLSearchParams(window.location.search);
+  const xfansCheckRetweet = urlParams.get('xfans_check_retweet');
+
   const checkTasksStatus = async () => {
     try {
       const activateData = (await http.post(`api/user/activate/check-task`)) as ResultData;
       if (activateData.code === 0 && activateData.data.finished === true) {
         _setGoRetwittesVerify('true');
       } else {
-        _setGoRetwittes('false');
+        if (!xfansCheckRetweet) {
+          _setGoRetwittes('false');
+        } else {
+          _setGoRetwittes('true');
+        }
         _setGoRetwittesVerify('false');
       }
     } catch (error) {
-      _setGoRetwittes('false');
+      if (!xfansCheckRetweet) {
+        _setGoRetwittes('false');
+      } else {
+        _setGoRetwittes('true');
+      }
       _setGoRetwittesVerify('false');
     }
   };
 
   useEffect(() => {
-    checkTasksStatus();
+    if (!xfansCheckRetweet) {
+      checkTasksStatus();
+    }
   }, []);
 
   return (
@@ -141,10 +155,8 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
           onClick={() => {
             switch (retweetStatus) {
               case 'GO':
+                _setGoRetwittes('true');
                 openNewTab(XFANS_TWITTES);
-                setGoRetwittes('true');
-                localStorage.setItem('xfans-go-retweets', 'true');
-
                 break;
 
               case 'Verify':
