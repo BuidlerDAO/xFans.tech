@@ -98,13 +98,15 @@ export default function PersistentDrawerRight() {
       if (profileData.data.isActive) {
         setPageState('profile');
         return 'active';
-      } else {
+      } else if (!profileData.data.isRegistered) {
         setPageState('invite');
-        return 'waiting invite';
+        return 'waiting invite code';
+      } else if (!profileData.data.isTaskFinished) {
+        setPageState('congratulation');
+        return 'waiting task';
       }
-    } else {
-      return profileData.message;
     }
+    return profileData.message;
   };
 
   const clickLogin = async () => {
@@ -120,9 +122,8 @@ export default function PersistentDrawerRight() {
     }
   };
 
-  const clickActivate = async (inviteCode: string) => {
-    // https://test-xfans-api.d.buidlerdao.xyz/api/user/activate
-    const activateData = (await http.post(`api/user/activate`, {
+  const clickRegisterInviteCode = async (inviteCode: string) => {
+    const activateData = (await http.post(`api/user/register`, {
       inviteCode: inviteCode,
     })) as ResultData;
     if (activateData.code === 0) {
@@ -180,11 +181,18 @@ export default function PersistentDrawerRight() {
             <ChevronRightIcon onClick={handleDrawerClose} className="m-0 w-[24px] cursor-pointer" />
           </div>
           <Divider orientation="vertical" flexItem />
+          {/* <CongratulationPage
+            start={(startStatus) => {
+              if (startStatus) {
+                setPageState('profile');
+              }
+            }}
+          /> */}
           {pageState === 'login' && (
             <SignInWithXPage showLoading={loginLoading} handleButtonClick={() => clickLogin()} />
           )}
           {pageState === 'invite' && (
-            <InvitePage handleButtonClick={(inviteCode) => clickActivate(inviteCode)} />
+            <InvitePage handleButtonClick={(inviteCode) => clickRegisterInviteCode(inviteCode)} />
           )}
           {pageState === 'congratulation' && (
             <CongratulationPage

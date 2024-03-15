@@ -13,5 +13,7 @@ export interface ProfileData {
   //   rewardEarned: RewardEarned;
   //   rewardUnClaimed: RewardUnClaimed;
   isActive: boolean;
+  isRegistered: boolean;
+  isTaskFinished: boolean;
   updatedAt: number;
 }

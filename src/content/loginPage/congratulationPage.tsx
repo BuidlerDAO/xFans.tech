@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { NextButton, VerifyButton } from '../../components/buttons/loginButton';
 import '../../tailwind.css';
 import { XFANS_TWITTER_HOMEPAGE, XFANS_TWITTES } from '../../constants';
+import http, { ResultData } from '../../service/request';
 
 interface CongratulationPageProps {
   start: (startStatus: boolean) => void; // 定义一个函数类型的属性
@@ -32,6 +33,23 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
     const newTab = window.open(url, '_blank');
     newTab?.focus();
   };
+
+  const checkTasksStatus = async () => {
+    const activateData = (await http.post(`api/user/activate/check-task`)) as ResultData;
+    if (activateData.code === 0 && activateData.data.finished === true) {
+      setGoRetwittesVerify('true');
+      localStorage.setItem('xfans-go-retweets-verify', 'true');
+    } else {
+      setGoRetwittes('false');
+      localStorage.setItem('xfans-go-retweets', 'false');
+      setGoRetwittesVerify('false');
+      localStorage.setItem('xfans-go-retweets-verify', 'false');
+    }
+  };
+
+  useEffect(() => {
+    checkTasksStatus();
+  }, []);
 
   return (
     <div className="min-h-screen w-full items-center justify-center text-center">
@@ -102,7 +120,7 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
         </svg>
 
         <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
-          Like tweets on X
+          Retweet tweets on X
         </p>
         <VerifyButton
           variant="contained"
@@ -118,10 +136,7 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ start }) => {
                 break;
 
               case 'Verify':
-                setTimeout(() => {
-                  setGoRetwittesVerify('true');
-                  localStorage.setItem('xfans-go-retweets-verify', 'true');
-                }, 1000);
+                checkTasksStatus();
                 break;
 
               default:
