@@ -47,14 +47,13 @@ const contractConfig = {
   withCredentials: true,
 };
 
-let showMsg = true;
-
 class RequestHttp {
+  showMsg: boolean;
   service: AxiosInstance;
   public constructor(config: AxiosRequestConfig<ResultData<any>>) {
     // instantiation
     this.service = axios.create(config);
-
+    this.showMsg = true;
     /**
      * @description 请求拦截器
      * 客户端发送请求 -> [请求拦截器] -> 服务器
@@ -107,7 +106,7 @@ class RequestHttp {
       async (error: AxiosError) => {
         const { response } = error;
 
-        if (showMsg) {
+        if (this.showMsg) {
           // 请求超时 && 网络错误单独判断，没有 response
           if (error.message.indexOf('timeout') !== -1) {
             useGlobalStore.setState({
@@ -127,9 +126,9 @@ class RequestHttp {
           if (response) {
             checkStatus(response.status);
           }
-          showMsg = false;
+          this.showMsg = false;
           setTimeout(() => {
-            showMsg = true;
+            this.showMsg = true;
           }, 3000);
         }
         // 服务器结果都没有返回(可能服务器错误可能客户端断网)，断网处理:可以跳转到断网页面
@@ -146,6 +145,10 @@ class RequestHttp {
     return this.service.get(url, { params, ..._object });
   }
   post<T>(url: string, params?: object | string, _object = {}): Promise<T> {
+    return this.service.post(url, params, _object);
+  }
+  post2<T>(url: string, showMsg: boolean, params?: object | string, _object = {}): Promise<T> {
+    this.showMsg = showMsg;
     return this.service.post(url, params, _object);
   }
   put<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {

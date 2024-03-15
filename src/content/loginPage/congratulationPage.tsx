@@ -72,7 +72,7 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
 
   const checkTasksStatus = async () => {
     try {
-      const activateData = (await http.post(`api/user/activate/check-task`)) as ResultData;
+      const activateData = (await http.post2(`api/user/activate/check-task`, false)) as ResultData;
       if (activateData.code === 0 && activateData.data.finished === true) {
         _setGoRetwittesVerify(LOCALSTORAGE_TRUE);
       } else {
