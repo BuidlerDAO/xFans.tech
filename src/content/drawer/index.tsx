@@ -184,13 +184,6 @@ export default function PersistentDrawerRight() {
             <ChevronRightIcon onClick={handleDrawerClose} className="m-0 w-[24px] cursor-pointer" />
           </div>
           <Divider orientation="vertical" flexItem />
-          {/* <CongratulationPage
-            start={(startStatus) => {
-              if (startStatus) {
-                setPageState('profile');
-              }
-            }}
-          /> */}
           {pageState === 'login' && (
             <SignInWithXPage showLoading={loginLoading} handleButtonClick={() => clickLogin()} />
           )}
