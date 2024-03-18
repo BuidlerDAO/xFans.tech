@@ -1,14 +1,29 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 
+type NumberDisplayerProps = {
+  text?: string;
+  className?: string;
+  /**
+   * @default true
+   */
+  isBigNumber?: boolean;
+};
+
 /**
  * 展示 bignumber 组件
  *
  * eg. 0.0{4}5252
  */
-export function NumberDisplayer({ text = '0', className }: { text?: string; className?: string }) {
+export function NumberDisplayer({
+  text = '0',
+  className,
+  isBigNumber = true,
+}: NumberDisplayerProps) {
   // 转成处理过后的字符串形式
-  const number = new BigNumber(text).dividedBy(new BigNumber(Math.pow(10, 18))).toFixed();
+  const number = isBigNumber
+    ? new BigNumber(text).dividedBy(new BigNumber(Math.pow(10, 18))).toFixed()
+    : text;
   // 拆分成2部分
   const [valueBeforeDot, valueAfterDot] = number.split('.');
   let value;

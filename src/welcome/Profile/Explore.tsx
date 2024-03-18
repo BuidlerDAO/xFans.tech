@@ -4,7 +4,6 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
-import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 
 import Loading from '../../components/Loading';
@@ -79,7 +78,7 @@ const Explore = () => {
   }, []);
 
   return (
-    <div className="px-4 flex-1 flex flex-col">
+    <div className="flex flex-1 flex-col px-4">
       <TabContext value={value}>
         <Box>
           <TabList
@@ -143,7 +142,7 @@ const Explore = () => {
         </Box>
         <>
           {loading1 || loading2 || loading3 || loading4 ? (
-            <div className="flex items-center justify-center flex-1">
+            <div className="flex flex-1 items-center justify-center">
               <Loading />
             </div>
           ) : (
@@ -158,34 +157,34 @@ const Explore = () => {
                   {topList?.map((item, i) => (
                     <li
                       key={item.id}
-                      className="pt-[18px] pb-2 flex items-center border-t border-t-[#EBEEF0] cursor-pointer"
+                      className="flex cursor-pointer items-center border-t border-t-[#EBEEF0] pt-[18px] pb-2"
                       onClick={() => openProfile(item)}
                     >
                       <span className="text-[#0F1419]">{i + 1}</span>
                       <img
                         src={item.avatar}
                         alt="avatar"
-                        className="w-[44px] h-[44px] mx-[14px] rounded-full"
+                        className="mx-[14px] h-[44px] w-[44px] rounded-full"
                       />
-                      <div className="flex-1 flex flex-col space-y-1">
+                      <div className="flex flex-1 flex-col space-y-1">
                         <div className="flex items-center space-x-2">
-                          <span className="text-[#0F1419] font-bold text-sm">{item.username}</span>
+                          <span className="text-sm font-bold text-[#0F1419]">{item.username}</span>
                           <span className="text-[#5B7083]">@{item.twitterUsername}</span>
                         </div>
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-[6px]">
-                            <span className="text-[#919099] text-sm">Price</span>
+                            <span className="text-sm text-[#919099]">Price</span>
                             <Icon />
                             <NumberDisplayer
-                              className="text-[#919099] text-[15px]"
+                              className="text-[15px] text-[#919099]"
                               text={item.price}
                             />
                           </div>
 
                           <div className="flex items-center space-x-[6px]">
-                            <span className="text-[#919099] text-sm">Tweet Avg Rank:</span>
-                            <span className="text-[#919099] text-[15px]">#{i + 1}</span>
+                            <span className="text-sm text-[#919099]">Tweet Avg Rank:</span>
+                            <span className="text-[15px] text-[#919099]">#{i + 1}</span>
                           </div>
                         </div>
                       </div>
@@ -203,32 +202,32 @@ const Explore = () => {
                   {newList?.map((item, i) => (
                     <li
                       key={item.id}
-                      className="pt-[18px] pb-2 flex items-center border-t border-t-[#EBEEF0] cursor-pointer"
+                      className="flex cursor-pointer items-center border-t border-t-[#EBEEF0] pt-[18px] pb-2"
                       onClick={() => openProfile(item)}
                     >
                       <span className="text-[#0F1419]">{i + 1}</span>
                       <img
                         src={item.avatar}
                         alt="avatar"
-                        className="w-[44px] h-[44px] mx-[14px] rounded-full"
+                        className="mx-[14px] h-[44px] w-[44px] rounded-full"
                       />
-                      <div className="flex-1 flex flex-col space-y-1">
+                      <div className="flex flex-1 flex-col space-y-1">
                         <div className="flex items-center space-x-2">
-                          <span className="text-[#0F1419] font-bold text-sm">{item.username}</span>
+                          <span className="text-sm font-bold text-[#0F1419]">{item.username}</span>
                           <span className="text-[#5B7083]">@{item.twitterUsername}</span>
                         </div>
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-[6px]">
-                            <span className="text-[#919099] text-sm">Price</span>
+                            <span className="text-sm text-[#919099]">Price</span>
                             <Icon />
                             <NumberDisplayer
-                              className="text-[#919099] text-[15px]"
+                              className="text-[15px] text-[#919099]"
                               text={item.price}
                             />
                           </div>
 
-                          <span className="text-[#919099] text-sm">
+                          <span className="text-sm text-[#919099]">
                             {getTimeDistanceFromDate(item.createdAt)} ago
                           </span>
                         </div>
@@ -247,34 +246,34 @@ const Explore = () => {
                   {recentList?.map((item, i) => (
                     <li
                       key={item.id}
-                      className="pt-[18px] pb-2 flex items-center border-t border-t-[#EBEEF0] cursor-pointer"
+                      className="flex cursor-pointer items-center border-t border-t-[#EBEEF0] pt-[18px] pb-2"
                       onClick={() => openProfile(item)}
                     >
                       <span className="text-[#0F1419]">{i + 1}</span>
                       <img
                         src={item.avatar}
                         alt="avatar"
-                        className="w-[44px] h-[44px] mx-[14px] rounded-full"
+                        className="mx-[14px] h-[44px] w-[44px] rounded-full"
                       />
-                      <div className="flex-1 flex flex-col space-y-1">
+                      <div className="flex flex-1 flex-col space-y-1">
                         <div className="flex items-center space-x-2">
-                          <span className="text-[#0F1419] font-bold text-sm">{item.username}</span>
+                          <span className="text-sm font-bold text-[#0F1419]">{item.username}</span>
                           <span className="text-[#5B7083]">@{item.twitterUsername}</span>
                         </div>
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-[6px]">
-                            <span className="text-[#919099] text-sm">Price</span>
+                            <span className="text-sm text-[#919099]">Price</span>
                             <Icon />
                             <NumberDisplayer
-                              className="text-[#919099] text-[15px]"
+                              className="text-[15px] text-[#919099]"
                               text={item.price}
                             />
                           </div>
 
                           <div className="flex items-center space-x-1">
                             <Up />
-                            <span className="text-[#16B364] text-[15px]">
+                            <span className="text-[15px] text-[#16B364]">
                               {item.increaseRate24h}%
                             </span>
                           </div>
@@ -292,36 +291,36 @@ const Explore = () => {
               >
                 <ul>
                   {shareList?.map((item, i: any) => (
-                    <li key={i} className="pt-[10px] pb-2 space-y-2 border-t border-t-[#EBEEF0]">
-                      <span className="text-[#A1A1AA] text-sm">
+                    <li key={i} className="space-y-2 border-t border-t-[#EBEEF0] pt-[10px] pb-2">
+                      <span className="text-sm text-[#A1A1AA]">
                         {dayjs(item.createdAt).format('YYYY/MM/DD HH:mm')}
                       </span>
                       <div className="flex items-center justify-between pl-5">
-                        <div className="flex space-x-9 items-center">
-                          <div className="flex flex-col items-center w-9">
+                        <div className="flex items-center space-x-9">
+                          <div className="flex w-9 flex-col items-center">
                             <img
                               onClick={() => openProfile(item.traderUser)}
                               src={item.traderUser?.avatar}
                               alt="avatar"
-                              className="w-9 h-9 rounded-full cursor-pointer"
+                              className="h-9 w-9 cursor-pointer rounded-full"
                             />
-                            <span className="text-[#919099] text-sm max-w-[80px] truncate">
+                            <span className="max-w-[80px] truncate text-sm text-[#919099]">
                               @{item.traderUser?.username}
                             </span>
                           </div>
 
-                          <span className="font-bold w-12 text-center text-sm">
+                          <span className="w-12 text-center text-sm font-bold">
                             {item.isBuy ? 'Bought' : 'Sold'}
                           </span>
 
-                          <div className="flex flex-col items-center w-9">
+                          <div className="flex w-9 flex-col items-center">
                             <img
                               onClick={() => openProfile(item.subjectUser)}
                               src={item.subjectUser?.avatar}
                               alt="avatar"
-                              className="w-9 h-9 rounded-full cursor-pointer"
+                              className="h-9 w-9 cursor-pointer rounded-full"
                             />
-                            <span className="text-[#919099] text-sm max-w-[80px] truncate">
+                            <span className="max-w-[80px] truncate text-sm text-[#919099]">
                               @{item.subjectUser?.username}
                             </span>
                           </div>
@@ -336,7 +335,7 @@ const Explore = () => {
                             {item.isBuy ? '+' : '-'}
                             {item.shareAmount} Shares
                           </span>
-                          <div className="space-x-1 flex items-center">
+                          <div className="flex items-center space-x-1">
                             <Icon />
                             <span
                               className={`text-xs ${

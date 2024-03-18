@@ -6,6 +6,7 @@ export async function getAccounts() {
 }
 
 export async function getBalance() {
-  const balance = await http.get<string>('/xfans/api/user/getBalance');
+  // 后端是不是应该返回 string?
+  const balance = await http.get<number>('/xfans/api/user/getBalance');
   return balance;
 }

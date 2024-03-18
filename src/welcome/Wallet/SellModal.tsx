@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Divider } from '@mui/material';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { CircularProgress, Divider } from '@mui/material';
 import BigNumber from 'bignumber.js';
 
 import { BasicButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
-import NumberInput from '../../components/NumberInput';
+import NumberInput, { NumberInputRef } from '../../components/NumberInput';
 import TruncateText from '../../components/TruncateText';
 import useWallet from '../../hooks/useWallet';
 import {
+  getFloorPrice,
   getSellPrice,
   getSellPriceAfterFee,
   getSharesBalance,
@@ -81,14 +82,14 @@ const SellModal = ({ onClose }: SellModalProps) => {
   const { currentInfo } = useProfileModal();
   const wallet = useWallet();
   const [price, setPrice] = useState<string>('0');
-  const [transactionFee, setTransactionFee] = useState<string>('0');
   const [gasFee, setGasFee] = useState<string>('0');
   const [amount, setAmount] = useState<number>(0);
   const [priceAfterFee, setPriceAfterFee] = useState('0');
-  const [total, setTotal] = useState('0');
   const [balance, setBalance] = useState('0');
   const [shareBalance, setShareBalance] = useState('0');
   const [isSelling, setIsSelling] = useState(false);
+  const [floorPrice, setFloorPrice] = useState('0');
+  const numberInputRef = useRef<NumberInputRef>(null);
   useEffect(() => {
     if (amount === 0) {
       setGasFee('0');
@@ -114,24 +115,14 @@ const SellModal = ({ onClose }: SellModalProps) => {
   }, [amount, currentInfo?.walletAddress]);
 
   // Transaction fee
-  useEffect(() => {
+  const transactionFee = useMemo(() => {
     if (price !== '0' && priceAfterFee !== '0') {
       const _transactionFee = new BigNumber(price).minus(new BigNumber(priceAfterFee));
-      setTransactionFee(_transactionFee.toString());
+      return _transactionFee.toString();
     } else {
-      setTransactionFee('0');
+      return '0';
     }
-  }, [price, priceAfterFee, transactionFee]);
-
-  // total
-  useEffect(() => {
-    if (priceAfterFee !== '0' && gasFee !== '0') {
-      const _total = new BigNumber(priceAfterFee).plus(new BigNumber(gasFee));
-      setTotal(_total.toString());
-    } else {
-      setTotal('0');
-    }
-  }, [gasFee, priceAfterFee]);
+  }, [price, priceAfterFee]);
 
   // shareBalance
   useEffect(() => {
@@ -145,20 +136,28 @@ const SellModal = ({ onClose }: SellModalProps) => {
   useEffect(() => {
     if (wallet) {
       getBalance().then((balance) => {
-        setBalance(balance);
+        setBalance(balance.toString());
       });
     }
   }, [wallet]);
 
-  // 刷新数据
+  useEffect(() => {
+    if (currentInfo?.walletAddress != null) {
+      getFloorPrice(currentInfo?.walletAddress).then(setFloorPrice);
+    }
+  }, [currentInfo?.walletAddress]);
+
+  // 刷新数据,可能有顺序问题
   function refresh() {
+    numberInputRef.current?.reset();
     if (currentInfo?.walletAddress) {
       getSharesBalance(currentInfo?.walletAddress).then((balance) => {
         setShareBalance(balance);
       });
       getBalance().then((balance) => {
-        setBalance(balance);
+        setBalance(balance.toString());
       });
+      getFloorPrice(currentInfo?.walletAddress).then(setFloorPrice);
     }
   }
 
@@ -181,24 +180,25 @@ const SellModal = ({ onClose }: SellModalProps) => {
         <h2 className="text-[24px] font-medium text-[#2E2E32]">
           Sell Shares of {currentInfo?.username}
         </h2>
-        <div className="mt-[15px] w-[438px] bg-[#EBEEF0] h-[1px]"></div>
+        <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
 
-        <div className="mt-6 flex items-center w-full justify-between text-black">
+        <div className="mt-6 flex w-full items-center justify-between text-black">
           <div className="flex items-center space-x-[6px]">
-            <span className="text-[#2E2E32] font-bold text-xl">Price:</span>
+            <span className="text-xl font-bold text-[#2E2E32]">Price:</span>
             <Icon />
             <span className="text-xl font-medium">
-              <NumberDisplayer text={price} />
+              <NumberDisplayer text={floorPrice} />
             </span>
           </div>
 
           <div className="flex items-center space-x-[6px]">
-            <span className="text-[#2E2E32] font-bold text-xl">You Own:</span>
+            <span className="text-xl font-bold text-[#2E2E32]">You Own:</span>
             <span className="text-xl font-medium">{+shareBalance / 100}</span>
           </div>
         </div>
 
         <NumberInput
+          ref={numberInputRef}
           className="!mt-6"
           fullWidth
           label="Amount"
@@ -209,7 +209,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
           }}
         />
 
-        <div className="mt-4 text-black flex items-center space-x-1 self-end">
+        <div className="mt-4 flex items-center space-x-1 self-end text-black">
           <span className="text-sm">Minimum unit: </span>
           <span className="text-sm font-medium">0.01 </span>
         </div>
@@ -223,13 +223,13 @@ const SellModal = ({ onClose }: SellModalProps) => {
           }}
         />
 
-        <div className="space-y-4 mt-5 text-black w-full">
+        <div className="mt-5 w-full space-y-4 text-black">
           <div className="flex items-center justify-between">
-            <span className="text-[#919099] text-lg font-medium">From</span>
+            <span className="text-lg font-medium text-[#919099]">From</span>
             <span className="text-lg font-medium">{wallet && <TruncateText text={wallet} />}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-[#919099] text-lg font-medium">To</span>
+            <span className="text-lg font-medium text-[#919099]">To</span>
             <span className="text-lg font-medium">
               {currentInfo?.walletAddress && <TruncateText text={currentInfo?.walletAddress} />}
             </span>
@@ -263,33 +263,35 @@ const SellModal = ({ onClose }: SellModalProps) => {
           }}
         />
 
-        <div className="space-y-4 mt-5 text-black w-full">
+        <div className="mt-5 w-full space-y-4 text-black">
           <div className="flex items-center justify-between">
-            <span className="text-lg font-medium">You Pay(Including Fees)</span>
+            <span className="text-lg font-medium">You Receive</span>
             <div className="flex items-center space-x-1">
               <Icon1 />
               <span className="text-2xl font-bold">
-                <NumberDisplayer text={total} />
+                <NumberDisplayer text={priceAfterFee} />
               </span>
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-[#919099] text-lg font-medium">Wallet Balance</span>
-            <div className="flex items-center justify-center bg-[#F5F5F5] rounded-full space-x-1 px-5 py-1">
+            <span className="text-lg font-medium text-[#919099]">Wallet Balance</span>
+            <div className="flex items-center justify-center space-x-1 rounded-full bg-[#F5F5F5] px-5 py-1">
               <Icon1 />
-              <span className="text-lg font-medium">{balance}</span>
+              <span className="text-lg font-medium">
+                <NumberDisplayer text={balance} isBigNumber={false} />
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="flex justify-between w-full my-[30px]">
+        <div className="my-[30px] flex w-full justify-between">
           <BasicButton
             classes={{
               outlined: '!py-[10px] !px-[38px] !w-[170px] !text-[#0F1419] !border-[#0F1419]',
             }}
             onClick={onClose}
           >
-            <div className="flex space-x-2 items-center justify-center">
+            <div className="flex items-center justify-center space-x-2">
               <Left />
               <span className="text-[15px] font-medium">Go Back</span>
             </div>
@@ -299,7 +301,8 @@ const SellModal = ({ onClose }: SellModalProps) => {
               contained: '!py-[10px] !px-[38px] !w-[170px]',
             }}
             onClick={handleSellClick}
-            disabled={isSelling}
+            disabled={isSelling || amount === 0}
+            startIcon={isSelling && <CircularProgress color="inherit" size={15} />}
           >
             <span className="text-[15px] font-medium">Sell</span>
           </PrimaryButton>
