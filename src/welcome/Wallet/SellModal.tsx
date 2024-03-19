@@ -164,7 +164,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
   }
 
   function handleSellClick() {
-    if (new BigNumber(gasFee).isGreaterThan(new BigNumber(balance))) {
+    if (new BigNumber(gasFee).dividedBy(Math.pow(10, 18)).isGreaterThan(new BigNumber(balance))) {
       toaster.error(ContractError.InsufficientBalance);
       return;
     }

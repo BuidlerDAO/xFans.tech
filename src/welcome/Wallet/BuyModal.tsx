@@ -159,7 +159,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   }
 
   function handleBuyClick() {
-    if (new BigNumber(total).isGreaterThan(new BigNumber(balance))) {
+    if (new BigNumber(total).dividedBy(Math.pow(10, 18)).isGreaterThan(new BigNumber(balance))) {
       toaster.error(ContractError.InsufficientBalance);
       return;
     }
