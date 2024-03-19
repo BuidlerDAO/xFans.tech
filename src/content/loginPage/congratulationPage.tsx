@@ -101,7 +101,7 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
 
   return (
     <div className="min-h-screen w-full items-center justify-center text-center">
-      <p className="mt-[81px] mb-[44px] text-center text-[24px] font-bold leading-[38px] text-[#0F1419]">
+      <p className="mt-[81px] mb-[44px] text-center text-[32px] font-bold leading-[38px] text-[#0F1419]">
         Congratulations!
       </p>
       <p className="mb-[21px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
@@ -120,7 +120,7 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
             fill="#121516"
           />
         </svg>
-        <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
+        <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[16px] font-medium leading-[24px] text-[#000]">
           Follow @xFans on X
         </p>
         <VerifyButton
@@ -154,20 +154,17 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
         <svg
           width="24"
           height="24"
-          viewBox="0 0 24 24"
+          viewBox="0 0 24 18"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M7.5 4C4.46244 4 2 6.46245 2 9.5C2 15 8.5 20 12 21.1631C15.5 20 22 15 22 9.5C22 6.46245 19.5375 4 16.5 4C14.6399 4 12.9954 4.92345 12 6.3369C11.0046 4.92345 9.36015 4 7.5 4Z"
-            stroke="#333333"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            d="M4.49987 0.879883L8.93187 5.01988L7.56787 6.47988L5.49987 4.54988V12.9999C5.49987 14.0999 6.39587 14.9999 7.49987 14.9999H12.9999V16.9999H7.49987C5.29087 16.9999 3.49987 15.2099 3.49987 12.9999V4.54988L1.43187 6.47988L0.0678711 5.01988L4.49987 0.879883ZM16.4999 2.99988H10.9999V0.999883H16.4999C18.7089 0.999883 20.4999 2.78988 20.4999 4.99988V13.4499L22.5679 11.5199L23.9319 12.9799L19.4999 17.1199L15.0679 12.9799L16.4319 11.5199L18.4999 13.4499V4.99988C18.4999 3.89988 17.6039 2.99988 16.4999 2.99988Z"
+            fill="#333333"
           />
         </svg>
 
-        <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
+        <p className="mx-[16px] mb-[21px] w-[207px] text-center text-[16px] font-medium leading-[24px] text-[#000]">
           Retweet tweets on X
         </p>
         <VerifyButton
@@ -196,6 +193,11 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
       <NextButton
         variant="contained"
         disableElevation
+        style={{
+          color: '#fff',
+          backgroundColor: true ? '#9A6CF9' : '#B08DF6',
+          borderColor: true ? '#9A6CF9' : '#B08DF6',
+        }}
         onClick={async () => {
           try {
             const activateData = (await http.post(`api/user/activate`)) as ResultData;
