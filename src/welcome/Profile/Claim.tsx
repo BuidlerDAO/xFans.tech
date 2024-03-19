@@ -148,9 +148,11 @@ const Claim = (props: { price?: string }) => {
           <TableContainer
             sx={{
               marginTop: 0,
+              maxHeight: '500px', // 设置固定高度
+              overflowY: 'auto', // 添加垂直滚动
             }}
           >
-            <Table aria-label="simple table">
+            <Table aria-label="simple table" stickyHeader={true}>
               <TableHead>
                 <TableRow>
                   <TableCell
