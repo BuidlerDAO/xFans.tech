@@ -2,11 +2,10 @@ import React from 'react';
 import { styled, TextField as MTextField } from '@mui/material';
 import { useToggle } from 'ahooks';
 
-import { BasicButton, PrimaryButton } from '../../components/Button';
+import { BasicButton, PrimaryButton, BackButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
-import BackButton from '../../components/buttons/backButton';
 
 const Icon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="17" viewBox="0 0 10 17" fill="none">
@@ -92,7 +91,7 @@ const WithDraw = () => {
             </div>
           </div>
           <div className="my-[30px] flex w-full justify-between">
-            <BackButton onButtonClick={close}/>
+            <BackButton onButtonClick={close} />
             <PrimaryButton
               classes={{
                 contained: '!py-[10px] !px-[38px] !w-[170px]',

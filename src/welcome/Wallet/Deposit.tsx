@@ -2,12 +2,11 @@ import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { useToggle } from 'ahooks';
 
-import { BasicButton, PrimaryButton } from '../../components/Button';
+import { BasicButton, PrimaryButton, BackButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import TruncateText from '../../components/TruncateText';
 import useGlobalStore from '../../store/useGlobalStore';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
-import BackButton from '../../components/buttons/backButton';
 
 const Deposit = () => {
   const [isOpen, { setLeft: close, setRight: open }] = useToggle(false);
@@ -57,7 +56,7 @@ const Deposit = () => {
             </div>
           </div>
           <div className="my-[30px] flex w-full justify-between">
-            <BackButton onButtonClick={close}/>
+            <BackButton onButtonClick={close} />
             <CopyToClipboard
               text={accounts[0] ?? '0x0'}
               onCopy={() => {

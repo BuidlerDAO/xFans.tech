@@ -2,13 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CircularProgress, Divider } from '@mui/material';
 import BigNumber from 'bignumber.js';
 
-import { BasicButton, PrimaryButton } from '../../components/Button';
+import { BackButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import NumberInput, { NumberInputRef } from '../../components/NumberInput';
 import TruncateText from '../../components/TruncateText';
 import useWallet from '../../hooks/useWallet';
-import BackButton from '../../components/buttons/backButton';
 
 import {
   buyShares,
