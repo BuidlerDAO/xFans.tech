@@ -14,7 +14,7 @@ export default function StackModal({ onClose }: ModalProps) {
     <Modal
       open
       onClose={onClose}
-      closeButtonStyle={{
+      closebuttonstyle={{
         marginTop: '5px',
       }}
     >

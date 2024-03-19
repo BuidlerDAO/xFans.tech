@@ -3,7 +3,7 @@ import { Modal as MModal, ModalProps } from '@mui/material';
 
 interface ExtraModalProps extends ModalProps {
   width?: number | string;
-  closeButtonStyle?: React.CSSProperties;
+  closebuttonstyle?: React.CSSProperties;
 }
 
 const Close = () => (
@@ -49,7 +49,7 @@ const Modal = (props: ExtraModalProps) => {
           <div
             onClick={(e) => props.onClose?.(e, 'backdropClick')}
             className="absolute right-[30px] z-50 cursor-pointer"
-            style={props.closeButtonStyle}
+            style={props.closebuttonstyle}
           >
             <Close />
           </div>

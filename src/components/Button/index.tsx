@@ -35,8 +35,10 @@ const PrimaryStyleButton = styled(MButton)(primaryStyle as any);
 const PrimaryStyleLoadingButton = styled(LoadingButton)(primaryStyle as any);
 
 const BasicButton = (props: ButtonProps) => {
+  const { className, ...otherProps } = props; // 提取 className 属性
+
   return (
-    <BasicStyleButton variant="outlined" disableRipple {...props}>
+    <BasicStyleButton variant="outlined" disableRipple {...otherProps} className={className}>
       {props.children}
     </BasicStyleButton>
   );

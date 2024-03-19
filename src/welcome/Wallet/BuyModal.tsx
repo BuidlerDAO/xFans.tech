@@ -8,6 +8,8 @@ import { NumberDisplayer } from '../../components/NumberDisplayer';
 import NumberInput, { NumberInputRef } from '../../components/NumberInput';
 import TruncateText from '../../components/TruncateText';
 import useWallet from '../../hooks/useWallet';
+import BackButton from '../../components/buttons/backButton';
+
 import {
   buyShares,
   getBuyPrice,
@@ -271,17 +273,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
         </div>
 
         <div className="my-[30px] flex w-full justify-between">
-          <BasicButton
-            classes={{
-              outlined: '!py-[10px] !px-[38px] !w-[170px] !text-[#0F1419] !border-[#0F1419]',
-            }}
-            onClick={onClose}
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <Left />
-              <span className="text-[15px] font-medium">Go Back</span>
-            </div>
-          </BasicButton>
+          <BackButton onButtonClick={onClose}/>
           <PrimaryButton
             classes={{
               contained: '!py-[10px] !px-[38px] !w-[170px]',

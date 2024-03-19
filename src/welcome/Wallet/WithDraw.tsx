@@ -6,6 +6,7 @@ import { BasicButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
+import BackButton from '../../components/buttons/backButton';
 
 const Icon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="17" viewBox="0 0 10 17" fill="none">
@@ -86,7 +87,7 @@ const WithDraw = () => {
         onClose={close}
         open={isOpen}
         width={553}
-        closeButtonStyle={{
+        closebuttonstyle={{
           marginTop: '5px',
         }}
       >
@@ -110,17 +111,7 @@ const WithDraw = () => {
             </div>
           </div>
           <div className="my-[30px] flex w-full justify-between">
-            <BasicButton
-              classes={{
-                outlined: '!py-[10px] !px-[38px] !w-[170px] !text-[#0F1419] !border-[#0F1419]',
-              }}
-              onClick={close}
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <Left />
-                <span className="text-[15px] font-medium">Go Back</span>
-              </div>
-            </BasicButton>
+            <BackButton onButtonClick={close}/>
             <PrimaryButton
               classes={{
                 contained: '!py-[10px] !px-[38px] !w-[170px]',
