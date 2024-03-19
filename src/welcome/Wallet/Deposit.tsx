@@ -36,13 +36,20 @@ const Deposit = () => {
       <BasicButton
         classes={{
           outlined:
-            '!py-[10px] !px-[38px] !w-[170px] !text-[#0F1419] !border-[#0F1419] hover:!border-[#9A6CF9]',
+            'text-base font-medium !py-[10px] !px-[38px] !w-[170px] !text-[#0F1419] !border-[#0F1419] hover:!border-[#9A6CF9]',
         }}
         onClick={open}
       >
-        Deposit
+        <span className="text-base font-medium">Deposit</span>
       </BasicButton>
-      <Modal onClose={close} open={isOpen} width={553}>
+      <Modal
+        onClose={close}
+        open={isOpen}
+        width={553}
+        closeButtonStyle={{
+          marginTop: '5px',
+        }}
+      >
         <div className="relative flex flex-col items-center">
           <h2 className="text-[24px] font-medium text-[#2E2E32]">Deposit</h2>
           <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>

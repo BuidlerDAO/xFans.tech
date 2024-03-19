@@ -173,7 +173,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
           </div>
 
           <div
-            className="mt-6 flex cursor-pointer items-center justify-center rounded-full border border-[#0F1419] px-[38px] py-[14px] text-[15px] font-medium leading-[18px] text-[#0F1419] hover:border-[#9A6CF9]"
+            className="mt-6 flex cursor-pointer items-center justify-center rounded-full border border-[#0F1419] px-[38px] py-[14px] text-base font-medium leading-[18px] text-[#0F1419] hover:border-[#9A6CF9]"
             onClick={() => props.logout?.()}
           >
             Log Out

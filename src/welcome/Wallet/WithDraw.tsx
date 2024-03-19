@@ -80,9 +80,16 @@ const WithDraw = () => {
         }}
         onClick={open}
       >
-        Withdraw
+        <span className="text-base font-medium">Withdraw</span>
       </BasicButton>
-      <Modal onClose={close} open={isOpen} width={553}>
+      <Modal
+        onClose={close}
+        open={isOpen}
+        width={553}
+        closeButtonStyle={{
+          marginTop: '5px',
+        }}
+      >
         <div className="relative flex flex-col items-center">
           <h2 className="text-[24px] font-medium text-[#2E2E32]">Withdraw</h2>
           <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
