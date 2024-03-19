@@ -85,6 +85,7 @@ const Explore = () => {
             sx={{
               '& .MuiTabs-indicator': {
                 backgroundColor: '#9A6CF9',
+                borderRadius: '1px',
               },
               '& .Mui-selected': {
                 fontWeight: 700,
@@ -160,7 +161,7 @@ const Explore = () => {
                       className="flex cursor-pointer items-center border-t border-t-[#EBEEF0] pt-[18px] pb-2"
                       onClick={() => openProfile(item)}
                     >
-                      <span className="text-[#0F1419]">{i + 1}</span>
+                      <span className="text-[14px] font-medium text-[#0F1419]">{i + 1}</span>
                       <img
                         src={item.avatar}
                         alt="avatar"
@@ -168,8 +169,12 @@ const Explore = () => {
                       />
                       <div className="flex flex-1 flex-col space-y-1">
                         <div className="flex items-center space-x-2">
-                          <span className="text-sm font-bold text-[#0F1419]">{item.username}</span>
-                          <span className="text-[#5B7083]">@{item.twitterUsername}</span>
+                          <span className="text-[17px] font-bold text-[#0F1419]">
+                            {item.username}
+                          </span>
+                          <span className="mt-[1px] text-[14px] text-[#5B7083]">
+                            @{item.twitterUsername}
+                          </span>
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -177,7 +182,7 @@ const Explore = () => {
                             <span className="text-sm text-[#919099]">Price</span>
                             <Icon />
                             <NumberDisplayer
-                              className="text-[15px] text-[#919099]"
+                              className="text-[15px] font-bold text-[#919099]"
                               text={item.price}
                             />
                           </div>
