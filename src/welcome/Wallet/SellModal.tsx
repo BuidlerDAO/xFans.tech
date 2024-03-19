@@ -6,7 +6,9 @@ import { BasicButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import NumberInput, { NumberInputRef } from '../../components/NumberInput';
+import * as toaster from '../../components/Toaster';
 import TruncateText from '../../components/TruncateText';
+import { ContractError } from '../../constants';
 import useWallet from '../../hooks/useWallet';
 import {
   getFloorPrice,
@@ -162,6 +164,10 @@ const SellModal = ({ onClose }: SellModalProps) => {
   }
 
   function handleSellClick() {
+    if (new BigNumber(gasFee).isGreaterThan(new BigNumber(balance))) {
+      toaster.error(ContractError.InsufficientBalance);
+      return;
+    }
     setIsSelling(true);
     sellShares(currentInfo!.walletAddress!, amount).then(() => {
       setIsSelling(false);

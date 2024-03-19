@@ -4,6 +4,22 @@ import { Snackbar } from '@mui/material';
 
 import useGlobalStore from '../store/useGlobalStore';
 
+export function success(message: string) {
+  useGlobalStore.setState({
+    message,
+    messageType: 'succes',
+    messageOpen: true,
+  });
+}
+
+export function error(message: string) {
+  useGlobalStore.setState({
+    message,
+    messageType: 'error',
+    messageOpen: true,
+  });
+}
+
 export default function Toaster() {
   const { message, messageType, messageOpen, closeMessage } = useGlobalStore();
 

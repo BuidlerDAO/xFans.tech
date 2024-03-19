@@ -15,7 +15,12 @@ const XFANS_GO = 'GO';
 // table
 const PAGE_PER_ROW = 10;
 
+enum ContractError {
+  InsufficientBalance = 'Insufficient Balance',
+}
+
 export {
+  ContractError,
   LOCALSTORAGE_FALSE,
   LOCALSTORAGE_TRUE,
   PAGE_PER_ROW,

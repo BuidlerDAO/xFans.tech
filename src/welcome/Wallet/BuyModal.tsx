@@ -6,7 +6,9 @@ import { BasicButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import NumberInput, { NumberInputRef } from '../../components/NumberInput';
+import * as toaster from '../../components/Toaster';
 import TruncateText from '../../components/TruncateText';
+import { ContractError } from '../../constants';
 import useWallet from '../../hooks/useWallet';
 import {
   buyShares,
@@ -157,6 +159,10 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   }
 
   function handleBuyClick() {
+    if (new BigNumber(total).isGreaterThan(new BigNumber(balance))) {
+      toaster.error(ContractError.InsufficientBalance);
+      return;
+    }
     setIsBuying(true);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     buyShares(currentInfo!.walletAddress!, amount).then(() => {
