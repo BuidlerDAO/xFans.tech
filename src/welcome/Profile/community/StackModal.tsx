@@ -11,7 +11,13 @@ export default function StackModal({ onClose }: ModalProps) {
   const [currentTab, setCurrentTab] = useState<'stack' | 'unstack'>('stack');
   const activedTabNavClassName = 'bg-[#9A6CF9] text-white';
   return (
-    <Modal open onClose={onClose}>
+    <Modal
+      open
+      onClose={onClose}
+      closeButtonStyle={{
+        marginTop: '5px',
+      }}
+    >
       <div className="relative flex flex-col items-center pb-[24px]">
         <h2 className="text-[24px] font-medium text-[#2E2E32]">Unlock Vincent ’s Community</h2>
         <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
@@ -32,7 +38,7 @@ export default function StackModal({ onClose }: ModalProps) {
           <div className="flex h-[46px] w-[296px] items-stretch justify-center overflow-hidden rounded-[38px] border-[1px] border-[#E0E2E7]">
             <div
               className={`flex w-[148px] cursor-pointer items-center justify-center ${
-                currentTab === 'stack' ? activedTabNavClassName : ''
+                currentTab === 'stack' ? activedTabNavClassName : 'text-black'
               }`}
               onClick={() => setCurrentTab('stack')}
             >
@@ -41,7 +47,7 @@ export default function StackModal({ onClose }: ModalProps) {
             <div className="w-[1px] bg-[#E0E2E7]" />
             <div
               className={`flex w-[148px] cursor-pointer items-center justify-center ${
-                currentTab === 'unstack' ? activedTabNavClassName : ''
+                currentTab === 'unstack' ? activedTabNavClassName : 'text-black'
               }`}
               onClick={() => setCurrentTab('unstack')}
             >
