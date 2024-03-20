@@ -107,7 +107,9 @@ const CongratulationPage: FC<CongratulationPageProps> = ({ goProfile }) => {
         Congratulations!
       </p>
       <p className="mb-[21px] text-center text-[14px] font-normal leading-[24px] text-[#5B7083]">
-        Complete the following tasks to activate your account
+        To activate your account, please complete the following tasks. Note that data updates may
+        take a 1-2 minute delay. If verification does not occur immediately, please be patient and
+        wait.
       </p>
       <div className="flex px-[58px]">
         <svg
