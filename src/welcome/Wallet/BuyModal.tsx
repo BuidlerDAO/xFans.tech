@@ -65,6 +65,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   const [price, setPrice] = useState<string>('0');
   const [gasFee, setGasFee] = useState<string>('0');
   const [amount, setAmount] = useState<number>(0);
+  const [loadingFloorPrice, setLoadingFloorPrice] = useState<boolean>(true);
   const [priceAfterFee, setPriceAfterFee] = useState('0');
   const [balance, setBalance] = useState('0');
   const [isBuying, setIsBuying] = useState(false);
@@ -96,7 +97,11 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
 
   useEffect(() => {
     if (currentInfo?.walletAddress != null) {
-      getFloorPrice(currentInfo?.walletAddress).then(setFloorPrice);
+      setLoadingFloorPrice(true);
+      getFloorPrice(currentInfo?.walletAddress).then((price) => {
+        setLoadingFloorPrice(false);
+        setFloorPrice(price);
+      });
     }
   }, [currentInfo?.walletAddress]);
 
@@ -136,7 +141,11 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
       setBalance(balance.toString());
     });
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    getFloorPrice(currentInfo!.walletAddress!).then(setFloorPrice);
+    setLoadingFloorPrice(true);
+    getFloorPrice(currentInfo!.walletAddress!).then((price) => {
+      setLoadingFloorPrice(false);
+      setFloorPrice(price);
+    });
   }
 
   function handleBuyClick() {
@@ -163,7 +172,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
           <span className="text-xl font-bold text-[#2E2E32]">Floor Price:</span>
           <Icon />
           <span className="text-xl font-medium text-black">
-            <NumberDisplayer text={floorPrice} />
+            <NumberDisplayer text={floorPrice} loading={loadingFloorPrice} />
           </span>
         </div>
 

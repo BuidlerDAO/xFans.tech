@@ -1,5 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
+import Loading from './Loading';
+import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
 
 type NumberDisplayerProps = {
   text?: string;
@@ -8,6 +10,10 @@ type NumberDisplayerProps = {
    * @default true
    */
   isBigNumber?: boolean;
+  /**
+   * @default false
+   */
+  loading?: boolean;
 };
 
 /**
@@ -19,6 +25,7 @@ export function NumberDisplayer({
   text = '0',
   className,
   isBigNumber = true,
+  loading = false,
 }: NumberDisplayerProps) {
   // 转成处理过后的字符串形式
   const number = isBigNumber
@@ -52,7 +59,11 @@ export function NumberDisplayer({
 
   return (
     <span className={className}>
-      {valueBeforeDot}.{value}
+      {loading ? (
+        <CircularProgress size={12} sx={{ marginTop: '6px' }} />
+      ) : (
+        valueBeforeDot + '.' + value
+      )}
     </span>
   );
 }
