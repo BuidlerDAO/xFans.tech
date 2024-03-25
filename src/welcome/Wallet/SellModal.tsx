@@ -72,7 +72,6 @@ const SellModal = ({ onClose }: SellModalProps) => {
   const [isSelling, setIsSelling] = useState(false);
   const [floorPrice, setFloorPrice] = useState('0');
   const numberInputRef = useRef<NumberInputRef>(null);
-  const [loadingFloorPrice, setLoadingFloorPrice] = useState<boolean>(true);
   useEffect(() => {
     if (amount === 0) {
       setGasFee('0');
@@ -126,11 +125,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
 
   useEffect(() => {
     if (currentInfo?.walletAddress != null) {
-      setLoadingFloorPrice(true);
-      getFloorPrice(currentInfo?.walletAddress).then((price) => {
-        setLoadingFloorPrice(false);
-        setFloorPrice(price);
-      });
+      getFloorPrice(currentInfo?.walletAddress).then(setFloorPrice);
     }
   }, [currentInfo?.walletAddress]);
 
@@ -145,11 +140,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
       getBalance().then((balance) => {
         setBalance(balance.toString());
       });
-      setLoadingFloorPrice(true);
-      getFloorPrice(currentInfo?.walletAddress).then((price) => {
-        setLoadingFloorPrice(false);
-        setFloorPrice(price);
-      });
+      getFloorPrice(currentInfo?.walletAddress).then(setFloorPrice);
     }
   }
 
@@ -179,7 +170,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
             <span className="text-xl font-bold text-[#2E2E32]">Floor Price:</span>
             <Icon />
             <span className="text-xl font-medium">
-              <NumberDisplayer text={floorPrice} loading={loadingFloorPrice} />
+              <NumberDisplayer text={floorPrice} />
             </span>
           </div>
 
