@@ -27,6 +27,7 @@ export default function useRoom(user: string, room?: string) {
     setSocket(socket);
     return () => {
       setMessages([]);
+      setMembers([]);
       socket.disconnect();
     };
   }, [room, user]);

@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 
 import ArrowBackIcon from '../../../components/icons/ArrowBackIcon';
 import Loading from '../../../components/Loading';
+import Modal from '../../../components/Modal';
 import useAccount from '../../../hooks/useAccount';
 import { getMyInfo, getUserCount } from '../../../service/community';
 import { ReceiveMessage, SendMessage } from '../../../service/room';
@@ -50,31 +51,36 @@ export default function ChatRoomDrawer({ open = false, community, onClose }: Pro
     manual: true,
   });
 
-  const isFirstRenderMessages = useRef(false);
+  const [isFirstRenderCompleted, setIsFirstRenderCompleted] = useState(false);
   useEffect(() => {
     if (ref.current == null) return;
-    const observer = new ResizeObserver(() => {
-      if (ref.current == null) return;
-      if (isFirstRenderMessages.current === false) return;
-      if (ref.current.scrollHeight > ref.current.clientHeight) {
-        ref.current.scrollTop = 999999999;
+    if (isFirstRenderCompleted === false) return;
+    if (open) {
+      const observer = new ResizeObserver(() => {
+        if (ref.current == null) return;
+        if (ref.current.scrollHeight > ref.current.clientHeight) {
+          ref.current.scrollTop = 999999999;
+        }
+      });
+      // 监听子组件，以后图片可能来自网络
+      for (const child of ref.current.children) {
+        observer.observe(child);
       }
-    });
-    observer.observe(ref.current);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+      return () => {
+        observer.disconnect();
+      };
+    }
+  }, [isFirstRenderCompleted, open]);
   // 需要提前更新 isFirstRenderMessages 让 ResizeObserver 触发后能及时拿到新状态
   useLayoutEffect(() => {
     if (open) {
-      if (messages.length > 0 && isFirstRenderMessages.current === false) {
-        isFirstRenderMessages.current = true;
+      if (messages.length > 0 && members.length > 0 && isFirstRenderCompleted === false) {
+        setIsFirstRenderCompleted(true);
       }
     } else {
-      isFirstRenderMessages.current = false;
+      setIsFirstRenderCompleted(false);
     }
-  }, [messages.length, open]);
+  }, [isFirstRenderCompleted, members.length, messages.length, open]);
 
   useEffect(() => {
     if (ref.current == null) return;
@@ -116,10 +122,14 @@ export default function ChatRoomDrawer({ open = false, community, onClose }: Pro
     return messages.map((msg) => {
       const senderUserInfo = members.find((member) => member.address === msg.sender);
       if (senderUserInfo == null) return null;
-      if (msg.sender === wallet) {
-        return <MessageFromMeItem key={msg.id} msg={msg} userInfo={senderUserInfo} />;
-      }
-      return <MessageFromOtherItem key={msg.id} msg={msg} userInfo={senderUserInfo} />;
+      return (
+        <MessageItem
+          key={msg.id}
+          msg={msg}
+          from={msg.sender === wallet ? 'me' : 'other'}
+          userInfo={senderUserInfo}
+        />
+      );
     });
   }
   return (
@@ -193,27 +203,74 @@ function FireIcon() {
 type MessageItemProps = {
   msg: ReceiveMessage;
   userInfo: CommunityUserInfo;
+  from: 'other' | 'me';
 };
 
-function MessageFromMeItem({ msg, userInfo }: MessageItemProps) {
+function MessageItem({ msg, userInfo, from }: MessageItemProps) {
   const { openProfile } = useProfileModal();
+  const [previewImg, setPreviewImg] = useState<string | null>(null);
   const { run: batchUserInfo } = useTweetBatchUserInfo(
     [userInfo.username],
     (result) => {
       const twitterUserInfo = result?.data?.items?.[0];
       if (twitterUserInfo == null) return;
-      openProfile(twitterUserInfo, 1);
+      openProfile(twitterUserInfo, 0);
     },
     () => undefined
   );
   function handleAvatarClick() {
     batchUserInfo();
   }
+
+  if (from === 'other') {
+    return (
+      <div className="mt-[39px] flex w-full items-start">
+        <img
+          onClick={handleAvatarClick}
+          className="mr-[12px] w-[44px] cursor-pointer rounded-full"
+          src={userInfo.avatar}
+          alt="avatar"
+        />
+        <div className="flex flex-col">
+          <div className="flex max-w-[290px] flex-col rounded-[25px] rounded-tl-none bg-[#EEEEEE] p-[16px]">
+            <span className="text-xs text-[#B9B9BA]">{userInfo.username}</span>
+            <div className="text-sm text-[#505050]">
+              {msg.image && (
+                <img
+                  onClick={() => setPreviewImg(msg.image)}
+                  src={msg.image}
+                  alt="pic"
+                  className="mb-[16px]"
+                />
+              )}
+              {msg.message}
+            </div>
+          </div>
+          <span className="mt-[6px] text-xs text-[#A6A6A9]">
+            {dayjs(msg.createTime).format('YYYY/MM/DD HH:mm')}
+          </span>
+        </div>
+        {previewImg && (
+          <Modal open onClose={() => setPreviewImg(null)} closebuttonstyle={{ display: 'none' }}>
+            <img src={previewImg} alt="preview" className="mb-[18px]" />
+          </Modal>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="mt-[39px] flex w-full items-start justify-end">
       <div className="flex flex-col items-end">
         <div className="max-w-[290px] rounded-[25px] rounded-tr-none bg-[#9A6CF9] p-[16px] text-sm text-white">
-          {msg.image && <img src={msg.image} alt="pic" className="mb-[16px]" />}
+          {msg.image && (
+            <img
+              onClick={() => setPreviewImg(msg.image)}
+              src={msg.image}
+              alt="pic"
+              className="mb-[16px]"
+            />
+          )}
           {msg.message}
         </div>
         <span className="mt-[6px] text-xs text-[#A6A6A9]">
@@ -226,43 +283,11 @@ function MessageFromMeItem({ msg, userInfo }: MessageItemProps) {
         src={userInfo.avatar}
         alt="avatar"
       />
-    </div>
-  );
-}
-function MessageFromOtherItem({ msg, userInfo }: MessageItemProps) {
-  const { openProfile } = useProfileModal();
-  const { run: batchUserInfo } = useTweetBatchUserInfo(
-    [userInfo.username],
-    (result) => {
-      const twitterUserInfo = result?.data?.items?.[0];
-      if (twitterUserInfo == null) return;
-      openProfile(twitterUserInfo, 1);
-    },
-    () => undefined
-  );
-  function handleAvatarClick() {
-    batchUserInfo();
-  }
-  return (
-    <div className="mt-[39px] flex w-full items-start">
-      <img
-        onClick={handleAvatarClick}
-        className="mr-[12px] w-[44px] cursor-pointer rounded-full"
-        src={userInfo.avatar}
-        alt="avatar"
-      />
-      <div className="flex flex-col">
-        <div className="flex max-w-[290px] flex-col rounded-[25px] rounded-tl-none bg-[#EEEEEE] p-[16px]">
-          <span className="text-xs text-[#B9B9BA]">{userInfo.username}</span>
-          <div className="text-sm text-[#505050]">
-            {msg.image && <img src={msg.image} alt="pic" className="mb-[16px]" />}
-            {msg.message}
-          </div>
-        </div>
-        <span className="mt-[6px] text-xs text-[#A6A6A9]">
-          {dayjs(msg.createTime).format('YYYY/MM/DD HH:mm')}
-        </span>
-      </div>
+      {previewImg && (
+        <Modal open onClose={() => setPreviewImg(null)} closebuttonstyle={{ display: 'none' }}>
+          <img src={previewImg} alt="preview" className="mb-[18px]" />
+        </Modal>
+      )}
     </div>
   );
 }
