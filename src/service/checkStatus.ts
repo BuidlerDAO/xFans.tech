@@ -13,11 +13,9 @@ export const checkStatus = (status: number) => {
       toaster.error(toaster.ToastMessage.REQUEST_FAILURE_RETRY);
       break;
     case 401:
-      useGlobalStore.setState({ token: '' });
       toaster.error(toaster.ToastMessage.LOGIN_FAILURE_RETRY);
       break;
     case 403:
-      useGlobalStore.setState({ token: '' });
       toaster.error(toaster.ToastMessage.NO_PERMISSION);
       break;
     case 404:
