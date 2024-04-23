@@ -187,7 +187,7 @@ const Claim = (props: { price?: number }) => {
                           borderColor: '#EBEEF0',
                         }}
                       >
-                        {dayjs(row.claimedAt).format('YYYY/MM/DD HH:mm')}
+                        {dayjs(row.createdAt).format('YYYY/MM/DD HH:mm')}
                       </TableCell>
                       <TableCell
                         sx={{
