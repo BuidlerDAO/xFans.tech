@@ -15,6 +15,7 @@ import UpIcon from '../../components/icons/UpIcon';
 import Loading from '../../components/Loading';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import UserName from '../../components/User';
+import { SHARE_UNIT_MODIFIER } from '../../constants';
 import { useNewList, useRecentList, useShareList, useTopList } from '../../service/share';
 import useProfileModal from '../../store/useProfileModal';
 import useShareStore from '../../store/useShareStore';
@@ -353,7 +354,7 @@ const Explore = () => {
                             }`}
                           >
                             {item.isBuy ? '+' : '-'}
-                            {Number(item.shareAmount) / 10} Shares
+                            {Number(item.shareAmount) / SHARE_UNIT_MODIFIER} Shares
                           </span>
                           <div className="flex items-center space-x-1">
                             <ETHIcon />

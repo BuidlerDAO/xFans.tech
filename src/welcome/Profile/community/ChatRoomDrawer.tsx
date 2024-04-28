@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Drawer } from '@mui/material';
+import { CircularProgress, Drawer } from '@mui/material';
 import { useRequest, useThrottleFn } from 'ahooks';
 import imageCompression from 'browser-image-compression';
 import dayjs from 'dayjs';
@@ -43,7 +43,11 @@ export default function ChatRoomDrawer({ open = false, community, onClose }: Pro
   const { wallet } = useAccount();
   const { messages, members, sendMessage, loadMessages } = useRoom(wallet, community?.subject);
   const ref = useRef<HTMLDivElement>(null);
-  const { data: userCount = 0, run: runGetUserCount } = useRequest(
+  const {
+    data: userCount = 0,
+    loading: loadingUserCount,
+    run: runGetUserCount,
+  } = useRequest(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     () => getUserCount(community!.subject),
     {
@@ -102,7 +106,7 @@ export default function ChatRoomDrawer({ open = false, community, onClose }: Pro
       runGetMyInfo();
     }
   }, [open, runGetMyInfo, runGetUserCount]);
-
+  console.log(loadingUserCount);
   const { run: handleScroll } = useThrottleFn(
     (env: React.UIEvent<HTMLDivElement, UIEvent>) => {
       if (ref.current == null) return;
@@ -161,14 +165,19 @@ export default function ChatRoomDrawer({ open = false, community, onClose }: Pro
         <header className="flex h-[64px] items-center justify-between  px-[16px] ">
           <div className="flex items-center font-bold text-[#0F1419]">
             <ArrowBackIcon className="cursor-pointer" onClick={onClose} />
-            <span className="ml-[8px]">{community?.ownerUser.username}&apos;s Community</span>
+            <span className="ml-[8px] max-w-[250px]">
+              {community?.ownerUser.username}&apos;s Community
+            </span>
           </div>
           <div className="flex leading-none">
             <div
               className="flex cursor-pointer items-center rounded-full border border-[#9A6CF9] px-[8px] py-[4px] font-medium"
               onClick={() => setIsMembersDrawerOpen(true)}
             >
-              <MembersIcon /> <span className="ml-[2px] text-[#0F1419]">{userCount}</span>
+              <MembersIcon />
+              <span className="ml-[2px] text-[#0F1419]">
+                {loadingUserCount ? <CircularProgress size={12} /> : userCount}
+              </span>
             </div>
             <div
               className="ml-[18px] flex cursor-pointer items-center rounded-full border border-[#9A6CF9] px-[8px] py-[4px] font-medium"

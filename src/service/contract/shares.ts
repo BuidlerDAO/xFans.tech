@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 
+import { SHARE_UNIT_MODIFIER } from '../../constants';
 import { contractRequestHttp as http } from '../request';
 
 export async function getFloorPrice(address: string) {
@@ -12,7 +13,7 @@ export async function getFloorPrice(address: string) {
 
 export async function getBuyPrice(address: string, amount: number) {
   const data = await http.get<{ gasFee: string; price: string }>('/xfans/api/shares/getBuyPrice', {
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
     address,
   });
   return data;
@@ -20,7 +21,7 @@ export async function getBuyPrice(address: string, amount: number) {
 
 export async function getBuyPriceAfterFee(address: string, amount: number) {
   const data = await http.get<string>('/xfans/api/shares/getBuyPriceAfterFee', {
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
     address,
   });
   return data;
@@ -28,7 +29,7 @@ export async function getBuyPriceAfterFee(address: string, amount: number) {
 
 export async function getSellPrice(address: string, amount: number) {
   const data = await http.get<{ gasFee: string; price: string }>('/xfans/api/shares/getSellPrice', {
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
     address,
   });
   return data;
@@ -36,7 +37,7 @@ export async function getSellPrice(address: string, amount: number) {
 
 export async function getSellPriceAfterFee(address: string, amount: number) {
   const data = await http.get<string>('/xfans/api/shares/getSellPriceAfterFee', {
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
     address,
   });
   return data;
@@ -55,14 +56,14 @@ export async function getSharesBalance(address: string) {
 
 export async function buyShares(address: string, amount: number) {
   await http.post<null>('/xfans/api/shares/buy', {
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
     address,
   });
 }
 
 export async function sellShares(address: string, amount: number) {
   await http.post<null>('/xfans/api/shares/sell', {
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
     address,
   });
 }
@@ -76,14 +77,14 @@ export async function getStakeBalance(address: string) {
 export async function stake(address: string, amount: number) {
   return await http.post<string>('/xfans/api/shares/stake', {
     address,
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
   });
 }
 
 export async function unstake(address: string, amount: number) {
   return await http.post<string>('/xfans/api/shares/unstake', {
     address,
-    amount: BigNumber(amount).times(10).toFixed(),
+    amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
   });
 }
 export async function transfer(address: string, amount: string) {
