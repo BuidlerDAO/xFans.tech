@@ -106,7 +106,7 @@ export default function ChatRoomDrawer({ open = false, community, onClose }: Pro
       runGetMyInfo();
     }
   }, [open, runGetMyInfo, runGetUserCount]);
-  console.log(loadingUserCount);
+
   const { run: handleScroll } = useThrottleFn(
     (env: React.UIEvent<HTMLDivElement, UIEvent>) => {
       if (ref.current == null) return;
