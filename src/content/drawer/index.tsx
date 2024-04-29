@@ -18,7 +18,6 @@ import ProfileModal from '../../welcome/Wallet/Profile';
 import CongratulationPage from '../loginPage/congratulationPage';
 import InvitePage from '../loginPage/invitePage';
 import SignInWithXPage from '../loginPage/signInWithXPage';
-import ChainSelectPage from '../loginPage/chainSelectPage';
 
 import LogoButton from './logoButton';
 
