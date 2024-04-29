@@ -1,3 +1,4 @@
+import { XFANS_NETWORK_ARB, XFANS_NETWORK_BERA } from '../constants';
 interface ChainConfigType {
   vite_socket_base_url: string;
   vite_room_base_url: string;
@@ -29,6 +30,10 @@ const ChainConfig = () => {
 export const getCurrentChain = () => localStorage.getItem('current_chain') ?? 'arb';
 export const setCurrentChain = (chain: string) => {
   localStorage.setItem('current_chain', chain);
+};
+
+export const getCurrentChainName = () => {
+  return getCurrentChain() == 'arb' ? XFANS_NETWORK_ARB : XFANS_NETWORK_BERA;
 };
 
 export default ChainConfig;

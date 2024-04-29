@@ -1,12 +1,12 @@
 import React from 'react';
 import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
-
+import { getCurrentChain } from '../../config/chainConfig';
 interface TSelectProps {
   handleChange: (value: string) => void;
 }
 
 const TSelect: React.FC<TSelectProps> = ({ handleChange }) => {
-  const [selectedValue, setSelectedValue] = React.useState('arb');
+  const [selectedValue, setSelectedValue] = React.useState(getCurrentChain());
 
   const handleInternalChange = (event: SelectChangeEvent<string>) => {
     const value = event.target.value;
