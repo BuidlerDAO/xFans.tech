@@ -10,7 +10,7 @@ import * as toaster from '../components/Toaster';
 import useGlobalStore from '../store/useGlobalStore';
 
 import { checkStatus } from './checkStatus';
-import ChainConfig from '../config/chainConfig';
+import ChainConfig, { getCurrentChain } from '../config/chainConfig';
 
 // 请求响应参数（不包含data）
 export interface Result {
@@ -61,7 +61,7 @@ const chatConfig = {
 class RequestHttp {
   showMsg: boolean;
   service: AxiosInstance;
-  public constructor(config: AxiosRequestConfig<ResultData<any>>) {
+  public constructor(config: AxiosRequestConfig<ResultData<any>>, chainInfo?: boolean) {
     // instantiation
     this.service = axios.create(config);
     this.showMsg = true;
@@ -75,6 +75,10 @@ class RequestHttp {
         const token = useGlobalStore.getState().token;
         if (config.headers && typeof config.headers.set === 'function') {
           config.headers.set('Authorization', 'Bearer ' + token);
+        }
+        if (chainInfo) {
+          const chainInfo = getCurrentChain();
+          config.url = config?.url?.replace(/(\/xfans\/api\/)/, `/xfans/api/${chainInfo}/`);
         }
         return config;
       },
@@ -156,5 +160,5 @@ class RequestHttp {
 }
 
 export default new RequestHttp(config);
-export const contractRequestHttp = new RequestHttp(contractConfig);
+export const contractRequestHttp = new RequestHttp(contractConfig, true);
 export const roomRequestHttp = new RequestHttp(chatConfig);

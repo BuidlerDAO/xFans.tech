@@ -20,16 +20,15 @@ const _chainConfig: Record<string, ChainConfigType> = {
   },
 };
 
-let _currentChain = 'arb';
 console.log('_chainConfig', _chainConfig);
 const ChainConfig = () => {
-  if (_currentChain == '') console.error('chain info undefined!');
-  return _chainConfig[_currentChain];
+  if (getCurrentChain() == '') console.error('chain info undefined!');
+  return _chainConfig[getCurrentChain()];
 };
 
-export const getCurrentChain = () => _currentChain;
+export const getCurrentChain = () => localStorage.getItem('current_chain') ?? 'arb';
 export const setCurrentChain = (chain: string) => {
-  _currentChain = chain;
+  localStorage.setItem('current_chain', chain);
 };
 
 export default ChainConfig;
