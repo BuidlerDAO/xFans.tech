@@ -9,13 +9,14 @@ import { InfoCircle } from '../../components/icons/InfoCircle';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import * as toaster from '../../components/Toaster';
 import TruncateText from '../../components/TruncateText';
+import { getCurrentChainName } from '../../config/chainConfig';
 import useAccount from '../../hooks/useAccount';
 import { useUserInfo } from '../../service/user';
 import { useWalletAccounts } from '../../service/wallet';
 import useGlobalStore from '../../store/useGlobalStore';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
 import useProfileModal from '../../store/useProfileModal';
-import { XFANS_NETWORK } from '../../constants';
+
 import Deposit from './Deposit';
 import InviteFriends from './InviteFriends';
 import WithDraw from './WithDraw';
@@ -76,7 +77,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
               </CopyToClipboard>
 
               <div className="flex items-center space-x-1">
-                <span className="text-[#919099]">{`Network:${XFANS_NETWORK}`}</span>
+                <span className="text-[#919099]">{`Network:${getCurrentChainName()}`}</span>
                 <Network />
               </div>
             </div>

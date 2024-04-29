@@ -3,6 +3,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
 
 import { error } from '../../../components/Toaster';
+import ChainConfig from '../../../config/chainConfig';
 import { getMessagesByRoom, ReceiveMessage, SendMessage } from '../../../service/room';
 import useGlobalStore from '../../../store/useGlobalStore';
 
@@ -16,7 +17,7 @@ export default function useRoom(user: string, room?: string) {
   // 建立 socket
   useEffect(() => {
     if (room == null) return;
-    const socket = io(import.meta.env.VITE_SOCKET_BASE_URL, {
+    const socket = io(ChainConfig().vite_socket_base_url, {
       autoConnect: false,
       extraHeaders: {
         Authorization: 'Bearer ' + useGlobalStore.getState().token,

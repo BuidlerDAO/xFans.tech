@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 
 import * as toaster from '../../components/Toaster';
+import { getCurrentChain, setCurrentChain } from '../../config/chainConfig';
 import { XFANS_CONTENT_WIDTH } from '../../constants';
 import { XFANS_TOKEN } from '../../constants';
 import { ProfileData } from '../../service/login/me';
@@ -241,6 +242,11 @@ export default function PersistentDrawerRight() {
                     isGoFollowVerify: false,
                   });
                   clickLogin();
+                }}
+                handleSwitchSelect={(x: string) => {
+                  setCurrentChain(x);
+                  console.log('select chain', getCurrentChain());
+                  checkProfileData();
                 }}
               />
             )}

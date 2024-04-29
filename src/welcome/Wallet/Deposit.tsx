@@ -5,8 +5,8 @@ import { useToggle } from 'ahooks';
 import { BackButton, BasicButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import * as toaster from '../../components/Toaster';
+import { getCurrentChainName } from '../../config/chainConfig';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
-import { XFANS_NETWORK } from '../../constants';
 const Deposit = () => {
   const [isOpen, { setLeft: close, setRight: open }] = useToggle(false);
   const accounts = useGlobalUserStore((state) => state.accounts);
@@ -38,7 +38,7 @@ const Deposit = () => {
             <div className="flex flex-col space-y-[14px]">
               <span className="text-base font-medium text-[#919099]">Network</span>
               <div className="rounded-[8px] bg-[#F7F9FA] py-[18px] pl-[26px] text-base font-medium text-[#1A1D1F]">
-                {XFANS_NETWORK}
+                {getCurrentChainName()}
               </div>
             </div>
             <div className="flex flex-col space-y-[14px]">
