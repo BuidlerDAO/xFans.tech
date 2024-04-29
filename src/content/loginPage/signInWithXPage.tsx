@@ -7,10 +7,15 @@ import '../../tailwind.css';
 
 interface SignInWithXPageProps {
   handleButtonClick: () => void; // 定义一个函数类型的属性
+  handleSwitchSelect: (x: string) => void;
   showLoading: boolean;
 }
 
-const SignInWithXPage: FC<SignInWithXPageProps> = ({ handleButtonClick, showLoading }) => {
+const SignInWithXPage: FC<SignInWithXPageProps> = ({
+  handleButtonClick,
+  handleSwitchSelect,
+  showLoading,
+}) => {
   return (
     <div className="h-full min-h-screen w-full items-center justify-center text-center">
       <img
@@ -54,13 +59,7 @@ const SignInWithXPage: FC<SignInWithXPageProps> = ({ handleButtonClick, showLoad
           'Login With X'
         )}
       </NextButton>
-      <TSelect
-        handleChange={(x: string) => {
-          console.log('select', x);
-          setCurrentChain(x);
-          console.log('getCurrentChain', getCurrentChain());
-        }}
-      />
+      <TSelect handleChange={handleSwitchSelect} />
     </div>
   );
 };

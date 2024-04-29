@@ -18,10 +18,12 @@ import ProfileModal from '../../welcome/Wallet/Profile';
 import CongratulationPage from '../loginPage/congratulationPage';
 import InvitePage from '../loginPage/invitePage';
 import SignInWithXPage from '../loginPage/signInWithXPage';
+import ChainSelectPage from '../loginPage/chainSelectPage';
 
 import LogoButton from './logoButton';
 
 import '../../tailwind.css';
+import { setCurrentChain, getCurrentChain } from '../../config/chainConfig';
 
 export default function PersistentDrawerRight() {
   const { isShowDrawer, goPage, page, logout } = useGlobalStore((state) => ({ ...state }));
@@ -241,6 +243,11 @@ export default function PersistentDrawerRight() {
                     isGoFollowVerify: false,
                   });
                   clickLogin();
+                }}
+                handleSwitchSelect={(x: string) => {
+                  setCurrentChain(x);
+                  console.log('select chain', getCurrentChain());
+                  checkProfileData();
                 }}
               />
             )}

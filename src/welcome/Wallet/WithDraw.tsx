@@ -12,7 +12,7 @@ import { error, success } from '../../components/Toaster';
 import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { transfer as transferApi } from '../../service/contract/shares';
-import { XFANS_NETWORK } from '../../constants';
+import { getCurrentChainName } from '../../config/chainConfig';
 const TextField = styled(MTextField)({
   width: '493px',
   '& label.Mui-focused': {
@@ -95,7 +95,7 @@ const WithDraw = ({ onClose }: Props) => {
         <h2 className="xfans-font-sf text-[24px] font-medium text-[#2E2E32]">Withdraw</h2>
         <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
         <p className="xfans-font-sf my-6 text-sm text-black text-opacity-50">
-          {`Send your ETH to another wallet address on the ${XFANS_NETWORK}`}
+          {`Send your ETH to another wallet address on the ${getCurrentChainName()}`}
         </p>
 
         <div className="mb-6 w-full space-y-6">
