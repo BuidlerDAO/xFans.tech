@@ -18,8 +18,8 @@ const TSelect = () => {
       onChange={handleInternalChange}
       style={{ minWidth: '120px', height: '60px' }}
     >
-      <MenuItem value="arb">arb</MenuItem>
-      <MenuItem value="bera">bera</MenuItem>
+      <MenuItem value={Chain.Arb}>{Chain.Arb}</MenuItem>
+      <MenuItem value={Chain.Bera}>{Chain.Bera}</MenuItem>
     </Select>
   );
 };
