@@ -22,7 +22,6 @@ import SignInWithXPage from '../loginPage/signInWithXPage';
 import LogoButton from './logoButton';
 
 import '../../tailwind.css';
-import { setCurrentChain, getCurrentChain } from '../../config/chainConfig';
 
 export default function PersistentDrawerRight() {
   const { isShowDrawer, goPage, page, logout } = useGlobalStore((state) => ({ ...state }));
@@ -242,11 +241,6 @@ export default function PersistentDrawerRight() {
                     isGoFollowVerify: false,
                   });
                   clickLogin();
-                }}
-                handleSwitchSelect={(x: string) => {
-                  setCurrentChain(x);
-                  console.log('select chain', getCurrentChain());
-                  checkProfileData();
                 }}
               />
             )}

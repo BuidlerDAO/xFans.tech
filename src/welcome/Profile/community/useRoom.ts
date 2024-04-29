@@ -5,18 +5,19 @@ import { io, Socket } from 'socket.io-client';
 import { error } from '../../../components/Toaster';
 import { getMessagesByRoom, ReceiveMessage, SendMessage } from '../../../service/room';
 import useGlobalStore from '../../../store/useGlobalStore';
-import ChainConfig from '../../../config/chainConfig';
+
 import { ToasterMessageType } from './constants';
 
 export default function useRoom(user: string, room?: string) {
   const [messages, setMessages] = useState<ReceiveMessage[]>([]);
   const [socket, setSocket] = useState<Socket>();
   const [members, setMembers] = useState<CommunityUserInfo[]>([]);
+  const { getChainConfig } = useGlobalStore();
 
   // 建立 socket
   useEffect(() => {
     if (room == null) return;
-    const socket = io(ChainConfig().vite_socket_base_url, {
+    const socket = io(getChainConfig().vite_socket_base_url, {
       autoConnect: false,
       extraHeaders: {
         Authorization: 'Bearer ' + useGlobalStore.getState().token,
@@ -32,7 +33,7 @@ export default function useRoom(user: string, room?: string) {
       setMembers([]);
       socket.disconnect();
     };
-  }, [room, user]);
+  }, [getChainConfig, room, user]);
 
   useEffect(() => {
     function handle() {

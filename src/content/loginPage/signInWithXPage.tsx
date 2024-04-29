@@ -2,20 +2,15 @@ import React, { FC } from 'react';
 
 import { NextButton } from '../../components/buttons/loginButton';
 import TSelect from '../../components/Select/index';
-import { setCurrentChain, getCurrentChain } from '../../config/chainConfig';
+
 import '../../tailwind.css';
 
 interface SignInWithXPageProps {
   handleButtonClick: () => void; // 定义一个函数类型的属性
-  handleSwitchSelect: (x: string) => void;
   showLoading: boolean;
 }
 
-const SignInWithXPage: FC<SignInWithXPageProps> = ({
-  handleButtonClick,
-  handleSwitchSelect,
-  showLoading,
-}) => {
+const SignInWithXPage: FC<SignInWithXPageProps> = ({ handleButtonClick, showLoading }) => {
   return (
     <div className="h-full min-h-screen w-full items-center justify-center text-center">
       <img
@@ -59,7 +54,7 @@ const SignInWithXPage: FC<SignInWithXPageProps> = ({
           'Login With X'
         )}
       </NextButton>
-      <TSelect handleChange={handleSwitchSelect} />
+      <TSelect />
     </div>
   );
 };

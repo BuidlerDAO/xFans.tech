@@ -4,6 +4,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import ChainConfig, { Chain, ChainConfigType } from '../config/chainConfig';
+
 export enum PageType {
   Login = 'login',
   Invite = 'invite',
@@ -25,11 +27,13 @@ export interface GlobalStoreProps {
   goPage(page: PageType): void;
   logout(): void;
   userVote: Record<string, boolean> | null;
+  chain: Chain;
+  getChainConfig(): ChainConfigType;
 }
 
 const useGlobalStore = create<GlobalStoreProps>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       page: PageType.Login,
       token: '',
       isShowPrice: false,
@@ -49,6 +53,10 @@ const useGlobalStore = create<GlobalStoreProps>()(
         });
       },
       userVote: null,
+      chain: Chain.Arb,
+      getChainConfig() {
+        return ChainConfig[get().chain];
+      },
     }),
     {
       name: 'xfans-user-config',
