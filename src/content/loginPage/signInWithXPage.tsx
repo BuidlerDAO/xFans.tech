@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 
 import { NextButton } from '../../components/buttons/loginButton';
-
+import TSelect from '../../components/Select/index';
+import { setCurrentChain, getCurrentChain } from '../../config/chainConfig';
 import '../../tailwind.css';
 
 interface SignInWithXPageProps {
@@ -53,6 +54,13 @@ const SignInWithXPage: FC<SignInWithXPageProps> = ({ handleButtonClick, showLoad
           'Login With X'
         )}
       </NextButton>
+      <TSelect
+        handleChange={(x: string) => {
+          console.log('select', x);
+          setCurrentChain(x);
+          console.log('getCurrentChain', getCurrentChain());
+        }}
+      />
     </div>
   );
 };

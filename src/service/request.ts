@@ -10,6 +10,7 @@ import * as toaster from '../components/Toaster';
 import useGlobalStore from '../store/useGlobalStore';
 
 import { checkStatus } from './checkStatus';
+import ChainConfig from '../config/chainConfig';
 
 // 请求响应参数（不包含data）
 export interface Result {
@@ -32,7 +33,7 @@ export enum ResultEnum {
 
 const config = {
   // 默认地址请求地址，可在 .env.** 文件中修改
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: ChainConfig().vite_base_url,
   // 设置超时时间
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
@@ -41,7 +42,7 @@ const config = {
 
 const contractConfig = {
   // 默认地址请求地址，可在 .env.** 文件中修改
-  baseURL: import.meta.env.VITE_CONTRACT_BASE_URL,
+  baseURL: ChainConfig().vite_contract_base_url,
   // 设置超时时间
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
@@ -50,7 +51,7 @@ const contractConfig = {
 
 const chatConfig = {
   // 默认地址请求地址，可在 .env.** 文件中修改
-  baseURL: import.meta.env.VITE_ROOM_BASE_URL,
+  baseURL: ChainConfig().vite_room_base_url,
   // 设置超时时间
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
