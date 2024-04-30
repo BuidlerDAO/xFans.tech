@@ -1,5 +1,6 @@
 import React from 'react';
-import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+
 import { getCurrentChain } from '../../config/chainConfig';
 interface TSelectProps {
   handleChange: (value: string) => void;

@@ -9,10 +9,10 @@ import ETHIcon from '../../components/icons/ETHIcon';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import { error, success } from '../../components/Toaster';
+import { getCurrentChainName } from '../../config/chainConfig';
 import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { transfer as transferApi } from '../../service/contract/shares';
-import { getCurrentChainName } from '../../config/chainConfig';
 const TextField = styled(MTextField)({
   width: '493px',
   '& label.Mui-focused': {

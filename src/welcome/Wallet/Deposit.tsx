@@ -5,8 +5,8 @@ import { useToggle } from 'ahooks';
 import { BackButton, BasicButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import * as toaster from '../../components/Toaster';
-import useGlobalUserStore from '../../store/useGlobalUserStore';
 import { getCurrentChainName } from '../../config/chainConfig';
+import useGlobalUserStore from '../../store/useGlobalUserStore';
 const Deposit = () => {
   const [isOpen, { setLeft: close, setRight: open }] = useToggle(false);
   const accounts = useGlobalUserStore((state) => state.accounts);

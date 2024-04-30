@@ -9,13 +9,14 @@ import { InfoCircle } from '../../components/icons/InfoCircle';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import * as toaster from '../../components/Toaster';
 import TruncateText from '../../components/TruncateText';
+import { getCurrentChainName } from '../../config/chainConfig';
 import useAccount from '../../hooks/useAccount';
 import { useUserInfo } from '../../service/user';
 import { useWalletAccounts } from '../../service/wallet';
 import useGlobalStore from '../../store/useGlobalStore';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
 import useProfileModal from '../../store/useProfileModal';
-import { getCurrentChainName } from '../../config/chainConfig';
+
 import Deposit from './Deposit';
 import InviteFriends from './InviteFriends';
 import WithDraw from './WithDraw';

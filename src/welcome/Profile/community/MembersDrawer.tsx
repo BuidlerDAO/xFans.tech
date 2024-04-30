@@ -6,8 +6,9 @@ import { Drawer, Switch } from '@mui/material';
 import { useRequest } from 'ahooks';
 
 import ArrowBackIcon from '../../../components/icons/ArrowBackIcon';
+import Loading from '../../../components/Loading';
 import { success } from '../../../components/Toaster';
-import { XFANS_CONTENT_WIDTH } from '../../../constants';
+import { SHARE_UNIT_MODIFIER, XFANS_CONTENT_WIDTH } from '../../../constants';
 import { blockUser, getUserList } from '../../../service/community';
 
 import { ToasterMessageType } from './constants';
@@ -21,7 +22,11 @@ type Props = {
 
 export default function MembersDrawer({ isOwner = false, subject, open = false, onClose }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const { data: userList = [], run: runGetUserList } = useRequest(() => getUserList(subject!), {
+  const {
+    data: userList = [],
+    loading,
+    run: runGetUserList,
+  } = useRequest(() => getUserList(subject!), {
     manual: true,
   });
 
@@ -30,6 +35,30 @@ export default function MembersDrawer({ isOwner = false, subject, open = false, 
       runGetUserList();
     }
   }, [open, runGetUserList]);
+
+  function renderContent() {
+    if (loading) {
+      return (
+        <div className="flex flex-1 items-center justify-center">
+          <Loading />
+        </div>
+      );
+    }
+    return (
+      <div className="xfans-scrollbar flex-1 overflow-y-auto px-[16px]">
+        {userList.map((item) => (
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          <MemberItem
+            key={item.address}
+            disabled={!isOwner || item.address === subject}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            subject={subject!}
+            user={item}
+          />
+        ))}
+      </div>
+    );
+  }
   return (
     <Drawer
       sx={{
@@ -52,18 +81,7 @@ export default function MembersDrawer({ isOwner = false, subject, open = false, 
             <span className="ml-[8px]">Members</span>
           </div>
         </header>
-        <div className="xfans-scrollbar flex-1 overflow-y-auto px-[16px]">
-          {userList.map((item) => (
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            <MemberItem
-              key={item.address}
-              disabled={!isOwner || item.address === subject}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              subject={subject!}
-              user={item}
-            />
-          ))}
-        </div>
+        {renderContent()}
       </div>
     </Drawer>
   );
@@ -96,7 +114,7 @@ function MemberItem({
         <div className="font-bold text-[#0F1419]">{user.username}</div>
         <div className="text-[#919099]">
           <span className="text-sm">Holding</span>
-          <span className="font- ml-[6px] text-base">{+user.shares / 10}</span>
+          <span className="font- ml-[6px] text-base">{+user.shares / SHARE_UNIT_MODIFIER}</span>
         </div>
       </div>
       <div className="">

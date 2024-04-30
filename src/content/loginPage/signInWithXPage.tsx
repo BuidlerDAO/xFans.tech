@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 
 import { NextButton } from '../../components/buttons/loginButton';
 import TSelect from '../../components/Select/index';
-import { setCurrentChain, getCurrentChain } from '../../config/chainConfig';
+import { getCurrentChain, setCurrentChain } from '../../config/chainConfig';
+
 import '../../tailwind.css';
 
 interface SignInWithXPageProps {

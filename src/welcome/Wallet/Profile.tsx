@@ -14,7 +14,7 @@ import TableEmptyWidget from '../../components/Empty';
 import { CenterLoading } from '../../components/Loading';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
-import { ROWS_PER_PAGE } from '../../constants';
+import { ROWS_PER_PAGE, SHARE_UNIT_MODIFIER } from '../../constants';
 import { useHolderList } from '../../service/share';
 import { useTweetList } from '../../service/tweet';
 import useProfileModal from '../../store/useProfileModal';
@@ -49,7 +49,7 @@ const ProfileModal = () => {
         <span className="text-xs text-[#0F1419]">{item.holderUser?.username}</span>
       </div>
     ),
-    shares: Number(item.shares) / 10,
+    shares: Number(item.shares) / SHARE_UNIT_MODIFIER,
     value: (
       <div className="flex items-center space-x-1">
         <Icon />
@@ -70,7 +70,7 @@ const ProfileModal = () => {
         <span className="text-xs text-[#0F1419]">{item.subjectUser?.username}</span>
       </div>
     ),
-    shares: Number(item.shares) / 10,
+    shares: Number(item.shares) / SHARE_UNIT_MODIFIER,
     value: (
       <div className="flex items-center space-x-1">
         <Icon />

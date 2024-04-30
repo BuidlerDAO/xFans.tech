@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 
 import * as toaster from '../../components/Toaster';
+import { getCurrentChain, setCurrentChain } from '../../config/chainConfig';
 import { XFANS_CONTENT_WIDTH } from '../../constants';
 import { XFANS_TOKEN } from '../../constants';
 import { ProfileData } from '../../service/login/me';
@@ -22,7 +23,6 @@ import SignInWithXPage from '../loginPage/signInWithXPage';
 import LogoButton from './logoButton';
 
 import '../../tailwind.css';
-import { setCurrentChain, getCurrentChain } from '../../config/chainConfig';
 
 export default function PersistentDrawerRight() {
   const { isShowDrawer, goPage, page, logout } = useGlobalStore((state) => ({ ...state }));

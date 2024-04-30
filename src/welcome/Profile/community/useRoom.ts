@@ -3,9 +3,10 @@ import { nanoid } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
 
 import { error } from '../../../components/Toaster';
+import ChainConfig from '../../../config/chainConfig';
 import { getMessagesByRoom, ReceiveMessage, SendMessage } from '../../../service/room';
 import useGlobalStore from '../../../store/useGlobalStore';
-import ChainConfig from '../../../config/chainConfig';
+
 import { ToasterMessageType } from './constants';
 
 export default function useRoom(user: string, room?: string) {
