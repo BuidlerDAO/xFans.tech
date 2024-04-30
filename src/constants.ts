@@ -18,3 +18,6 @@ export enum ContractError {
 
 export const XFANS_CONTENT_WIDTH = 433;
 export const XFANS_MIN_WIDTH = 458;
+
+// shares 精度单位，输出除以10，输入乘以10
+export const SHARE_UNIT_MODIFIER = 10;

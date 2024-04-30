@@ -6,6 +6,7 @@ import { BasicButton, PrimaryButton } from '../../../components/Button';
 import Modal from '../../../components/Modal';
 import NumberInput from '../../../components/NumberInput';
 import { success } from '../../../components/Toaster';
+import { SHARE_UNIT_MODIFIER } from '../../../constants';
 import { getBySubject } from '../../../service/community';
 import {
   getSharesBalance,
@@ -22,8 +23,8 @@ type ModalProps = {
 export default function StackModal({ onClose, subject }: ModalProps) {
   const [currentTab, setCurrentTab] = useState<'stack' | 'unstack'>('stack');
   const activedTabNavClassName = 'bg-[#9A6CF9] text-white';
-  const [sharesBalance, setSharesBalance] = useState('0');
-  const [stakeBalance, setStakeBalance] = useState('0');
+  const [sharesBalance, setSharesBalance] = useState<string | null>(null);
+  const [stakeBalance, setStakeBalance] = useState<string | null>(null);
   const { data: community } = useRequest(() => getBySubject(subject));
 
   useEffect(() => {
@@ -45,7 +46,13 @@ export default function StackModal({ onClose, subject }: ModalProps) {
         <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
 
         <p className="relative mt-[27px] pl-[25px] text-center text-sm text-[#919099]">
-          <Icon /> Stake at least 5 shares to unlock the
+          <Icon /> Stake at least{' '}
+          {community?.requiredStakedShares == null ? (
+            <CircularProgress size={8} />
+          ) : (
+            +community.requiredStakedShares / SHARE_UNIT_MODIFIER
+          )}{' '}
+          shares to unlock the
           <br /> creator&apos;s community
         </p>
 
@@ -54,9 +61,21 @@ export default function StackModal({ onClose, subject }: ModalProps) {
           stakeRequired={+(community?.requiredStakedShares ?? 0)}
         />
         <p className="mt-[14px] w-full text-right text-sm text-[#919099]">
-          Community total staked: {+(community?.stakedShares ?? 0) / 10}
+          Community total staked:
+          {community?.stakedShares == null ? (
+            <CircularProgress size={8} />
+          ) : (
+            +(community.stakedShares ?? 0) / SHARE_UNIT_MODIFIER
+          )}
         </p>
-        <p className="w-full text-right text-sm text-[#919099]">you staked: {+stakeBalance / 10}</p>
+        <p className="w-full text-right text-sm text-[#919099]">
+          you staked:
+          {stakeBalance == null ? (
+            <CircularProgress size={8} />
+          ) : (
+            +stakeBalance / SHARE_UNIT_MODIFIER
+          )}
+        </p>
 
         {/* tab bar */}
         <div className="flex w-full justify-start">
@@ -93,7 +112,7 @@ export default function StackModal({ onClose, subject }: ModalProps) {
 
 type StackPanelProps = {
   address: string;
-  sharesBalance: string;
+  sharesBalance: string | null;
   // false cancel true confirm
   onClose(fromConfirm?: boolean): void;
 };
@@ -114,8 +133,22 @@ function StackPanel({ sharesBalance, onClose, address }: StackPanelProps) {
     <>
       <div className="mt-[25px] w-full">
         <p className="flex justify-between text-base font-medium text-[#0F1419]">
-          <span>Shares you hold: {+sharesBalance / 10}</span>
-          <span>Max stake: {+sharesBalance / 10}</span>
+          <span>
+            Shares you hold:
+            {sharesBalance == null ? (
+              <CircularProgress size={8} />
+            ) : (
+              +sharesBalance / SHARE_UNIT_MODIFIER
+            )}
+          </span>
+          <span>
+            Max stake:
+            {sharesBalance == null ? (
+              <CircularProgress size={8} />
+            ) : (
+              +sharesBalance / SHARE_UNIT_MODIFIER
+            )}
+          </span>
         </p>
         <NumberInput
           className="!mt-[16px]"
@@ -123,7 +156,7 @@ function StackPanel({ sharesBalance, onClose, address }: StackPanelProps) {
           fullWidth
           label="Amount"
           min={0}
-          max={+sharesBalance / 10}
+          max={sharesBalance == null ? 0 : +sharesBalance / SHARE_UNIT_MODIFIER}
           onChange={(v) => setAmount(v ?? 0)}
         />
       </div>
@@ -155,7 +188,7 @@ function StackPanel({ sharesBalance, onClose, address }: StackPanelProps) {
 
 type UnstackPanelProps = {
   address: string;
-  stakeBalance: string;
+  stakeBalance: string | null;
   // false cancel true confirm
   onClose(fromConfirm?: boolean): void;
 };
@@ -176,8 +209,22 @@ function UnstackPanel({ stakeBalance, address, onClose }: UnstackPanelProps) {
     <>
       <div className="mt-[25px] w-full">
         <p className="flex justify-between text-base font-medium text-[#0F1419]">
-          <span>Shares you staked: {+stakeBalance / 10}</span>
-          <span>Max unstake: {+stakeBalance / 10}</span>
+          <span>
+            Shares you staked:
+            {stakeBalance == null ? (
+              <CircularProgress size={8} />
+            ) : (
+              +stakeBalance / SHARE_UNIT_MODIFIER
+            )}
+          </span>
+          <span>
+            Max unstake:
+            {stakeBalance == null ? (
+              <CircularProgress size={8} />
+            ) : (
+              +stakeBalance / SHARE_UNIT_MODIFIER
+            )}
+          </span>
         </p>
         <NumberInput
           className="!mt-[16px]"
@@ -185,7 +232,7 @@ function UnstackPanel({ stakeBalance, address, onClose }: UnstackPanelProps) {
           fullWidth
           label="Amount"
           min={0}
-          max={+stakeBalance / 10}
+          max={stakeBalance == null ? 0 : +stakeBalance / SHARE_UNIT_MODIFIER}
           onChange={(v) => setAmount(v ?? 0)}
         />
       </div>
@@ -225,10 +272,15 @@ function ProgressBar({ staked, stakeRequired }: { staked: number; stakeRequired:
         style={{
           width: `calc(${Math.min(percentage, 100)}%)`,
           background: 'linear-gradient(92.17deg, #BD95FF 1.19%, #9A6CF9 98.18%)',
+          transition: 'width 0.3s ease-in-out',
         }}
       />
       <div className="absolute right-0 top-[1px] flex h-[18px] items-center justify-center rounded-full border border-[#9A6CF9] bg-white px-[5px] text-xs text-[#2E2E32]">
-        {stakeRequired / 10}
+        {stakeRequired === 0 ? (
+          <CircularProgress color="inherit" size={6} />
+        ) : (
+          stakeRequired / SHARE_UNIT_MODIFIER
+        )}
       </div>
     </div>
   );

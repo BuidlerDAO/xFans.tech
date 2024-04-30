@@ -7,7 +7,7 @@ import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import NumberInput, { NumberInputRef } from '../../components/NumberInput';
 import * as toaster from '../../components/Toaster';
-import { ContractError } from '../../constants';
+import { ContractError, SHARE_UNIT_MODIFIER } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { useETHPrice } from '../../hooks/useETHPrice';
 import {
@@ -215,7 +215,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
               {loadingSharesBalance ? (
                 <CircularProgress size={12} sx={{ marginTop: '6px' }} />
               ) : (
-                +shareBalance / 10
+                +shareBalance / SHARE_UNIT_MODIFIER
               )}
             </span>
           </div>
@@ -226,7 +226,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
           className="!mt-6"
           fullWidth
           label="Amount"
-          max={+shareBalance / 10}
+          max={+shareBalance / SHARE_UNIT_MODIFIER}
           disabled={isSelling}
           onChange={(v) => {
             setAmount(v ?? 0);

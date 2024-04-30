@@ -4,6 +4,7 @@ import { Tooltip } from '@mui/material';
 import { ListEmpty } from '../../components/Empty';
 import { InfoCircle } from '../../components/icons/InfoCircle';
 import Loading from '../../components/Loading';
+import { SHARE_UNIT_MODIFIER } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { getList } from '../../service/community';
 import { getUnreadMessageCount, ReceiveMessage } from '../../service/room';
@@ -136,10 +137,10 @@ const Community = () => {
                   </span>
                   <div className="flex items-start justify-between">
                     <span className="text-xs text-[#5B7083]">
-                      Unlock Requires Staking: {+item.requiredStakedShares / 10}
+                      Unlock Requires Staking: {+item.requiredStakedShares / SHARE_UNIT_MODIFIER}
                     </span>
                     <span className="text-xs text-[#5B7083]">
-                      Staked: {+item.stakedShares / 10}
+                      Staked: {+item.stakedShares / SHARE_UNIT_MODIFIER}
                     </span>
                   </div>
                 </div>
