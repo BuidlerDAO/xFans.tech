@@ -7,7 +7,7 @@ import axios, {
 } from 'axios';
 
 import * as toaster from '../components/Toaster';
-import ChainConfig, { getCurrentChain } from '../config/chainConfig';
+import chainConfig from '../config/chainConfig';
 import useGlobalStore from '../store/useGlobalStore';
 
 import { checkStatus } from './checkStatus';
@@ -33,7 +33,7 @@ export enum ResultEnum {
 
 const config = {
   // 默认地址请求地址，可在 .env.** 文件中修改
-  baseURL: ChainConfig().vite_base_url,
+  baseURL: chainConfig[useGlobalStore.getState().chain].vite_base_url,
   // 设置超时时间
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
@@ -42,7 +42,7 @@ const config = {
 
 const contractConfig = {
   // 默认地址请求地址，可在 .env.** 文件中修改
-  baseURL: ChainConfig().vite_contract_base_url,
+  baseURL: chainConfig[useGlobalStore.getState().chain].vite_contract_base_url,
   // 设置超时时间
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
@@ -51,7 +51,7 @@ const contractConfig = {
 
 const chatConfig = {
   // 默认地址请求地址，可在 .env.** 文件中修改
-  baseURL: ChainConfig().vite_room_base_url,
+  baseURL: chainConfig[useGlobalStore.getState().chain].vite_room_base_url,
   // 设置超时时间
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
@@ -77,8 +77,8 @@ class RequestHttp {
           config.headers.set('Authorization', 'Bearer ' + token);
         }
         if (chainInfo) {
-          const chainInfo = getCurrentChain();
-          config.url = config?.url?.replace(/(\/xfans\/api\/)/, `/xfans/api/${chainInfo}/`);
+          const currentChain = useGlobalStore.getState().chain;
+          config.url = config?.url?.replace(/(\/xfans\/api\/)/, `/xfans/api/${currentChain}/`);
         }
         return config;
       },

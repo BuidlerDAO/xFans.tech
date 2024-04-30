@@ -1,28 +1,25 @@
 import React from 'react';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-import { getCurrentChain } from '../../config/chainConfig';
-interface TSelectProps {
-  handleChange: (value: string) => void;
-}
+import { Chain } from '../../config/chainConfig';
+import useGlobalStore from '../../store/useGlobalStore';
 
-const TSelect: React.FC<TSelectProps> = ({ handleChange }) => {
-  const [selectedValue, setSelectedValue] = React.useState(getCurrentChain());
+const TSelect = () => {
+  const { chain } = useGlobalStore();
 
-  const handleInternalChange = (event: SelectChangeEvent<string>) => {
-    const value = event.target.value;
-    setSelectedValue(value);
-    handleChange(value); // 调用传入的 handleChange 函数
+  const handleInternalChange = (event: SelectChangeEvent<Chain>) => {
+    const value = event.target.value as Chain;
+    useGlobalStore.setState({ chain: value });
   };
 
   return (
-    <Select
-      value={selectedValue}
+    <Select<Chain>
+      value={chain}
       onChange={handleInternalChange}
       style={{ minWidth: '120px', height: '60px' }}
     >
-      <MenuItem value="arb">arb</MenuItem>
-      <MenuItem value="bera">bera</MenuItem>
+      <MenuItem value={Chain.Arb}>{Chain.Arb}</MenuItem>
+      <MenuItem value={Chain.Bera}>{Chain.Bera}</MenuItem>
     </Select>
   );
 };

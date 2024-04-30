@@ -9,7 +9,7 @@ import { InfoCircle } from '../../components/icons/InfoCircle';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import * as toaster from '../../components/Toaster';
 import TruncateText from '../../components/TruncateText';
-import { getCurrentChainName } from '../../config/chainConfig';
+import { chainNameMap } from '../../config/chainConfig';
 import useAccount from '../../hooks/useAccount';
 import { useUserInfo } from '../../service/user';
 import { useWalletAccounts } from '../../service/wallet';
@@ -24,7 +24,7 @@ import WithDraw from './WithDraw';
 const Wallet = (props: { back?: () => void; logout?: () => void }) => {
   const { openProfile } = useProfileModal((state) => ({ ...state }));
 
-  const { isShowPrice } = useGlobalStore((state) => ({ ...state }));
+  const { isShowPrice, chain } = useGlobalStore((state) => ({ ...state }));
   const { userInfo } = useAccount();
   const { run: getUserInfo } = useUserInfo();
   const [isWithDrawOpen, setIsWithDrawOpen] = useState(false);
@@ -77,7 +77,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
               </CopyToClipboard>
 
               <div className="flex items-center space-x-1">
-                <span className="text-[#919099]">{`Network:${getCurrentChainName()}`}</span>
+                <span className="text-[#919099]">{`Network:${chainNameMap[chain]}`}</span>
                 <Network />
               </div>
             </div>

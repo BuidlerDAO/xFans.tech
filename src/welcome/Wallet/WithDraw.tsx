@@ -9,10 +9,12 @@ import ETHIcon from '../../components/icons/ETHIcon';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import { error, success } from '../../components/Toaster';
-import { getCurrentChainName } from '../../config/chainConfig';
+import { chainNameMap } from '../../config/chainConfig';
 import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { transfer as transferApi } from '../../service/contract/shares';
+import useGlobalStore from '../../store/useGlobalStore';
+
 const TextField = styled(MTextField)({
   width: '493px',
   '& label.Mui-focused': {
@@ -44,6 +46,7 @@ const WithDraw = ({ onClose }: Props) => {
   const { balance, refresh } = useAccount();
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
+  const { chain } = useGlobalStore();
   const { run: transfer, loading } = useRequest(() => transferApi(address, amount), {
     manual: true,
     onSuccess() {
@@ -95,7 +98,7 @@ const WithDraw = ({ onClose }: Props) => {
         <h2 className="xfans-font-sf text-[24px] font-medium text-[#2E2E32]">Withdraw</h2>
         <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
         <p className="xfans-font-sf my-6 text-sm text-black text-opacity-50">
-          {`Send your ETH to another wallet address on the ${getCurrentChainName()}`}
+          {`Send your ETH to another wallet address on the ${chainNameMap[chain]}`}
         </p>
 
         <div className="mb-6 w-full space-y-6">

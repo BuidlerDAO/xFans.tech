@@ -3,7 +3,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
 
 import { error } from '../../../components/Toaster';
-import ChainConfig from '../../../config/chainConfig';
+import chainConfig from '../../../config/chainConfig';
 import { getMessagesByRoom, ReceiveMessage, SendMessage } from '../../../service/room';
 import useGlobalStore from '../../../store/useGlobalStore';
 
@@ -13,11 +13,12 @@ export default function useRoom(user: string, room?: string) {
   const [messages, setMessages] = useState<ReceiveMessage[]>([]);
   const [socket, setSocket] = useState<Socket>();
   const [members, setMembers] = useState<CommunityUserInfo[]>([]);
+  const { chain } = useGlobalStore();
 
   // 建立 socket
   useEffect(() => {
     if (room == null) return;
-    const socket = io(ChainConfig().vite_socket_base_url, {
+    const socket = io(chainConfig[chain].vite_socket_base_url, {
       autoConnect: false,
       extraHeaders: {
         Authorization: 'Bearer ' + useGlobalStore.getState().token,
@@ -33,7 +34,7 @@ export default function useRoom(user: string, room?: string) {
       setMembers([]);
       socket.disconnect();
     };
-  }, [room, user]);
+  }, [chain, room, user]);
 
   useEffect(() => {
     function handle() {
