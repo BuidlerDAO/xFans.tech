@@ -115,9 +115,6 @@ class RequestHttp {
           if (error.message.indexOf('timeout') !== -1) {
             toaster.error(toaster.ToastMessage.REQUEST_TIMEOUT_RETRY);
           }
-          if (error.message.indexOf('Network Error') !== -1) {
-            toaster.error(toaster.ToastMessage.NETWORK_ERROR_RETRY);
-          }
           // 根据服务器响应的错误状态码，做不同的处理
           if (response) {
             checkStatus(response.status);
