@@ -93,3 +93,11 @@ export async function transfer(address: string, amount: string) {
     address,
   });
 }
+
+export async function getSupply(address: string) {
+  const supply = await http.get<string>('/xfans/api/shares/supply', {
+    address,
+  });
+
+  return +supply / SHARE_UNIT_MODIFIER;
+}
