@@ -93,3 +93,9 @@ export async function transfer(address: string, amount: string) {
     address,
   });
 }
+
+export async function getSupply(address: string) {
+  return await http.get<string>('/xfans/api/shares/supply', {
+    address,
+  });
+}

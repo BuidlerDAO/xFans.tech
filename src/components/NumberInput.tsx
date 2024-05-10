@@ -3,6 +3,7 @@ import { TextField } from '@mui/material';
 import { debounce } from 'lodash';
 
 const pattern = /^(0|[1-9][0-9]*)(\.[0-9]{0,1})?$/;
+const integerPattern = /^[1-9][0-9]*$/;
 
 export type NumberInputRef = {
   reset(): void;
@@ -15,6 +16,7 @@ type NumberInputProps = {
   label?: string;
   max?: number;
   min?: number;
+  integerOnly?: boolean;
   size?: 'small' | 'medium';
   onChange(value: number | null): void;
 };
@@ -23,6 +25,7 @@ export default forwardRef<NumberInputRef, NumberInputProps>(function NumberInput
     max = Number.MAX_SAFE_INTEGER,
     min = Number.MIN_SAFE_INTEGER,
     onChange,
+    integerOnly = false,
     ...restProps
   }: NumberInputProps,
   ref
@@ -38,7 +41,7 @@ export default forwardRef<NumberInputRef, NumberInputProps>(function NumberInput
       }
       return;
     }
-    if (pattern.test(nextValue)) {
+    if (integerOnly ? integerPattern.test(nextValue) : pattern.test(nextValue)) {
       const n = +nextValue;
       if (n <= max && n >= min) {
         setValue(nextValue);

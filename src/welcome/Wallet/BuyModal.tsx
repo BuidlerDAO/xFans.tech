@@ -15,6 +15,7 @@ import {
   getBuyPrice,
   getBuyPriceAfterFee,
   getFloorPrice,
+  getSupply,
 } from '../../service/contract/shares';
 import { getBalance } from '../../service/contract/user';
 import useProfileModal from '../../store/useProfileModal';
@@ -70,14 +71,26 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   const [balance, setBalance] = useState('0');
   const [isBuying, setIsBuying] = useState(false);
   const [floorPrice, setFloorPrice] = useState('0');
+  const [supply, setSupply] = useState(0);
   const numberInputRef = useRef<NumberInputRef>(null);
 
   const [loadingFloorPrice, setLoadingFloorPrice] = useState<boolean>(true);
   const [loadingPrice, setLoadingPrice] = useState<boolean>(false);
   const [loadingPirceAfterFee, setLoadingPirceAfterFee] = useState<boolean>(false);
   const [loadingBalance, setLoadingBalance] = useState<boolean>(true);
+  const [loadingSupply, setLoadingSupply] = useState<boolean>(true);
 
   const ethPrice = useETHPrice();
+
+  useEffect(() => {
+    setLoadingSupply(true);
+    if (currentInfo?.walletAddress != null) {
+      getSupply(currentInfo?.walletAddress).then((data) => {
+        setLoadingSupply(false);
+        setSupply(+data);
+      });
+    }
+  }, [currentInfo]);
 
   useEffect(() => {
     if (amount === 0) {
@@ -181,6 +194,11 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
       });
   }
 
+  const unit = useMemo(() => {
+    if (supply <= 5) return 1;
+    return 0.1;
+  }, [supply]);
+
   return (
     <Modal open onClose={onClose} width={553} closebuttonstyle={{ marginTop: '5px' }}>
       <div className="relative flex flex-col items-center">
@@ -200,7 +218,8 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
           className="!mt-6"
           fullWidth
           label="Amount"
-          disabled={isBuying}
+          integerOnly={unit === 1}
+          disabled={isBuying || loadingSupply}
           onChange={(v) => {
             setAmount(v ?? 0);
           }}
@@ -208,7 +227,9 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
 
         <div className="mt-4 flex items-center space-x-1 self-end text-black">
           <span className="text-sm">Minimum unit: </span>
-          <span className="text-sm font-medium">0.1 </span>
+          <span className="text-sm font-medium">
+            {loadingSupply ? <CircularProgress size={8} /> : unit}
+          </span>
         </div>
 
         <Divider
