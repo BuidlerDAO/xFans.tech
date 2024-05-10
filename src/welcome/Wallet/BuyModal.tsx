@@ -83,8 +83,8 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   const ethPrice = useETHPrice();
 
   useEffect(() => {
-    setLoadingSupply(true);
     if (currentInfo?.walletAddress != null) {
+      setLoadingSupply(true);
       getSupply(currentInfo?.walletAddress).then((data) => {
         setLoadingSupply(false);
         setSupply(data);
