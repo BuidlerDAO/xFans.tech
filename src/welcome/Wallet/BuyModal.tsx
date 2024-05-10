@@ -87,7 +87,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
     if (currentInfo?.walletAddress != null) {
       getSupply(currentInfo?.walletAddress).then((data) => {
         setLoadingSupply(false);
-        setSupply(+data);
+        setSupply(data);
       });
     }
   }, [currentInfo]);
