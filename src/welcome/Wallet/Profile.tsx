@@ -60,13 +60,11 @@ const ProfileModal = () => {
 
   const holding = holderingList?.map((item) => ({
     holder: (
-      <div className="flex items-center space-x-1">
-        <img
-          onClick={() => openProfile(item.holderUser)}
-          src={item.subjectUser?.avatar}
-          alt=""
-          className="w-5 cursor-pointer rounded-full"
-        />
+      <div
+        className="flex cursor-pointer items-center space-x-1"
+        onClick={() => openTwitterProfile(item.subjectUser?.twitterUsername)}
+      >
+        <img src={item.subjectUser?.avatar} alt="" className="w-5 cursor-pointer rounded-full" />
         <span className="text-xs text-[#0F1419]">{item.subjectUser?.username}</span>
       </div>
     ),
