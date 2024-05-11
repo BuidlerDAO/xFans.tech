@@ -26,6 +26,13 @@ export const addPriceComponent = (element: Element, tweetId: string, twitterUser
 
 export const addVoteComponent = (element: Element, tweetId: string, userName: string) => {
   const voteContainer = document.createElement('div');
+  const repostContainer = element.querySelector<HTMLDivElement>(
+    'article > div >div > div:nth-child(1)'
+  );
+  // 如果是转发的话，目前 innerText 会是 You reposted，判断如果有内容不管是什么文案我们就认为是转发的
+  const isRepost = repostContainer && repostContainer.innerText !== '';
+  // 如果是转发不要附加 vote 组件
+  if (isRepost) return;
   const specificElement = element.querySelector(
     'article > div > div > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div > div'
   );
