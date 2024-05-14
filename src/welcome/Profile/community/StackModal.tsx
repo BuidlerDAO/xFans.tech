@@ -18,9 +18,10 @@ import {
 type ModalProps = {
   // false cancel true confirm
   onClose(fromConfirm?: boolean): void;
+  ownerName: string;
   subject: string;
 };
-export default function StackModal({ onClose, subject }: ModalProps) {
+export default function StackModal({ onClose, ownerName, subject }: ModalProps) {
   const [currentTab, setCurrentTab] = useState<'stack' | 'unstack'>('stack');
   const activedTabNavClassName = 'bg-[#9A6CF9] text-white';
   const [sharesBalance, setSharesBalance] = useState<string | null>(null);
@@ -42,7 +43,10 @@ export default function StackModal({ onClose, subject }: ModalProps) {
       }}
     >
       <div className="relative flex flex-col items-center pb-[24px]">
-        <h2 className="text-[24px] font-medium text-[#2E2E32]">Unlock Vincent&apos;s Community</h2>
+        <h2 className="flex text-[24px] font-medium text-[#2E2E32]">
+          Unlock&nbsp;<span className="max-w-[130px] truncate">{ownerName}</span>
+          &apos;s&nbsp;Community
+        </h2>
         <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
 
         <p className="relative mt-[27px] pl-[25px] text-center text-sm text-[#919099]">
