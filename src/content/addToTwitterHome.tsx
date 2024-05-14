@@ -100,13 +100,7 @@ export const addTwitterComponent = () => {
 
 export const addUserPagePriceComponent = () => {
   const addByXPath = (xpath: string) => {
-    const specificElement = document.evaluate(
-      xpath,
-      document,
-      null,
-      XPathResult.FIRST_ORDERED_NODE_TYPE,
-      null
-    ).singleNodeValue as Element;
+    const specificElement = document.querySelectorAll('[data-testid="UserName"]')[0];
 
     if (specificElement) {
       const priceContainer = document.createElement('span');
@@ -128,6 +122,7 @@ export const addUserPagePriceComponent = () => {
   const elementId = `xfans-userPagePrice-${username}`;
   const existingElement = document.getElementById(elementId);
 
+  console.log(username);
   // 由于个人中心页面有复用，因此在插入之前要删除掉其他price tag
   const elements = document.querySelectorAll('[id^="xfans-userPagePrice-"]');
   elements.forEach((x) => {
@@ -144,5 +139,6 @@ export const addUserPagePriceComponent = () => {
   // 当用户个人主页有背景图或者没有背景图的时候，xpath不一致。
   const xpath = `/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div[1]/div[2]/div[1]/div/div[1]/div/div/span/span[2]`;
   const xpath2 = `/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/span/span[2]`;
+  console.log(!addByXPath(xpath));
   if (!addByXPath(xpath)) addByXPath(xpath2);
 };
