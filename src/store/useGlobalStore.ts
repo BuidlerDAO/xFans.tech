@@ -52,7 +52,7 @@ const useGlobalStore = create<GlobalStoreProps>()(
         });
       },
       userVote: null,
-      chain: Chain.Arb,
+      chain: Chain.Bera,
     }),
     {
       name: 'xfans-user-config',
