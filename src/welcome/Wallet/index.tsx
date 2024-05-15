@@ -114,6 +114,10 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
 
                 <NumberDisplayer className="text-base font-bold text-[#9A6CF9]" text={balance} />
               </div>
+              <div className="flex items-center space-x-1">
+                <BeraIcon />
+                <NumberDisplayer className="text-base font-bold text-[#9A6CF9]" text={balance} />
+              </div>
             </div>
 
             <div className="flex items-center justify-between rounded-[8px] border border-[#EBECED] p-4 hover:border-[#9A6CF9]">
@@ -366,6 +370,14 @@ const Icon = () => (
       </clipPath>
     </defs>
   </svg>
+);
+
+const BeraIcon = () => (
+  <img
+    src="https://cdn-xfans.buidlerdao.xyz/20240513-190428.jpeg"
+    className="mx-0 h-[18px] w-[18px] cursor-pointer rounded-full p-0"
+    alt="Logo"
+  />
 );
 
 const GoBack = () => (
