@@ -34,7 +34,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
     getUserInfo();
   }, []);
 
-  const { balance, accounts } = useGlobalUserStore((state) => ({
+  const { balance, accounts, wETHBalance } = useGlobalUserStore((state) => ({
     ...state,
   }));
 
@@ -112,7 +112,10 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
               <div className="flex items-center space-x-1">
                 <Icon />
 
-                <NumberDisplayer className="text-base font-bold text-[#9A6CF9]" text={balance} />
+                <NumberDisplayer
+                  className="text-base font-bold text-[#9A6CF9]"
+                  text={wETHBalance}
+                />
               </div>
               <div className="flex items-center space-x-1">
                 <BeraIcon />

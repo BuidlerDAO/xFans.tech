@@ -14,6 +14,7 @@ import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { transfer as transferApi } from '../../service/contract/shares';
 import useGlobalStore from '../../store/useGlobalStore';
+import TSelect from '../../components/Select';
 
 const TextField = styled(MTextField)({
   width: '493px',
@@ -102,6 +103,13 @@ const WithDraw = ({ onClose }: Props) => {
         </p>
 
         <div className="mb-6 w-full space-y-6">
+          <TSelect
+            defaultValue="ETH"
+            options={['ETH', 'Bera']}
+            onChange={(x) => {
+              console.log('Tselect', x);
+            }}
+          />
           <TextField
             label="Enter Address"
             error={address !== '' && !isAddress(address)}

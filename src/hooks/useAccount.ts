@@ -19,6 +19,7 @@ export default function useAccount() {
       useGlobalUserStore.setState({
         accounts: response.accounts,
         balance: response.balance,
+        wETHBalance: response.weth_balance,
       });
     },
   });

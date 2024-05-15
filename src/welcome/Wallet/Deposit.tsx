@@ -55,7 +55,7 @@ const Deposit = () => {
               <span className="text-base font-medium text-[#919099]">Asset</span>
               <TSelect
                 defaultValue="ETH"
-                options={['ETH', 'WETH']}
+                options={['ETH', 'Bera']}
                 onChange={(x) => {
                   console.log('Tselect', x);
                 }}
