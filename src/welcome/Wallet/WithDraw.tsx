@@ -49,7 +49,7 @@ const WithDraw = ({ onClose }: Props) => {
   const { balance, refresh, wETHBalance } = useAccount();
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
-  const [token, setToken] = useState('Bera');
+  const [token, setToken] = useState<Token>(Token.Bera);
   const { chain } = useGlobalStore();
   const { run: transfer, loading } = useRequest(() => transferApi(address, amount, token), {
     manual: true,
@@ -113,7 +113,7 @@ const WithDraw = ({ onClose }: Props) => {
           <TSelect
             defaultValue={Token.Bera}
             options={[Token.Bera, Token.WETH]}
-            onChange={(x) => {
+            onChange={(x: any) => {
               setToken(x);
             }}
           />
@@ -136,7 +136,7 @@ const WithDraw = ({ onClose }: Props) => {
         <div className="flex space-x-3 self-end">
           <span className="xfans-font-sf text-sm text-[#0F1419]">Wallet Balance: </span>
           <div className="flex items-center space-x-1">
-            {token === 'Bera' ? <BeraIcon /> : <ETHIcon />}
+            {token === Token.Bera ? <BeraIcon /> : <ETHIcon />}
             <NumberDisplayer
               className="text-base font-bold text-[#9A6CF9]"
               text={realBalance?.toString()}
