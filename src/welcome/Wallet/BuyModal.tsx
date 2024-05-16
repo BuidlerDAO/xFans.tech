@@ -10,6 +10,7 @@ import * as toaster from '../../components/Toaster';
 import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { useETHPrice } from '../../hooks/useETHPrice';
+import { BeraIcon } from '../../components/icons/ETHIcon';
 import {
   buyShares,
   getBuyPrice,
@@ -270,7 +271,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
             <span className="text-lg font-medium text-[#919099]">Transaction Fee</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <Icon1 />
+                <BeraIcon />
                 <span className="text-lg font-medium">
                   <NumberDisplayer
                     text={transactionFee}
@@ -285,7 +286,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
             <span className="text-lg font-medium text-[#919099]">Est. Gas Fee</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <Icon1 />
+                <BeraIcon />
                 <span className="text-lg font-medium">
                   <NumberDisplayer text={gasFee} loading={loadingPrice} />
                 </span>
