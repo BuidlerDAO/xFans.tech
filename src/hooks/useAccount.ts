@@ -8,7 +8,7 @@ import useUserStore from '../store/useUserStore';
 
 // 账户相关的全局状态
 export default function useAccount() {
-  const { accounts, balance } = useGlobalUserStore();
+  const { accounts, balance, wETHBalance } = useGlobalUserStore();
   const { userInfo, inviteInfo } = useUserStore((state) => ({ ...state }));
   const { run: getUserInfo } = useUserInfo();
   const { run: getUserInviteInfo } = useUserInvite();
@@ -40,5 +40,6 @@ export default function useAccount() {
     userInfo,
     inviteInfo,
     refresh,
+    wETHBalance,
   };
 }

@@ -20,6 +20,7 @@ const TSelect: React.FC<TSelectProps> = ({ defaultValue, options, onChange }) =>
       value={currentValue}
       onChange={handleInternalChange}
       style={{
+        width: '100%',
         height: '60px',
         borderRadius: 8,
         borderWidth: 0,

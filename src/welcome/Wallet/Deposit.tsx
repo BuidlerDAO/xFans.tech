@@ -9,6 +9,7 @@ import TSelect from '../../components/Select';
 import { chainNameMap } from '../../config/chainConfig';
 import useGlobalStore from '../../store/useGlobalStore';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
+import { Token } from '../../constants';
 
 const Deposit = () => {
   const [isOpen, { setLeft: close, setRight: open }] = useToggle(false);
@@ -54,11 +55,9 @@ const Deposit = () => {
             <div className="flex flex-col space-y-[14px]">
               <span className="text-base font-medium text-[#919099]">Asset</span>
               <TSelect
-                defaultValue="ETH"
-                options={['ETH', 'Bera']}
-                onChange={(x) => {
-                  console.log('Tselect', x);
-                }}
+                defaultValue={Token.WETH}
+                options={[Token.WETH, Token.Bera]}
+                onChange={(x) => {}}
               />
             </div>
           </div>
