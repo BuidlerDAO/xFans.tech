@@ -277,7 +277,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
             <span className="text-lg font-medium text-[#919099]">Transaction Fee</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <BeraIcon />
+                <Icon1 />
                 <span className="text-lg font-medium">
                   <NumberDisplayer
                     text={transactionFee}

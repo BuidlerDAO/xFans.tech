@@ -271,7 +271,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
             <span className="text-lg font-medium text-[#919099]">Transaction Fee</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <BeraIcon />
+                <Icon1 />
                 <span className="text-lg font-medium">
                   <NumberDisplayer
                     text={transactionFee}
@@ -311,7 +311,17 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
             <div className="flex items-center space-x-1">
               <Icon1 />
               <span className="text-2xl font-bold">
-                <NumberDisplayer text={total} loading={loadingPrice || loadingPirceAfterFee} />
+                <NumberDisplayer
+                  text={new BigNumber(priceAfterFee).toFixed()}
+                  loading={loadingPrice || loadingPirceAfterFee}
+                />
+              </span>
+              <BeraIcon />
+              <span className="text-2xl font-bold">
+                <NumberDisplayer
+                  text={new BigNumber(gasFee).toFixed()}
+                  loading={loadingPrice || loadingPirceAfterFee}
+                />
               </span>
             </div>
           </div>
