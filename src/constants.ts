@@ -1,6 +1,6 @@
-export const XFANS_TWITTER_HOMEPAGE = 'https://twitter.com/BuidlerDAO';
+export const XFANS_TWITTER_HOMEPAGE = 'https://x.com/BuidlerDAO';
 export const XFANS_TWITTES =
-  'https://twitter.com/BuidlerDAO/status/1744712912537788860?xfans_check_retweet=1';
+  'https://x.com/BuidlerDAO/status/1744712912537788860?xfans_check_retweet=1';
 export const XFANS_CHECK_RETWEET = 'xfans_check_retweet';
 export const XFANS_TOKEN = 'xfans_token';
 export const OAUTH2 = 'oauth2';

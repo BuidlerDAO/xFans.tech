@@ -229,7 +229,7 @@ const Reward = () => {
                       className="cursor-pointer text-xs leading-[20px] text-black"
                       onClick={() => {
                         window.open(
-                          `https://twitter.com/${item?.author?.twitterUsername}/status/${item?.id}`,
+                          `https://x.com/${item?.author?.twitterUsername}/status/${item?.id}`,
                           '_blank'
                         );
                       }}
@@ -284,7 +284,7 @@ const Reward = () => {
                       className="cursor-pointer text-xs leading-[20px] text-black"
                       onClick={() => {
                         window.open(
-                          `https://twitter.com/${item?.author?.twitterUsername}/status/${item?.id}`,
+                          `https://x.com/${item?.author?.twitterUsername}/status/${item?.id}`,
                           '_blank'
                         );
                       }}

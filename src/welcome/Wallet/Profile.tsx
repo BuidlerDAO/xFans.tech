@@ -368,7 +368,7 @@ const ProfileModal = () => {
                             className="inline-block max-w-[200px] truncate hover:cursor-pointer"
                             onClick={() => {
                               const newTab = window.open(
-                                `https://twitter.com/${currentInfo?.twitterUsername}/status/${currentInfo?.twitterId}`,
+                                `https://x.com/${currentInfo?.twitterUsername}/status/${currentInfo?.twitterId}`,
                                 '_blank'
                               );
                               newTab?.focus();
