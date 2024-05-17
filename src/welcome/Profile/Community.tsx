@@ -71,7 +71,7 @@ const Community = () => {
       );
 
     return (
-      <ul className="h-[250px]">
+      <ul className="min-h-[250px] flex-shrink-0">
         {unlockedCommunities.map((item, i) => (
           <li
             key={i}
@@ -175,7 +175,11 @@ const Community = () => {
       {renderUnlocked()}
       {renderLocked()}
       {selectedCommunity && selectedCommunity.status === 0 && (
-        <StackModal subject={selectedCommunity.subject} onClose={handleStakeModalClose} />
+        <StackModal
+          subject={selectedCommunity.subject}
+          ownerName={selectedCommunity.ownerUser.username}
+          onClose={handleStakeModalClose}
+        />
       )}
       {
         <ChatRoomDrawer

@@ -26,7 +26,11 @@ withProxyStore(<Content />, store).then((component) => {
 
     const doNotCheckPathList = ['notifications', 'messages', 'i'];
     // 判断当前页面的 URL 是否符合一般的用户主页 URL 格式
-    if (currentUrl.includes('https://twitter.com/') && urlWordLength === 4 && lastWord === 'home') {
+    if (
+      (currentUrl.includes('https://twitter.com/') || currentUrl.includes('https://x.com/')) &&
+      urlWordLength === 4 &&
+      lastWord === 'home'
+    ) {
       return 'home';
     } else if (urlWordLength === 4 && !doNotCheckPathList.includes(lastWord)) {
       return 'userPage';

@@ -10,7 +10,7 @@ const manifest: ManifestV3Export = {
   },
   content_scripts: [
     {
-      matches: ['https://twitter.com/*'],
+      matches: ['https://twitter.com/*', 'https://x.com/*'],
       js: ['src/content/index.tsx'],
       run_at: 'document_end',
     },

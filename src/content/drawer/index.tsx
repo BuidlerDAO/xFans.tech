@@ -123,9 +123,9 @@ export default function PersistentDrawerRight() {
 
   const initURLMonitor = () => {
     // 定义您要监控的 URL
-    const switchUrl = 'https://api.twitter.com/1.1/account/multi/switch.json';
-    const logoutUrl = 'https://api.twitter.com/1.1/account/logout.json';
-    const taskUrl = 'https://api.twitter.com/1.1/account/task.json';
+    const switchUrl = 'https://api.x.com/1.1/account/multi/switch.json';
+    const logoutUrl = 'https://api.x.com/1.1/account/logout.json';
+    const taskUrl = 'https://api.x.com/1.1/account/task.json';
 
     // 创建 PerformanceObserver
     const observer = new PerformanceObserver((list) => {
