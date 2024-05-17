@@ -18,7 +18,7 @@ import {
   getFloorPrice,
   getSupply,
 } from '../../service/contract/shares';
-import { getBalance } from '../../service/contract/user';
+import { getAccounts } from '../../service/contract/user';
 import useProfileModal from '../../store/useProfileModal';
 import { formatDollar } from '../../utils';
 
@@ -70,6 +70,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   const [amount, setAmount] = useState<number>(0);
   const [priceAfterFee, setPriceAfterFee] = useState('0');
   const [balance, setBalance] = useState('0');
+  const [WETHbalance, setWETHBalance] = useState('0');
   const [isBuying, setIsBuying] = useState(false);
   const [floorPrice, setFloorPrice] = useState('0');
   const [supply, setSupply] = useState(0);
@@ -134,9 +135,10 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   useEffect(() => {
     if (wallet) {
       setLoadingBalance(true);
-      getBalance().then((balance) => {
+      getAccounts().then((result) => {
         setLoadingBalance(false);
-        setBalance(balance);
+        setBalance(result.balance);
+        setWETHBalance(result.weth_balance);
       });
     }
   }, [wallet]);
@@ -166,9 +168,10 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
     numberInputRef.current?.reset();
     refreshAccount();
     setLoadingBalance(true);
-    getBalance().then((balance) => {
+    getAccounts().then((result) => {
       setLoadingBalance(false);
-      setBalance(balance);
+      setBalance(result.balance);
+      setWETHBalance(result.weth_balance);
     });
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     setLoadingFloorPrice(true);
@@ -330,7 +333,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
             <div className="flex items-center justify-center space-x-1 rounded-full bg-[#F5F5F5] px-5 py-1">
               <Icon1 />
               <span className="text-lg font-medium">
-                <NumberDisplayer text={balance} loading={loadingBalance} />
+                <NumberDisplayer text={WETHbalance} loading={loadingBalance} />
               </span>
             </div>
           </div>

@@ -6,8 +6,8 @@ export async function getAccounts() {
   );
   return accounts;
 }
-// todo: 建议删除
-export async function getBalance() {
-  const balance = await http.get<string>('/xfans/api/user/getBalance');
-  return balance;
-}
+// todo: 建议删除,后端暂时没删除
+// export async function getBalance() {
+//   const balance = await http.get<string>('/xfans/api/user/getBalance');
+//   return balance;
+// }
