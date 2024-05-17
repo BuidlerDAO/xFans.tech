@@ -94,17 +94,23 @@ const useHolderList = () => {
 };
 
 const useEthPrice = () => {
-  const result = useRequest<ResultData<{ id: number; symbol: string; price: number }>, unknown[]>(
-    () => http.get('/api/share/eth-price'),
-    {
-      manual: true,
-      onSuccess(response) {
-        useShareStore.setState({
-          ethPrice: response.data,
-        });
-      },
-    }
-  );
+  const result = useRequest<
+    ResultData<{ items: { id: number; symbol: string; price: number }[] }>,
+    unknown[]
+  >(() => http.get('/api/share/prices'), {
+    manual: true,
+    onSuccess(response) {
+      const ethPrice = response.data.items.find((x) => x.symbol === 'eth');
+      const beraPrice = response.data.items.find((x) => x.symbol === 'bera');
+
+      console.log('eth-prices', response, ethPrice, beraPrice);
+
+      useShareStore.setState({
+        ethPrice: ethPrice,
+        beraPrice: beraPrice,
+      });
+    },
+  });
 
   return result;
 };

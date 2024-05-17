@@ -9,7 +9,7 @@ import NumberInput, { NumberInputRef } from '../../components/NumberInput';
 import * as toaster from '../../components/Toaster';
 import { ContractError, SHARE_UNIT_MODIFIER } from '../../constants';
 import useAccount from '../../hooks/useAccount';
-import { useETHPrice } from '../../hooks/useETHPrice';
+import { useETHPrice, useBeraPrice } from '../../hooks/useETHPrice';
 import { BeraIcon } from '../../components/icons/ETHIcon';
 import {
   getFloorPrice,
@@ -83,6 +83,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
   const [loadingSharesBalance, setLoadingSharesBalance] = useState<boolean>(true);
 
   const ethPrice = useETHPrice();
+  const beraPrice = useBeraPrice();
 
   useEffect(() => {
     if (amount === 0) {
@@ -300,7 +301,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
                   <NumberDisplayer text={gasFee} loading={loadingPrice} />
                 </span>
               </div>
-              <span className="text-[#919099]">{formatDollar(gasFee, ethPrice)}</span>
+              <span className="text-[#919099]">{formatDollar(gasFee, beraPrice)}</span>
             </div>
           </div>
         </div>
