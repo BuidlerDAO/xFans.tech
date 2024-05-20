@@ -21,11 +21,15 @@ const TSelect: React.FC<TSelectProps> = ({ defaultValue, options, onChange }) =>
       onChange={handleInternalChange}
       style={{
         width: '100%',
-        height: '60px',
+        height: '58.5px',
         borderRadius: 8,
-        borderWidth: 0,
-        borderColor: 'transparent',
         fontSize: '15px',
+      }}
+      sx={{
+        border: 'none',
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: 'none',
+        },
       }}
       className="bg-[#F7F9FA] py-[18px] pl-[10px] text-base font-medium text-[#1A1D1F]"
     >
