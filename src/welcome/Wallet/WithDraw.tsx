@@ -14,6 +14,9 @@ import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { transfer as transferApi } from '../../service/contract/shares';
 import useGlobalStore from '../../store/useGlobalStore';
+import TSelect from '../../components/Select';
+import { BeraIcon } from '../../components/icons/ETHIcon';
+import { Token } from '../../constants';
 
 const TextField = styled(MTextField)({
   width: '493px',
@@ -43,11 +46,12 @@ type Props = {
 };
 
 const WithDraw = ({ onClose }: Props) => {
-  const { balance, refresh } = useAccount();
+  const { balance, refresh, wETHBalance } = useAccount();
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
+  const [token, setToken] = useState<Token>(Token.Bera);
   const { chain } = useGlobalStore();
-  const { run: transfer, loading } = useRequest(() => transferApi(address, amount), {
+  const { run: transfer, loading } = useRequest(() => transferApi(address, amount, token), {
     manual: true,
     onSuccess() {
       success('Submitted successfully');
@@ -60,6 +64,10 @@ const WithDraw = ({ onClose }: Props) => {
     }
   }, [address]);
 
+  const realBalance = useMemo(() => {
+    return token === Token.Bera ? balance : wETHBalance;
+  }, [wETHBalance, balance, token]);
+
   function handleAmountChange(nextAmount: string) {
     if (nextAmount === '') {
       setAmount('');
@@ -71,7 +79,7 @@ const WithDraw = ({ onClose }: Props) => {
   }
 
   function handleTransferClick() {
-    if (new BigNumber(balance).isLessThan(amount)) {
+    if (new BigNumber(realBalance).isLessThan(amount)) {
       error('Insufficient Balance');
       return;
     }
@@ -102,6 +110,13 @@ const WithDraw = ({ onClose }: Props) => {
         </p>
 
         <div className="mb-6 w-full space-y-6">
+          <TSelect
+            defaultValue={Token.Bera}
+            options={[Token.Bera, Token.WETH]}
+            onChange={(x: any) => {
+              setToken(x);
+            }}
+          />
           <TextField
             label="Enter Address"
             error={address !== '' && !isAddress(address)}
@@ -121,10 +136,10 @@ const WithDraw = ({ onClose }: Props) => {
         <div className="flex space-x-3 self-end">
           <span className="xfans-font-sf text-sm text-[#0F1419]">Wallet Balance: </span>
           <div className="flex items-center space-x-1">
-            <ETHIcon />
+            {token === Token.Bera ? <BeraIcon /> : <ETHIcon />}
             <NumberDisplayer
               className="text-base font-bold text-[#9A6CF9]"
-              text={balance.toString()}
+              text={realBalance?.toString()}
             />
           </div>
         </div>

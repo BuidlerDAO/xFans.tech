@@ -16,6 +16,11 @@ export enum ContractError {
   InsufficientBalance = 'Insufficient Balance',
 }
 
+export enum Token {
+  Bera = 'Bera',
+  WETH = 'WETH',
+}
+
 export const XFANS_CONTENT_WIDTH = 433;
 export const XFANS_MIN_WIDTH = 458;
 

@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 import { NextButton } from '../../components/buttons/loginButton';
-import TSelect from '../../components/Select/index';
 
 import '../../tailwind.css';
 
@@ -54,7 +53,6 @@ const SignInWithXPage: FC<SignInWithXPageProps> = ({ handleButtonClick, showLoad
           'Login With X'
         )}
       </NextButton>
-      <TSelect />
     </div>
   );
 };

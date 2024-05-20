@@ -122,7 +122,7 @@ export const addUserPagePriceComponent = () => {
   const elementId = `xfans-userPagePrice-${username}`;
   const existingElement = document.getElementById(elementId);
 
-  console.log(username);
+  // console.log(username);
   // 由于个人中心页面有复用，因此在插入之前要删除掉其他price tag
   const elements = document.querySelectorAll('[id^="xfans-userPagePrice-"]');
   elements.forEach((x) => {

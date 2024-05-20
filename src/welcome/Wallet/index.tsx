@@ -20,6 +20,7 @@ import useProfileModal from '../../store/useProfileModal';
 import Deposit from './Deposit';
 import InviteFriends from './InviteFriends';
 import WithDraw from './WithDraw';
+import { BeraIcon } from '../../components/icons/ETHIcon';
 
 const Wallet = (props: { back?: () => void; logout?: () => void }) => {
   const { openProfile } = useProfileModal((state) => ({ ...state }));
@@ -34,7 +35,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
     getUserInfo();
   }, []);
 
-  const { balance, accounts } = useGlobalUserStore((state) => ({
+  const { balance, accounts, wETHBalance } = useGlobalUserStore((state) => ({
     ...state,
   }));
 
@@ -112,6 +113,13 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
               <div className="flex items-center space-x-1">
                 <Icon />
 
+                <NumberDisplayer
+                  className="text-base font-bold text-[#9A6CF9]"
+                  text={wETHBalance}
+                />
+              </div>
+              <div className="flex items-center space-x-1">
+                <BeraIcon />
                 <NumberDisplayer className="text-base font-bold text-[#9A6CF9]" text={balance} />
               </div>
             </div>

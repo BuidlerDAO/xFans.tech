@@ -87,10 +87,11 @@ export async function unstake(address: string, amount: number) {
     amount: BigNumber(amount).times(SHARE_UNIT_MODIFIER).toFixed(),
   });
 }
-export async function transfer(address: string, amount: string) {
+export async function transfer(address: string, amount: string, token?: string) {
   await http.post<null>('/xfans/api/shares/transfer', {
     amount,
     address,
+    token,
   });
 }
 

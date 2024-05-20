@@ -9,7 +9,8 @@ import NumberInput, { NumberInputRef } from '../../components/NumberInput';
 import * as toaster from '../../components/Toaster';
 import { ContractError, SHARE_UNIT_MODIFIER } from '../../constants';
 import useAccount from '../../hooks/useAccount';
-import { useETHPrice } from '../../hooks/useETHPrice';
+import { useETHPrice, useBeraPrice } from '../../hooks/useETHPrice';
+import { BeraIcon } from '../../components/icons/ETHIcon';
 import {
   getFloorPrice,
   getSellPrice,
@@ -17,7 +18,7 @@ import {
   getSharesBalance,
   sellShares,
 } from '../../service/contract/shares';
-import { getBalance } from '../../service/contract/user';
+import { getAccounts } from '../../service/contract/user';
 import useProfileModal from '../../store/useProfileModal';
 import { formatDollar } from '../../utils';
 
@@ -69,6 +70,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
   const [amount, setAmount] = useState<number>(0);
   const [priceAfterFee, setPriceAfterFee] = useState('0');
   const [balance, setBalance] = useState('0');
+  const [WETHbalance, setWETHBalance] = useState('0');
   const [shareBalance, setShareBalance] = useState('0');
   const [isSelling, setIsSelling] = useState(false);
   const [floorPrice, setFloorPrice] = useState('0');
@@ -81,6 +83,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
   const [loadingSharesBalance, setLoadingSharesBalance] = useState<boolean>(true);
 
   const ethPrice = useETHPrice();
+  const beraPrice = useBeraPrice();
 
   useEffect(() => {
     if (amount === 0) {
@@ -134,9 +137,10 @@ const SellModal = ({ onClose }: SellModalProps) => {
   useEffect(() => {
     if (wallet) {
       setLoadingBalance(true);
-      getBalance().then((balance) => {
+      getAccounts().then((result) => {
         setLoadingBalance(false);
-        setBalance(balance);
+        setBalance(result.balance);
+        setWETHBalance(result.weth_balance);
       });
     }
   }, [wallet]);
@@ -163,9 +167,10 @@ const SellModal = ({ onClose }: SellModalProps) => {
       });
 
       setLoadingBalance(true);
-      getBalance().then((balance) => {
+      getAccounts().then((result) => {
         setLoadingBalance(false);
-        setBalance(balance);
+        setBalance(result.balance);
+        setWETHBalance(result.weth_balance);
       });
 
       setLoadingFloorPrice(true);
@@ -291,12 +296,12 @@ const SellModal = ({ onClose }: SellModalProps) => {
             <span className="text-lg font-medium text-[#919099]">Est. Gas Fee</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <Icon1 />
+                <BeraIcon />
                 <span className="text-lg font-medium">
                   <NumberDisplayer text={gasFee} loading={loadingPrice} />
                 </span>
               </div>
-              <span className="text-[#919099]">{formatDollar(gasFee, ethPrice)}</span>
+              <span className="text-[#919099]">{formatDollar(gasFee, beraPrice)}</span>
             </div>
           </div>
         </div>
@@ -328,7 +333,7 @@ const SellModal = ({ onClose }: SellModalProps) => {
             <div className="flex items-center justify-center space-x-1 rounded-full bg-[#F5F5F5] px-5 py-1">
               <Icon1 />
               <span className="text-lg font-medium">
-                <NumberDisplayer text={balance} loading={loadingBalance} />
+                <NumberDisplayer text={WETHbalance} loading={loadingBalance} />
               </span>
             </div>
           </div>
