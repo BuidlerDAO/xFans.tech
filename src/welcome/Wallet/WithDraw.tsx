@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { CircularProgress, styled, TextField as MTextField } from '@mui/material';
+import { PublicKey } from '@solana/web3.js';
 import { useRequest } from 'ahooks';
 import BigNumber from 'bignumber.js';
-import { isAddress } from 'web3-validator';
 
 import { BackButton, PrimaryButton } from '../../components/Button';
-import ETHIcon from '../../components/icons/ETHIcon';
+import ETHIcon from '../../components/icons/SolanaIcon';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import { error, success } from '../../components/Toaster';
@@ -55,7 +55,11 @@ const WithDraw = ({ onClose }: Props) => {
     },
   });
   const addressHelperText = useMemo(() => {
-    if (address !== '' && !isAddress(address)) {
+    try {
+      if (address !== '' && !PublicKey.isOnCurve(address)) {
+        return ContractError.InvalidAddress;
+      }
+    } catch {
       return ContractError.InvalidAddress;
     }
   }, [address]);
@@ -104,7 +108,7 @@ const WithDraw = ({ onClose }: Props) => {
         <div className="mb-6 w-full space-y-6">
           <TextField
             label="Enter Address"
-            error={address !== '' && !isAddress(address)}
+            error={addressHelperText != null}
             helperText={addressHelperText}
             autoComplete="off"
             onChange={(event) => setAddress(event.target.value)}
@@ -134,7 +138,7 @@ const WithDraw = ({ onClose }: Props) => {
             classes={{
               contained: '!py-[10px] !px-[38px] !w-[170px]',
             }}
-            disabled={loading || !isAddress(address) || !isValidAmount}
+            disabled={loading || addressHelperText != null || !isValidAmount}
             startIcon={loading && <CircularProgress color="inherit" size={15} />}
             onClick={handleTransferClick}
           >

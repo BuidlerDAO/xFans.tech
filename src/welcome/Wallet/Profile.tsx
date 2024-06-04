@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 
 import { BasicButton, PrimaryButton } from '../../components/Button';
 import TableEmptyWidget from '../../components/Empty';
+import SolanaIcon from '../../components/icons/SolanaIcon';
 import { CenterLoading } from '../../components/Loading';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
@@ -52,7 +53,7 @@ const ProfileModal = () => {
     shares: Number(item.shares) / SHARE_UNIT_MODIFIER,
     value: (
       <div className="flex items-center space-x-1">
-        <Icon />
+        <SolanaIcon />
         <NumberDisplayer className="text-xs text-[#0F1419]" text={item.value!} />
       </div>
     ),
@@ -71,7 +72,7 @@ const ProfileModal = () => {
     shares: Number(item.shares) / SHARE_UNIT_MODIFIER,
     value: (
       <div className="flex items-center space-x-1">
-        <Icon />
+        <SolanaIcon />
         <NumberDisplayer className="text-xs text-[#0F1419]" text={item.value!} />
       </div>
     ),
@@ -177,7 +178,7 @@ const ProfileModal = () => {
                   <span className="xfans-font-sf text-[14px] font-bold text-[#2E2E32]">
                     Floor Price:
                   </span>
-                  <Icon />
+                  <SolanaIcon />
                   <NumberDisplayer
                     className="text-[14px] text-[#0F1419]"
                     text={currentInfo?.price}
@@ -380,7 +381,7 @@ const ProfileModal = () => {
                         <TableCell>#{row.rank}</TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-1">
-                            <Icon />
+                            <SolanaIcon />
                             <NumberDisplayer className="text-xs text-[#0F1419]" text={row.reward} />
                           </div>
                         </TableCell>
@@ -410,23 +411,5 @@ const ProfileModal = () => {
     </>
   );
 };
-
-const Icon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="17" viewBox="0 0 10 17" fill="none">
-    <g clipPath="url(#clip0_410_42042)">
-      <path d="M5.00056 16.9065V12.6882L0.142822 9.63672L5.00056 16.9065Z" fill="#C7C7E0" />
-      <path d="M5.0166 16.9065V12.6882L9.87443 9.63672L5.01669 16.9065H5.0166Z" fill="#A3A3D2" />
-      <path d="M5.00048 11.6404V6.25684L0.0869141 8.62012L5.00048 11.6404Z" fill="#C7C7E0" />
-      <path d="M5.0166 11.6404V6.25684L9.93017 8.62021L5.0166 11.6404Z" fill="#A3A3D2" />
-      <path d="M0.0869141 8.62L5.00039 0.09375V6.25662L0.0869141 8.62Z" fill="#C7C7E0" />
-      <path d="M9.93008 8.62L5.0166 0.09375V6.25662L9.93008 8.62Z" fill="#A3A3D2" />
-    </g>
-    <defs>
-      <clipPath id="clip0_410_42042">
-        <rect width="10" height="17" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
 
 export default ProfileModal;

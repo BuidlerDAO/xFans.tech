@@ -9,8 +9,8 @@ import dayjs from 'dayjs';
 
 import ArrowRight from '../../components/icons/ArrowRight';
 import DownIcon from '../../components/icons/DownIcon';
-import ETHIcon from '../../components/icons/ETHIcon';
 import { InfoCircle } from '../../components/icons/InfoCircle';
+import ETHIcon from '../../components/icons/SolanaIcon';
 import UpIcon from '../../components/icons/UpIcon';
 import Loading from '../../components/Loading';
 import { NumberDisplayer } from '../../components/NumberDisplayer';

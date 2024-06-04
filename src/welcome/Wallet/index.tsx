@@ -6,6 +6,7 @@ import Switch from '@mui/material/Switch';
 
 import { BasicButton } from '../../components/Button';
 import { InfoCircle } from '../../components/icons/InfoCircle';
+import SolanaIcon from '../../components/icons/SolanaIcon';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import * as toaster from '../../components/Toaster';
 import TruncateText from '../../components/TruncateText';
@@ -96,7 +97,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
                 <span className="xfans-font-sf text-base font-medium">Portfolio Value</span>
               </div>
               <div className="flex items-center space-x-1">
-                <Icon />
+                <SolanaIcon />
                 <NumberDisplayer
                   className="text-base font-bold text-[#9A6CF9]"
                   text={userInfo?.holdValue}
@@ -110,7 +111,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
                 <span className="xfans-font-sf text-base font-medium">Wallet Balance</span>
               </div>
               <div className="flex items-center space-x-1">
-                <Icon />
+                <SolanaIcon />
 
                 <NumberDisplayer className="text-base font-bold text-[#9A6CF9]" text={balance} />
               </div>
@@ -129,7 +130,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
                 </span>
               </div>
               <div className="flex items-center space-x-1">
-                <Icon />
+                <SolanaIcon />
                 <NumberDisplayer
                   className="text-base font-bold text-[#9A6CF9]"
                   text={userInfo?.tradingFeeEarned}
@@ -150,7 +151,7 @@ const Wallet = (props: { back?: () => void; logout?: () => void }) => {
                 </span>
               </div>
               <div className="flex items-center space-x-1">
-                <Icon />
+                <SolanaIcon />
                 <NumberDisplayer
                   className="text-base font-bold text-[#9A6CF9]"
                   text={userInfo?.rewardEarned}
@@ -347,24 +348,6 @@ const Setting = () => (
       strokeWidth="2"
       strokeLinejoin="round"
     />
-  </svg>
-);
-
-const Icon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none">
-    <g clipPath="url(#clip0_450_22004)">
-      <path d="M5.00044 17.4065V13.1882L0.1427 10.1367L5.00044 17.4065Z" fill="#C7C7E0" />
-      <path d="M5.01648 17.4065V13.1882L9.87431 10.1367L5.01657 17.4065H5.01648Z" fill="#A3A3D2" />
-      <path d="M5.00048 12.1404V6.75684L0.0869141 9.12012L5.00048 12.1404Z" fill="#C7C7E0" />
-      <path d="M5.01648 12.1404V6.75684L9.93004 9.12021L5.01648 12.1404Z" fill="#A3A3D2" />
-      <path d="M0.0869141 9.12L5.00039 0.59375V6.75662L0.0869141 9.12Z" fill="#C7C7E0" />
-      <path d="M9.93008 9.12L5.0166 0.59375V6.75662L9.93008 9.12Z" fill="#A3A3D2" />
-    </g>
-    <defs>
-      <clipPath id="clip0_450_22004">
-        <rect width="10" height="17" fill="white" transform="translate(0 0.5)" />
-      </clipPath>
-    </defs>
   </svg>
 );
 

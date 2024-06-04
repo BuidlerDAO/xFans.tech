@@ -5,7 +5,7 @@ import { useToggle } from 'ahooks';
 import { BackButton, BasicButton, PrimaryButton } from '../../components/Button';
 import Modal from '../../components/Modal';
 import * as toaster from '../../components/Toaster';
-import { chainNameMap } from '../../config/chainConfig';
+import { chainAssetMap, chainNameMap } from '../../config/chainConfig';
 import useGlobalStore from '../../store/useGlobalStore';
 import useGlobalUserStore from '../../store/useGlobalUserStore';
 
@@ -53,7 +53,7 @@ const Deposit = () => {
             <div className="flex flex-col space-y-[14px]">
               <span className="text-base font-medium text-[#919099]">Asset</span>
               <div className="rounded-[8px] bg-[#F7F9FA] py-[18px] pl-[26px] text-base font-medium text-[#1A1D1F]">
-                ETH
+                {chainAssetMap[chain]}
               </div>
             </div>
           </div>

@@ -109,4 +109,18 @@ const useEthPrice = () => {
   return result;
 };
 
-export { useEthPrice, useHolderList, useNewList, useRecentList, useShareList, useTopList };
+async function getChainPrices() {
+  return http.get<ResultData<{ items: [{ id: number; symbol: string; price: number }] }>>(
+    '/api/share/prices'
+  );
+}
+
+export {
+  getChainPrices,
+  useEthPrice,
+  useHolderList,
+  useNewList,
+  useRecentList,
+  useShareList,
+  useTopList,
+};

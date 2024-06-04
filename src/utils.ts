@@ -1,6 +1,8 @@
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 
+import { chainPrecisionMap } from './config/chainConfig';
+import useGlobalStore from './store/useGlobalStore';
 import { OAUTH2, XFANS_CONTENT_WIDTH, XFANS_MIN_WIDTH } from './constants';
 
 export function formatTime(seconds: any) {
@@ -19,10 +21,11 @@ export function formatTime(seconds: any) {
   }
 }
 
-export function formatDollar(amount: string, ethPrice: number) {
+export function formatDollar(amount: string, price: number) {
+  const precision = chainPrecisionMap[useGlobalStore.getState().chain];
   const number = new BigNumber(amount)
-    .dividedBy(new BigNumber(Math.pow(10, 18)))
-    .multipliedBy(new BigNumber(ethPrice ?? 0));
+    .dividedBy(new BigNumber(Math.pow(10, precision)))
+    .multipliedBy(new BigNumber(price ?? 0));
 
   if (number.gte(0.00001)) {
     return `≈$${number.toFixed(5)}`;
@@ -40,13 +43,6 @@ export function getTimeDistanceFromDate(date: any) {
   const secondsDiff = now.diff(targetDate, 'second');
 
   return formatTime(secondsDiff);
-}
-
-export function getBigNumberString(numStr: string) {
-  return new BigNumber(numStr)
-    .dividedBy(new BigNumber(Math.pow(10, 18)))
-    .toNumber()
-    .toLocaleString(undefined, { maximumFractionDigits: 20 });
 }
 
 export function getElementWidthByXPath(xpath: string): number | null {
