@@ -3,13 +3,14 @@ import { CircularProgress, Divider } from '@mui/material';
 import BigNumber from 'bignumber.js';
 
 import { BackButton, PrimaryButton } from '../../components/Button';
+import SolanaIcon from '../../components/icons/SolanaIcon';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import NumberInput, { NumberInputRef } from '../../components/NumberInput';
 import * as toaster from '../../components/Toaster';
 import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
-import { useETHPrice } from '../../hooks/useETHPrice';
+import { useChainPrice } from '../../hooks/useChainPrice';
 import {
   buyShares,
   getBuyPrice,
@@ -18,50 +19,16 @@ import {
   getSupply,
 } from '../../service/contract/shares';
 import { getBalance } from '../../service/contract/user';
+import useGlobalStore from '../../store/useGlobalStore';
 import useProfileModal from '../../store/useProfileModal';
 import { formatDollar } from '../../utils';
-
-const Icon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="24" viewBox="0 0 15 24" fill="none">
-    <g clipPath="url(#clip0_365_20589)">
-      <path d="M7.50072 23.8686V17.9135L0.214111 13.6055L7.50072 23.8686Z" fill="#C7C7E0" />
-      <path d="M7.52466 23.8686V17.9135L14.8114 13.6055L7.52479 23.8686H7.52466Z" fill="#A3A3D2" />
-      <path d="M7.50084 16.4334V8.83301L0.130493 12.1694L7.50084 16.4334Z" fill="#C7C7E0" />
-      <path d="M7.52466 16.4334V8.83301L14.895 12.1695L7.52466 16.4334Z" fill="#A3A3D2" />
-      <path d="M0.130493 12.1689L7.50071 0.131836V8.83236L0.130493 12.1689Z" fill="#C7C7E0" />
-      <path d="M14.8951 12.1689L7.5249 0.131836V8.83236L14.8951 12.1689Z" fill="#A3A3D2" />
-    </g>
-    <defs>
-      <clipPath id="clip0_365_20589">
-        <rect width="15" height="24" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
-
-const Icon1 = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none">
-    <g clipPath="url(#clip0_365_21061)">
-      <path d="M5.00032 17.4065V13.1882L0.142578 10.1367L5.00032 17.4065Z" fill="#C7C7E0" />
-      <path d="M5.0166 17.4065V13.1882L9.87443 10.1367L5.01669 17.4065H5.0166Z" fill="#A3A3D2" />
-      <path d="M5.00048 12.1404V6.75684L0.0869141 9.12012L5.00048 12.1404Z" fill="#C7C7E0" />
-      <path d="M5.0166 12.1404V6.75684L9.93017 9.12021L5.0166 12.1404Z" fill="#A3A3D2" />
-      <path d="M0.0869141 9.12L5.00039 0.59375V6.75662L0.0869141 9.12Z" fill="#C7C7E0" />
-      <path d="M9.93008 9.12L5.0166 0.59375V6.75662L9.93008 9.12Z" fill="#A3A3D2" />
-    </g>
-    <defs>
-      <clipPath id="clip0_365_21061">
-        <rect width="10" height="17" fill="white" transform="translate(0 0.5)" />
-      </clipPath>
-    </defs>
-  </svg>
-);
 
 type BuyModalProps = {
   onClose(): void;
 };
 
 const BuyModal = ({ onClose }: BuyModalProps) => {
+  const { chain } = useGlobalStore();
   const { currentInfo } = useProfileModal();
   const { wallet, refresh: refreshAccount } = useAccount();
   const [price, setPrice] = useState<string>('0');
@@ -80,7 +47,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
   const [loadingBalance, setLoadingBalance] = useState<boolean>(true);
   const [loadingSupply, setLoadingSupply] = useState<boolean>(true);
 
-  const ethPrice = useETHPrice();
+  const chainPrice = useChainPrice(chain);
 
   useEffect(() => {
     if (currentInfo?.walletAddress != null) {
@@ -207,7 +174,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
 
         <div className="mt-6 flex items-center space-x-[6px] self-start">
           <span className="text-xl font-bold text-[#2E2E32]">Floor Price:</span>
-          <Icon />
+          <SolanaIcon />
           <span className="text-xl font-medium text-black">
             <NumberDisplayer text={floorPrice} loading={loadingFloorPrice} />
           </span>
@@ -246,12 +213,12 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
             <span className="text-lg font-medium">Total Price</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <Icon1 />
+                <SolanaIcon />
                 <span className="text-lg font-medium">
                   <NumberDisplayer text={price} loading={loadingPrice || loadingPirceAfterFee} />
                 </span>
               </div>
-              <span className="text-[#919099]">{formatDollar(price, ethPrice)}</span>
+              <span className="text-[#919099]">{formatDollar(price, chainPrice)}</span>
             </div>
           </div>
         </div>
@@ -270,7 +237,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
             <span className="text-lg font-medium text-[#919099]">Transaction Fee</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <Icon1 />
+                <SolanaIcon />
                 <span className="text-lg font-medium">
                   <NumberDisplayer
                     text={transactionFee}
@@ -278,19 +245,19 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
                   />
                 </span>
               </div>
-              <span className="text-[#919099]">{formatDollar(transactionFee, ethPrice)}</span>
+              <span className="text-[#919099]">{formatDollar(transactionFee, chainPrice)}</span>
             </div>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-lg font-medium text-[#919099]">Est. Gas Fee</span>
             <div className="flex flex-col items-end">
               <div className="flex items-center space-x-1">
-                <Icon1 />
+                <SolanaIcon />
                 <span className="text-lg font-medium">
                   <NumberDisplayer text={gasFee} loading={loadingPrice} />
                 </span>
               </div>
-              <span className="text-[#919099]">{formatDollar(gasFee, ethPrice)}</span>
+              <span className="text-[#919099]">{formatDollar(gasFee, chainPrice)}</span>
             </div>
           </div>
         </div>
@@ -308,7 +275,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
           <div className="flex items-center justify-between">
             <span className="text-lg font-medium">You Pay(Including Fees)</span>
             <div className="flex items-center space-x-1">
-              <Icon1 />
+              <SolanaIcon />
               <span className="text-2xl font-bold">
                 <NumberDisplayer text={total} loading={loadingPrice || loadingPirceAfterFee} />
               </span>
@@ -317,7 +284,7 @@ const BuyModal = ({ onClose }: BuyModalProps) => {
           <div className="flex items-center justify-between">
             <span className="text-lg font-medium text-[#919099]">Wallet Balance</span>
             <div className="flex items-center justify-center space-x-1 rounded-full bg-[#F5F5F5] px-5 py-1">
-              <Icon1 />
+              <SolanaIcon />
               <span className="text-lg font-medium">
                 <NumberDisplayer text={balance} loading={loadingBalance} />
               </span>

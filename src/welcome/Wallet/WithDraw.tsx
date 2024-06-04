@@ -1,15 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { CircularProgress, styled, TextField as MTextField } from '@mui/material';
+import { PublicKey } from '@solana/web3.js';
 import { useRequest } from 'ahooks';
 import BigNumber from 'bignumber.js';
 import { isAddress } from 'web3-validator';
 
 import { BackButton, PrimaryButton } from '../../components/Button';
-import ETHIcon from '../../components/icons/ETHIcon';
+import ETHIcon from '../../components/icons/SolanaIcon';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import { error, success } from '../../components/Toaster';
-import { chainNameMap } from '../../config/chainConfig';
+import { Chain, chainAssetMap, chainNameMap } from '../../config/chainConfig';
 import { ContractError } from '../../constants';
 import useAccount from '../../hooks/useAccount';
 import { transfer as transferApi } from '../../service/contract/shares';
@@ -55,10 +56,19 @@ const WithDraw = ({ onClose }: Props) => {
     },
   });
   const addressHelperText = useMemo(() => {
-    if (address !== '' && !isAddress(address)) {
+    try {
+      if (address !== '') {
+        if (chain === Chain.Sol && !PublicKey.isOnCurve(address)) {
+          return ContractError.InvalidAddress;
+        }
+        if (!isAddress(address)) {
+          return ContractError.InvalidAddress;
+        }
+      }
+    } catch {
       return ContractError.InvalidAddress;
     }
-  }, [address]);
+  }, [address, chain]);
 
   function handleAmountChange(nextAmount: string) {
     if (nextAmount === '') {
@@ -98,13 +108,13 @@ const WithDraw = ({ onClose }: Props) => {
         <h2 className="xfans-font-sf text-[24px] font-medium text-[#2E2E32]">Withdraw</h2>
         <div className="mt-[15px] h-[1px] w-[438px] bg-[#EBEEF0]"></div>
         <p className="xfans-font-sf my-6 text-sm text-black text-opacity-50">
-          {`Send your ETH to another wallet address on the ${chainNameMap[chain]}`}
+          {`Send your ${chainAssetMap[chain]} to another wallet address on the ${chainNameMap[chain]}`}
         </p>
 
         <div className="mb-6 w-full space-y-6">
           <TextField
             label="Enter Address"
-            error={address !== '' && !isAddress(address)}
+            error={addressHelperText != null}
             helperText={addressHelperText}
             autoComplete="off"
             onChange={(event) => setAddress(event.target.value)}
@@ -134,7 +144,7 @@ const WithDraw = ({ onClose }: Props) => {
             classes={{
               contained: '!py-[10px] !px-[38px] !w-[170px]',
             }}
-            disabled={loading || !isAddress(address) || !isValidAmount}
+            disabled={loading || addressHelperText != null || !isValidAmount}
             startIcon={loading && <CircularProgress color="inherit" size={15} />}
             onClick={handleTransferClick}
           >

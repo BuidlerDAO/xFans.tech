@@ -61,4 +61,4 @@ const usePoolBalance = (
   return result;
 };
 
-export { useWalletAccounts, useWalletClaimReward, usePoolBalance };
+export { usePoolBalance, useWalletAccounts, useWalletClaimReward };

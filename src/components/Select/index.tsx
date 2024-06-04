@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-import { Chain } from '../../config/chainConfig';
+import { Chain, chainNameMap } from '../../config/chainConfig';
 import useGlobalStore from '../../store/useGlobalStore';
 
 const TSelect = () => {
@@ -18,8 +18,9 @@ const TSelect = () => {
       onChange={handleInternalChange}
       style={{ minWidth: '120px', height: '60px' }}
     >
-      <MenuItem value={Chain.Arb}>{Chain.Arb}</MenuItem>
-      <MenuItem value={Chain.Bera}>{Chain.Bera}</MenuItem>
+      <MenuItem value={Chain.Arb}>{chainNameMap[Chain.Arb]}</MenuItem>
+      <MenuItem value={Chain.Bera}>{chainNameMap[Chain.Bera]}</MenuItem>
+      <MenuItem value={Chain.Sol}>{chainNameMap[Chain.Sol]}</MenuItem>
     </Select>
   );
 };

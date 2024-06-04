@@ -11,40 +11,25 @@ import dayjs from 'dayjs';
 
 import { BasicButton, PrimaryLoadingButton } from '../../components/Button';
 import TableEmptyWidget from '../../components/Empty';
+import SolanaIcon from '../../components/icons/SolanaIcon';
 import Modal from '../../components/Modal';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import * as toaster from '../../components/Toaster';
-import { useETHPrice } from '../../hooks/useETHPrice';
+import { useChainPrice } from '../../hooks/useChainPrice';
 import { useTweetReward } from '../../service/tweet';
 import { useWalletClaimReward } from '../../service/wallet';
+import useGlobalStore from '../../store/useGlobalStore';
 import useTweetStore from '../../store/useTweetStore';
 import { formatDollar } from '../../utils';
 
-const Icon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
-    <g clipPath="url(#clip0_975_31820)">
-      <path d="M5.00044 15.9124V11.9423L0.1427 9.07031L5.00044 15.9124Z" fill="#C7C7E0" />
-      <path d="M5.01648 15.9124V11.9423L9.87431 9.07031L5.01657 15.9124H5.01648Z" fill="#A3A3D2" />
-      <path d="M5.0006 10.9556V5.88867L0.0870361 8.11294L5.0006 10.9556Z" fill="#C7C7E0" />
-      <path d="M5.01648 10.9556V5.88867L9.93004 8.11302L5.01648 10.9556Z" fill="#A3A3D2" />
-      <path d="M0.0870361 8.11259L5.00051 0.0878906V5.88824L0.0870361 8.11259Z" fill="#C7C7E0" />
-      <path d="M9.93008 8.11259L5.0166 0.0878906V5.88824L9.93008 8.11259Z" fill="#A3A3D2" />
-    </g>
-    <defs>
-      <clipPath id="clip0_975_31820">
-        <rect width="10" height="16" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
-
 const Claim = (props: { price?: number }) => {
+  const { chain } = useGlobalStore();
   const [isOpen, { setLeft: close, setRight: open }] = useToggle(false);
   const { tweetRewardList, tweetRewardTotalRewardAmount } = useTweetStore((state) => ({
     ...state,
   }));
   const { run: getReward } = useTweetReward();
-  const ethPrice = useETHPrice();
+  const chainPrice = useChainPrice(chain);
 
   const { loading, run: claimReward } = useWalletClaimReward(
     tweetRewardList,
@@ -88,10 +73,10 @@ const Claim = (props: { price?: number }) => {
               </span>
               <div className="flex flex-col space-y-2">
                 <span className="text-xl font-medium leading-[20px] text-[#0F1419]">
-                  {formatDollar(tweetRewardTotalRewardAmount, ethPrice)}
+                  {formatDollar(tweetRewardTotalRewardAmount, chainPrice)}
                 </span>
                 <div className="flex items-center space-x-1">
-                  <Icon />
+                  <SolanaIcon />
                   <NumberDisplayer
                     className="text-sm font-medium text-[#919099]"
                     text={tweetRewardTotalRewardAmount}
@@ -209,7 +194,7 @@ const Claim = (props: { price?: number }) => {
                         }}
                       >
                         <div className="flex items-center space-x-1">
-                          <Icon />
+                          <SolanaIcon />
                           <NumberDisplayer
                             className="text-xs text-[#0F1419]"
                             text={row.totalRewardAmount}
@@ -222,7 +207,7 @@ const Claim = (props: { price?: number }) => {
                         }}
                       >
                         <div className="flex items-center space-x-1">
-                          <Icon />
+                          <SolanaIcon />
                           <NumberDisplayer
                             className="text-xs text-[#0F1419]"
                             text={row.ethAmount}

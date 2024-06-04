@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 
 import { ListEmpty } from '../../components/Empty';
 import { InfoCircle } from '../../components/icons/InfoCircle';
+import SolanaIcon from '../../components/icons/SolanaIcon';
 import { CenterLoading } from '../../components/Loading';
 import { NumberDisplayer } from '../../components/NumberDisplayer';
 import { useEthPrice } from '../../service/share';
@@ -20,24 +21,6 @@ import useTweetStore from '../../store/useTweetStore';
 
 import Claim from './Claim';
 import History from './History';
-
-const Icon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="9" height="12" viewBox="0 0 9 12" fill="none">
-    <g clipPath="url(#clip0_467_29546)">
-      <path d="M4.50041 11.9338V8.95625L0.728516 6.80225L4.50041 11.9338Z" fill="#C7C7E0" />
-      <path d="M4.5127 11.9338V8.95625L8.28465 6.80225L4.51276 11.9338H4.5127Z" fill="#A3A3D2" />
-      <path d="M4.49981 8.21619V4.41602L0.68457 6.08421L4.49981 8.21619Z" fill="#C7C7E0" />
-      <path d="M4.5127 8.21619V4.41602L8.32793 6.08428L4.5127 8.21619Z" fill="#A3A3D2" />
-      <path d="M0.68457 6.08493L4.49974 0.0664062V4.41667L0.68457 6.08493Z" fill="#C7C7E0" />
-      <path d="M8.32787 6.08493L4.5127 0.0664062V4.41667L8.32787 6.08493Z" fill="#A3A3D2" />
-    </g>
-    <defs>
-      <clipPath id="clip0_467_29546">
-        <rect width="7.76471" height="12" fill="white" transform="translate(0.617188)" />
-      </clipPath>
-    </defs>
-  </svg>
-);
 
 const Reward = () => {
   const { openProfile } = useProfileModal((state) => ({ ...state }));
@@ -99,7 +82,7 @@ const Reward = () => {
         <div className="flex space-x-[10px]">
           <div className="flex min-w-[60px] flex-col items-center space-y-1">
             <div className="flex items-center space-x-1">
-              <Icon />
+              <SolanaIcon />
               <NumberDisplayer className="text-xs font-medium text-[#0F1419]" text={poolBalance} />
             </div>
             <span className="relative text-[15px] font-medium text-[#919099]">
@@ -114,7 +97,7 @@ const Reward = () => {
 
           <div className="flex flex-col items-center space-y-1">
             <div className="flex items-center space-x-1">
-              <Icon />
+              <SolanaIcon />
               <NumberDisplayer
                 className="text-xs font-medium text-[#0F1419]"
                 text={tweetRewardTotalRewardAmount}

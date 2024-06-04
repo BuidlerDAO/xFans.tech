@@ -127,34 +127,6 @@ Then run the following:
 - `yarn lint` to call ESLint, Prettier and stylelint.
 - `yarn test` for testing.
 
-## Important Notes
-
-This starter includes experimental packages and is currently in development. You can see changes in this repo often for now.
-
-Please use with caution.
-
-#### [@eduardoac-skimlinks/webext-redux](https://github.com/eduardoacskimlinks/webext-redux)
-
-> **Note** It is a fork of [webext-redux](https://github.com/tshaddix/webext-redux) with Manifest V3 support and is currently in release candidate (RC).
->
-> Please see https://github.com/tshaddix/webext-redux/pull/282
->
-> **Warning** Do not update to react-redux version 8.x, it is not supported for now and is **break** your application.
-
-### Bundling
-
-#### [@crxjs/vite-plugin](https://github.com/crxjs/chrome-extension-tools)
-
-> **Note** This plugin powers the development side of this starter.
->
-> docs: https://crxjs.dev/vite-plugin
->
-> Special thanks to [@jacksteamdev](https://github.com/jacksteamdev) and contributors for this amazing plugin.
-
-## Contributing
-
-This repository is following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
-
 ## License
 
 MIT © [Sinan Bekar](https://sinan.engineer)

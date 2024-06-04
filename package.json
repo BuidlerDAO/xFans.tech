@@ -39,6 +39,7 @@
     "@mui/material": "5.15.5",
     "@mui/system": "5.15.6",
     "@reduxjs/toolkit": "1.8.4",
+    "@solana/web3.js": "1.91.8",
     "@types/chrome": "0.0.266",
     "@types/mockjs": "1.0.10",
     "@types/react-copy-to-clipboard": "5.0.7",

@@ -1,6 +1,9 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import BigNumber from 'bignumber.js';
+
+import { chainPrecisionMap } from '../config/chainConfig';
+import useGlobalStore from '../store/useGlobalStore';
 
 type NumberDisplayerProps = {
   text?: string;
@@ -29,10 +32,11 @@ export function NumberDisplayer({
 }: NumberDisplayerProps) {
   // 防止不会使用，或者错误传错类型，有助于开发阶段尽早发现问题
   if (typeof text !== 'string') throw new Error('text should be string');
+  const precision = chainPrecisionMap[useGlobalStore.getState().chain];
   // 转成处理过后的字符串形式
   const number = useMemo(
-    () => new BigNumber(text).dividedBy(new BigNumber(Math.pow(10, 18))).toFixed(),
-    [text]
+    () => new BigNumber(text).dividedBy(new BigNumber(Math.pow(10, precision))).toFixed(),
+    [precision, text]
   );
   const [valueBeforeDot, valueAfterDot] = number.split('.');
   const computedValue = useMemo(() => {
